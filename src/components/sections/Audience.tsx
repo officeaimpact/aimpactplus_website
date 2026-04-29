@@ -6,6 +6,7 @@ import {
   ArrowRight,
   BriefcaseBusiness,
   Hotel,
+  LayoutGrid,
   Map,
   Store,
   type LucideIcon,
@@ -17,10 +18,9 @@ import { SectionWrapper } from "@/components/ui/SectionWrapper";
 const iconMap: Record<AudienceIcon, LucideIcon> = {
   Store,
   BriefcaseBusiness,
+  LayoutGrid,
   Hotel,
   Map,
-  Stethoscope: Map,
-  Plane: Map,
 };
 
 export function Audience() {
@@ -28,7 +28,7 @@ export function Audience() {
     <SectionWrapper
       eyebrow="Для кого"
       title="Главная — это не лендинг, а портал входа"
-      description="Каждый сегмент быстро попадает на свою страницу, где видит конкретные сценарии, интеграции и ожидаемые результаты — а не общий обзор."
+      description="Каждый сегмент попадает на свою страницу с конкретными сценариями, интеграциями и ожидаемыми результатами — без общего обзора."
       alt
     >
       <motion.div
@@ -36,7 +36,7 @@ export function Audience() {
         initial="hidden"
         whileInView="visible"
         viewport={viewportOnce}
-        className="grid gap-5 md:grid-cols-2 lg:grid-cols-4"
+        className="grid gap-5 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5"
       >
         {audiencePaths.map((item) => {
           const Icon = iconMap[item.icon] ?? Store;
@@ -46,13 +46,13 @@ export function Audience() {
                 href={item.href}
                 className="card group flex h-full flex-col"
               >
-                <div className="mb-5 grid h-12 w-12 place-items-center rounded-xl bg-blue-ice text-primary transition group-hover:bg-primary group-hover:text-white">
-                  <Icon className="h-6 w-6" />
+                <div className="mb-5 grid h-12 w-12 place-items-center rounded-2xl bg-gradient-to-br from-primary to-accent text-white shadow-[var(--shadow-blue)] transition group-hover:scale-105">
+                  <Icon className="h-6 w-6" aria-hidden="true" />
                 </div>
-                <h3 className="text-xl font-black text-heading">
+                <h3 className="text-lg font-black text-heading">
                   {item.title}
                 </h3>
-                <p className="mt-3 grow leading-7 text-body">
+                <p className="mt-3 grow text-sm leading-6 text-body">
                   {item.description}
                 </p>
                 <span className="mt-6 inline-flex items-center gap-2 text-sm font-bold text-primary">

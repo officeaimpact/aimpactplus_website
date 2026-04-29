@@ -1,12 +1,14 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { motion } from "framer-motion";
 import { ArrowRight, CheckCircle2 } from "lucide-react";
 import { fadeInUp, staggerContainer, viewportOnce } from "@/lib/animations";
 import { cases } from "@/lib/site-data";
 import { SectionWrapper } from "@/components/ui/SectionWrapper";
 import { Tag } from "@/components/ui/Tag";
+import { BrandMonogram } from "@/components/ui/BrandMonogram";
 
 export function CasesPreview() {
   return (
@@ -29,10 +31,23 @@ export function CasesPreview() {
               className="card group flex h-full flex-col"
             >
               <div className="mb-5 flex items-center justify-between gap-4">
-                <Tag>{c.segment}</Tag>
+                {c.logo ? (
+                  <Image
+                    src={c.logo}
+                    alt={c.title}
+                    width={48}
+                    height={48}
+                    className="h-12 w-12 rounded-2xl object-contain"
+                  />
+                ) : (
+                  <BrandMonogram name={c.title} size="md" variant="soft" />
+                )}
                 <ArrowRight className="h-5 w-5 text-primary transition group-hover:translate-x-1" />
               </div>
-              <h3 className="text-xl font-black text-heading">{c.title}</h3>
+              <Tag className="self-start">{c.segment}</Tag>
+              <h3 className="mt-3 text-lg font-black text-heading">
+                {c.title}
+              </h3>
               <p className="mt-3 grow text-sm leading-6 text-body">
                 {c.summary}
               </p>

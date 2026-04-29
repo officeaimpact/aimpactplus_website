@@ -2,10 +2,8 @@
 
 import { motion } from "framer-motion";
 import {
+  BarChart3,
   Bot,
-  Plug,
-  ChartNoAxesCombined,
-  MessagesSquare,
   Brain,
   Headset,
   type LucideIcon,
@@ -15,11 +13,9 @@ import { solutionCards, type SolutionIcon } from "@/lib/site-data";
 import { SectionWrapper } from "@/components/ui/SectionWrapper";
 
 const iconMap: Record<SolutionIcon, LucideIcon> = {
-  Bot,
-  Plug,
-  ChartNoAxesCombined,
-  MessagesSquare,
   Brain,
+  Bot,
+  BarChart3,
   Headset,
 };
 
@@ -27,8 +23,8 @@ export function SolutionsMap() {
   return (
     <SectionWrapper
       eyebrow="Карта решений"
-      title="От ассистента на сайте — до интеграций с CRM, голосом и аналитикой"
-      description="ИИ-Туризм объединяет AI-решения вокруг реальных процессов туристического бизнеса: заявки, подбор, бронирование, FAQ, отчётность и сопровождение."
+      title="От проектирования индивидуальных AI-систем до интеллектуальных решений под бизнес"
+      description="Мы не сводим AI к чат-боту. Помогаем компаниям туризма строить полноценные интеллектуальные продукты — от моделей и интерфейсов до аналитики и омниканальной коммуникации."
     >
       <motion.div
         variants={staggerContainer}
@@ -47,10 +43,13 @@ export function SolutionsMap() {
               transition={{ duration: 0.25, ease: "easeOut" }}
               className="card group"
             >
-              <div className="mb-5 grid h-12 w-12 place-items-center rounded-xl bg-blue-ice text-accent transition group-hover:bg-accent/15">
-                <Icon className="h-6 w-6 transition group-hover:scale-110" />
+              <div className="mb-5 grid h-12 w-12 place-items-center rounded-2xl bg-gradient-to-br from-primary to-accent text-white shadow-[var(--shadow-blue)]">
+                <Icon
+                  className="h-6 w-6 transition group-hover:scale-110"
+                  aria-hidden="true"
+                />
               </div>
-              <h3 className="text-xl font-black text-heading">{card.title}</h3>
+              <h3 className="text-lg font-black text-heading">{card.title}</h3>
               <p className="mt-3 leading-7 text-body">{card.text}</p>
             </motion.article>
           );

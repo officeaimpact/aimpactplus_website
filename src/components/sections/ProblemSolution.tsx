@@ -9,22 +9,22 @@ export function ProblemSolution() {
   return (
     <SectionWrapper
       eyebrow="Проблема рынка"
-      title="Туризм теряет заявки там, где нужна скорость"
-      description="Клиенты решают за минуты, конкуренты отвечают первыми, а команда тратит часы на повторяющиеся вопросы. AI снимает рутину — менеджеры занимаются сложными продажами."
+      title="Туризм 2026: где AI даёт реальный эффект"
+      description="Сегодня бизнесу нужны не отдельные виджеты, а инфраструктура: связанные данные, прогнозы, сегментация и омниканальная коммуникация. AI-решения от ИИМПАКТ ПЛЮС закрывают эти узкие места."
     >
       <motion.div
         variants={staggerContainer}
         initial="hidden"
         whileInView="visible"
         viewport={viewportOnce}
-        className="grid gap-5 md:grid-cols-3"
+        className="grid gap-5 md:grid-cols-2 lg:grid-cols-3"
       >
         {painPoints.map((p) => (
           <motion.article key={p.title} variants={fadeInUp} className="card">
-            <p className="text-4xl font-black tracking-tight text-gradient sm:text-5xl">
+            <p className="text-xs font-black uppercase tracking-[0.2em] text-primary">
               {p.stat}
             </p>
-            <h3 className="mt-4 text-xl font-black text-heading">{p.title}</h3>
+            <h3 className="mt-3 text-xl font-black text-heading">{p.title}</h3>
             <p className="mt-3 leading-7 text-body">{p.text}</p>
           </motion.article>
         ))}

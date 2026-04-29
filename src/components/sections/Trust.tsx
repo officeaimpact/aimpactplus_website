@@ -1,10 +1,12 @@
 "use client";
 
+import Image from "next/image";
 import { motion } from "framer-motion";
+import { Quote } from "lucide-react";
 import { fadeInUp, staggerContainer, viewportOnce } from "@/lib/animations";
 import { partners, testimonials } from "@/lib/site-data";
 import { SectionWrapper } from "@/components/ui/SectionWrapper";
-import { Quote } from "lucide-react";
+import { BrandMonogram } from "@/components/ui/BrandMonogram";
 
 export function Trust() {
   return (
@@ -40,9 +42,27 @@ export function Trust() {
           >
             <Quote className="mb-3 h-6 w-6 text-primary/40" aria-hidden="true" />
             <p className="text-lg leading-8 text-heading">«{t.text}»</p>
-            <footer className="mt-6">
-              <p className="font-black text-heading">{t.name}</p>
-              <p className="mt-1 text-sm text-muted">{t.role}</p>
+            <footer className="mt-6 flex items-center gap-3">
+              {t.photo ? (
+                <Image
+                  src={t.photo}
+                  alt={t.name}
+                  width={48}
+                  height={48}
+                  className="h-12 w-12 rounded-full object-cover"
+                />
+              ) : (
+                <BrandMonogram
+                  name={t.name}
+                  size="md"
+                  variant="gradient"
+                  className="rounded-full"
+                />
+              )}
+              <div>
+                <p className="font-black text-heading">{t.name}</p>
+                <p className="mt-0.5 text-sm text-muted">{t.role}</p>
+              </div>
             </footer>
           </motion.blockquote>
         ))}
