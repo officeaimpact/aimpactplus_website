@@ -5,15 +5,18 @@ import { PageHero } from "@/components/ui/PageHero";
 import { SectionWrapper } from "@/components/ui/SectionWrapper";
 import { CtaBand } from "@/components/sections/CtaBand";
 import { JsonLd } from "@/components/ui/JsonLd";
-import { DemoWidget } from "@/components/DemoWidget";
+import DemoWidget from "@/components/DemoWidget";
+import { NaviletLiveDemo } from "@/components/sections/NaviletLiveDemo";
+import { NaviletDashboardPreview } from "@/components/sections/NaviletDashboardPreview";
 import { FAQSection } from "@/components/sections/FAQ";
 import { pageMetadata } from "@/lib/seo";
 import { naviletFeatures, integrations, site } from "@/lib/site-data";
+import { demoScenarios } from "@/lib/scenarios";
 
 export const metadata = pageMetadata({
   title: "Навылет! AI — AI-турменеджер для сайта",
   description:
-    "Готовый AI-турменеджер для сайта: подбор туров, FAQ, карточки отелей и передача заявки менеджеру. White-label, интеграция с Tourvisor, CRM и мессенджерами.",
+    "Готовый AI-турменеджер для сайта: подбор туров, FAQ, карточки отелей и передача заявки менеджеру. White-label, интеграция с Tourvisor, UON CRM и мессенджерами.",
   path: "/navilet-ai",
 });
 
@@ -51,7 +54,7 @@ export default function NaviletAi() {
         ]}
         aside={
           <div className="rounded-[2rem] bg-deep p-3 shadow-[var(--shadow-blue)]">
-            <DemoWidget />
+            <DemoWidget scenario={demoScenarios[0]} />
           </div>
         }
       />
@@ -71,6 +74,10 @@ export default function NaviletAi() {
           ))}
         </div>
       </SectionWrapper>
+
+      <NaviletLiveDemo />
+
+      <NaviletDashboardPreview />
 
       <SectionWrapper
         eyebrow="Интеграции"

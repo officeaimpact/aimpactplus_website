@@ -6,7 +6,8 @@ import { ArrowRight, CheckCircle2 } from "lucide-react";
 import { fadeInUp, scaleIn, staggerContainer, viewportOnce } from "@/lib/animations";
 import { naviletFeatures } from "@/lib/site-data";
 import { SectionWrapper } from "@/components/ui/SectionWrapper";
-import { DemoWidget } from "@/components/DemoWidget";
+import DemoWidget from "@/components/DemoWidget";
+import { demoScenarios } from "@/lib/scenarios";
 
 export function NaviletPreview() {
   return (
@@ -53,7 +54,7 @@ export function NaviletPreview() {
           variants={scaleIn}
           className="relative rounded-[2rem] bg-deep p-3 shadow-[var(--shadow-blue)]"
         >
-          <DemoWidget />
+          <DemoWidget scenario={demoScenarios[0]} />
         </motion.div>
       </div>
     </SectionWrapper>

@@ -651,14 +651,13 @@ export const partners = [
 
 export const integrations = [
   "Tourvisor",
-  "AmoCRM",
-  "Bitrix24",
-  "RetailCRM",
-  "Telegram",
+  "UON CRM",
   "WhatsApp",
+  "Telegram",
   "VK",
-  "Email / SMTP",
-  "Сайт / Веб-виджет",
+  "MAX",
+  "Сайт / Web-виджет",
+  "Email",
 ] as const;
 
 export const naviletFeatures = [
@@ -688,44 +687,7 @@ export const naviletFeatures = [
   },
 ] as const;
 
-export type DemoMessage = ["client" | "ai", string];
-
-export const demoScenarios: ReadonlyArray<{
-  id: string;
-  title: string;
-  messages: DemoMessage[];
-}> = [
-  {
-    id: "tour-search",
-    title: "Подбор тура",
-    messages: [
-      ["client", "Хочу в Турцию на море"],
-      ["ai", "Отличный выбор. Из какого города планируете вылет и на какие даты?"],
-      ["client", "Из Москвы, начало июня, на неделю, вдвоём"],
-      ["ai", "Нашёл варианты 4–5★ с питанием «всё включено». Покажу 3 предложения с актуальными ценами и перелётом."],
-    ],
-  },
-  {
-    id: "hot-tours",
-    title: "Горящие туры",
-    messages: [
-      ["client", "Есть горящие путёвки из Москвы?"],
-      ["ai", "Да. Покажу ближайшие вылеты, отсортирую по скидке и сразу уточню, что входит в стоимость."],
-      ["client", "Интересует Египет"],
-      ["ai", "Подобрал варианты с коралловым рифом, питанием AI и прямым перелётом. Сравним пляжи?"],
-    ],
-  },
-  {
-    id: "faq-handoff",
-    title: "FAQ → менеджер",
-    messages: [
-      ["client", "Нужна ли виза и что входит в тур?"],
-      ["ai", "Отвечу по документам, страховке, трансферу и питанию. Если готовы бронировать — передам менеджеру с контекстом."],
-      ["client", "Передайте менеджеру"],
-      ["ai", "Готово. В заявке уже есть направление, даты, состав туристов и выбранные варианты."],
-    ],
-  },
-];
+// Demo scenarios live in src/lib/scenarios.ts (1:1 порт из navilet_website).
 
 export const faq = [
   {
