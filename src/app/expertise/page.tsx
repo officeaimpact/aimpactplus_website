@@ -33,25 +33,27 @@ export default function Expertise() {
 
       <SectionWrapper
         eyebrow="Партнёры"
-        title="С кем мы работаем и где выступаем"
-        description="Сотрудничаем с профессиональными ассоциациями, государственными органами и ведущими университетами."
+        title="С кем мы работаем и сотрудничаем"
+        description="Сотрудничаем с профессиональными ассоциациями, государственными органами и ведущими университетами туристической отрасли."
       >
-        <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+        <div className="mx-auto grid max-w-6xl grid-cols-2 gap-5 sm:grid-cols-3 lg:grid-cols-5">
           {partners.map((p) => (
             <div
               key={p.name}
-              className="card flex h-28 items-center justify-center gap-3 p-5"
+              title={p.name}
+              className="group relative flex h-32 items-center justify-center overflow-hidden rounded-[1.5rem] border border-blue-100 bg-white p-6 shadow-[var(--shadow-soft)] transition-all duration-300 hover:-translate-y-1 hover:border-accent/30 hover:shadow-[var(--shadow-card-hover)]"
             >
+              <div className="pointer-events-none absolute -right-10 -top-10 h-28 w-28 rounded-full bg-accent/[0.05] transition-all duration-500 group-hover:scale-[1.8] group-hover:bg-accent/[0.08]" />
               {p.logo ? (
                 <Image
                   src={p.logo}
                   alt={p.name}
-                  width={140}
-                  height={56}
-                  className="h-14 w-auto object-contain"
+                  width={240}
+                  height={96}
+                  className="relative h-16 w-auto max-w-[180px] object-contain transition-transform duration-300 group-hover:scale-110 sm:h-20"
                 />
               ) : (
-                <span className="text-center text-sm font-black text-heading">
+                <span className="relative text-center text-base font-black text-heading">
                   {p.name}
                 </span>
               )}

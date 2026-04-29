@@ -701,11 +701,9 @@ export type PartnerItem = {
 
 export const partners: ReadonlyArray<PartnerItem> = [
   { name: "Российский союз туриндустрии", logo: "/partners/rst-logo.png" },
-  { name: "Ассоциация «ТУРПОМОЩЬ»" },
   { name: "ТПП РФ", logo: "/partners/tpp-logo.svg" },
   { name: "МГИМО", logo: "/partners/mgimo-logo.svg" },
   { name: "РЭУ им. Г. В. Плеханова", logo: "/partners/plekhanov-logo.png" },
-  { name: "Интурмаркет" },
   { name: "Магазин Горящих Путёвок", logo: "/partners/mgp-logo.svg" },
 ];
 
