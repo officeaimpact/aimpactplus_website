@@ -56,13 +56,6 @@ export const trustItems = [
   "Юридическое лицо: ООО «ИИМПАКТ ПЛЮС»",
 ] as const;
 
-export const heroMetrics = [
-  { value: "24/7", label: "ответы клиентам" },
-  { value: "−40%", label: "нагрузки на менеджеров" },
-  { value: "10×", label: "быстрее первичный подбор" },
-  { value: "2 нед.", label: "минимальный пилот" },
-] as const;
-
 export type AudienceIcon =
   | "Store"
   | "BriefcaseBusiness"
