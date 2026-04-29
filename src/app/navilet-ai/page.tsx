@@ -53,8 +53,9 @@ export default function NaviletAi() {
           { name: "Навылет! AI", href: "/navilet-ai" },
         ]}
         aside={
-          <div className="rounded-[2rem] bg-deep p-3 shadow-[var(--shadow-blue)]">
-            <DemoWidget scenario={demoScenarios[0]} />
+          <div className="relative">
+            <div className="absolute -inset-3 rounded-3xl bg-gradient-to-br from-accent/15 to-sky/15 blur-2xl" />
+            <DemoWidget scenario={demoScenarios[0]} className="relative" />
           </div>
         }
       />

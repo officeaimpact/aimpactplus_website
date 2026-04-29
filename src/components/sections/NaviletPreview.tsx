@@ -52,9 +52,10 @@ export function NaviletPreview() {
           whileInView="visible"
           viewport={viewportOnce}
           variants={scaleIn}
-          className="relative rounded-[2rem] bg-deep p-3 shadow-[var(--shadow-blue)]"
+          className="relative"
         >
-          <DemoWidget scenario={demoScenarios[0]} />
+          <div className="absolute -inset-3 rounded-3xl bg-gradient-to-br from-accent/15 to-sky/15 blur-2xl" />
+          <DemoWidget scenario={demoScenarios[0]} className="relative" />
         </motion.div>
       </div>
     </SectionWrapper>
