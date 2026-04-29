@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import { ArrowRight, CheckCircle2, ShieldCheck } from "lucide-react";
 import { Badge } from "@/components/ui/Badge";
-import { OrbitCore } from "@/components/visual/OrbitCore";
+import { HeroWordmark } from "@/components/visual/HeroWordmark";
 import {
   fadeInUp,
   heroWordVariant,
@@ -109,7 +109,7 @@ export function Hero() {
           variants={scaleIn}
           className="relative flex items-center justify-center"
         >
-          <OrbitCore />
+          <HeroWordmark />
         </motion.div>
       </div>
     </section>
