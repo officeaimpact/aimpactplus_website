@@ -153,21 +153,22 @@ export default function Expertise() {
             <blockquote key={t.name} className="card">
               <Quote className="mb-3 h-6 w-6 text-primary/40" />
               <p className="text-lg leading-8 text-heading">«{t.text}»</p>
-              <footer className="mt-6 flex items-center gap-3">
+              <footer className="mt-6 flex items-center gap-4">
                 {t.photo ? (
                   <Image
                     src={t.photo}
                     alt={t.name}
-                    width={48}
-                    height={48}
-                    className="h-12 w-12 rounded-full object-cover"
+                    width={128}
+                    height={128}
+                    sizes="64px"
+                    className="h-16 w-16 shrink-0 rounded-full object-cover ring-2 ring-blue-100"
                   />
                 ) : (
                   <BrandMonogram
                     name={t.name}
-                    size="md"
+                    size="lg"
                     variant="gradient"
-                    className="rounded-full"
+                    className="h-16 w-16 rounded-full text-base"
                   />
                 )}
                 <div>
