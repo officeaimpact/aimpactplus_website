@@ -9,7 +9,7 @@ export function Logo({
   inverted?: boolean;
   size?: "sm" | "md";
 }) {
-  const dim = size === "sm" ? 32 : 40;
+  const height = size === "sm" ? 32 : 40;
   return (
     <Link
       href="/"
@@ -19,13 +19,12 @@ export function Logo({
       <Image
         src="/brand/logo.png"
         alt="AIMPACT+"
-        width={dim * 4}
-        height={dim}
+        width={319}
+        height={72}
         priority
-        className={cn(
-          "h-9 w-auto sm:h-10",
-          inverted && "brightness-0 invert",
-        )}
+        sizes="180px"
+        style={{ height: `${height}px`, width: "auto" }}
+        className={cn(inverted && "brightness-0 invert")}
       />
       <span className="leading-none">
         <span
