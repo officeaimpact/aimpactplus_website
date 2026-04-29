@@ -1,6 +1,5 @@
 import { PageShell } from "@/components/PageShell";
 import { Hero } from "@/components/sections/Hero";
-import { Metrics } from "@/components/sections/Metrics";
 import { Audience } from "@/components/sections/Audience";
 import { ProblemSolution } from "@/components/sections/ProblemSolution";
 import { SolutionsMap } from "@/components/sections/SolutionsMap";
@@ -26,7 +25,6 @@ export default function Home() {
     <PageShell>
       <JsonLd data={faqJsonLd([...faq])} />
       <Hero />
-      <Metrics />
       <Audience />
       <ProblemSolution />
       <SolutionsMap />

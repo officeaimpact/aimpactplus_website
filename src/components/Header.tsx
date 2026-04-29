@@ -1,8 +1,9 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import { Menu, X, ArrowRight } from "lucide-react";
+import { Menu, X, ArrowRight, Phone } from "lucide-react";
 import { navigation, site } from "@/lib/site-data";
 import { Logo } from "@/components/ui/Logo";
 import { LeadFormModal } from "@/components/LeadFormModal";
@@ -13,6 +14,7 @@ export function Header() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
+  const pathname = usePathname();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -38,6 +40,9 @@ export function Header() {
     setOpen(false);
   };
 
+  const isActive = (href: string) =>
+    href === "/" ? pathname === "/" : pathname.startsWith(href);
+
   return (
     <header
       className={cn(
@@ -49,44 +54,63 @@ export function Header() {
     >
       <div className="mx-auto flex h-20 max-w-7xl items-center justify-between gap-4 px-5 sm:px-8">
         <Logo />
+
         <nav
-          className="hidden items-center gap-7 lg:flex"
+          className="hidden items-center gap-1 lg:flex"
           aria-label="Основная навигация"
         >
-          {navigation.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              className="text-sm font-semibold text-body transition hover:text-primary"
-            >
-              {item.label}
-            </Link>
-          ))}
+          {navigation.map((item) => {
+            const active = isActive(item.href);
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                aria-current={active ? "page" : undefined}
+                className={cn(
+                  "relative flex h-10 items-center rounded-full px-3.5 text-sm font-semibold transition",
+                  active
+                    ? "text-primary"
+                    : "text-body hover:bg-blue-50 hover:text-primary",
+                )}
+              >
+                {item.label}
+                {active && (
+                  <span
+                    aria-hidden="true"
+                    className="absolute inset-x-3 -bottom-0.5 h-0.5 rounded-full bg-gradient-to-r from-primary via-accent to-sky"
+                  />
+                )}
+              </Link>
+            );
+          })}
         </nav>
-        <div className="flex items-center gap-2.5">
+
+        <div className="flex items-center gap-2">
           <Link
             href={site.phoneHref}
-            className="hidden text-sm font-semibold text-body transition hover:text-primary xl:inline-flex"
+            aria-label={`Позвонить ${site.phone}`}
+            className="hidden h-10 items-center gap-1.5 rounded-full px-3.5 text-sm font-semibold text-body transition hover:bg-blue-50 hover:text-primary md:inline-flex"
           >
-            {site.phone}
+            <Phone className="h-4 w-4" aria-hidden="true" />
+            <span className="hidden xl:inline">{site.phone}</span>
           </Link>
           <Link
             href="/contact"
-            className="hidden rounded-full border border-blue-200 px-4 py-2 text-sm font-semibold text-primary transition hover:border-primary hover:bg-blue-50 sm:inline-flex"
+            className="hidden h-10 items-center rounded-full border border-blue-200 px-4 text-sm font-semibold text-primary transition hover:border-primary hover:bg-blue-50 sm:inline-flex"
           >
             Обсудить проект
           </Link>
           <button
             type="button"
             onClick={() => openModal("header")}
-            className="inline-flex items-center gap-2 rounded-full bg-primary px-4 py-2 text-sm font-bold text-white shadow-[var(--shadow-blue)] transition hover:-translate-y-0.5 hover:bg-primary-hover"
+            className="inline-flex h-10 items-center gap-1.5 rounded-full bg-primary px-4 text-sm font-bold text-white shadow-[var(--shadow-blue)] transition hover:-translate-y-0.5 hover:bg-primary-hover"
           >
             Демо
             <ArrowRight className="h-4 w-4" aria-hidden="true" />
           </button>
           <button
             type="button"
-            className="grid h-10 w-10 place-items-center rounded-xl border border-blue-100 text-primary transition hover:border-primary hover:bg-blue-50 lg:hidden"
+            className="grid h-10 w-10 place-items-center rounded-full border border-blue-100 text-primary transition hover:border-primary hover:bg-blue-50 lg:hidden"
             aria-label={open ? "Закрыть меню" : "Открыть меню"}
             aria-expanded={open}
             aria-controls="mobile-drawer"
@@ -123,17 +147,33 @@ export function Header() {
             className="mx-auto grid max-w-7xl gap-1 px-5 py-6 sm:px-8"
             aria-label="Мобильная навигация"
           >
-            {navigation.map((item) => (
+            {navigation.map((item) => {
+              const active = isActive(item.href);
+              return (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className={cn(
+                    "rounded-2xl px-4 py-3 text-base font-semibold transition",
+                    active
+                      ? "bg-blue-50 text-primary"
+                      : "text-heading hover:bg-blue-50 hover:text-primary",
+                  )}
+                  onClick={() => setOpen(false)}
+                >
+                  {item.label}
+                </Link>
+              );
+            })}
+            <div className="mt-3 grid gap-2">
               <Link
-                key={item.href}
-                href={item.href}
-                className="rounded-2xl px-4 py-3 text-base font-semibold text-heading transition hover:bg-blue-50 hover:text-primary"
+                href={site.phoneHref}
+                className="btn-outline"
                 onClick={() => setOpen(false)}
               >
-                {item.label}
+                <Phone className="h-4 w-4" aria-hidden="true" />
+                {site.phone}
               </Link>
-            ))}
-            <div className="mt-3 grid gap-2">
               <Link
                 href="/contact"
                 className="btn-secondary"

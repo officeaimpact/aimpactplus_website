@@ -13,7 +13,7 @@ export function Logo({
   return (
     <Link
       href="/"
-      className="flex items-center gap-3 transition hover:opacity-90"
+      className="flex items-center transition hover:opacity-90"
       aria-label="AIMPACT+ — На главную"
     >
       <Image
@@ -26,16 +26,6 @@ export function Logo({
         style={{ height: `${height}px`, width: "auto" }}
         className={cn(inverted && "brightness-0 invert")}
       />
-      <span className="leading-none">
-        <span
-          className={cn(
-            "block text-[0.7rem] font-bold uppercase tracking-[0.22em]",
-            inverted ? "text-blue-100" : "text-muted",
-          )}
-        >
-          ИИ-Туризм.рф
-        </span>
-      </span>
     </Link>
   );
 }

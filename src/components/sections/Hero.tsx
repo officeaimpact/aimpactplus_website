@@ -2,9 +2,9 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { ArrowRight, CheckCircle2 } from "lucide-react";
+import { ArrowRight, CheckCircle2, ShieldCheck } from "lucide-react";
 import { Badge } from "@/components/ui/Badge";
-import { DemoWidget } from "@/components/DemoWidget";
+import { OrbitCore } from "@/components/visual/OrbitCore";
 import {
   fadeInUp,
   heroWordVariant,
@@ -61,9 +61,9 @@ export function Hero() {
             variants={fadeInUp}
             className="mt-6 max-w-2xl text-pretty text-lg leading-8 text-blue-100 sm:text-xl"
           >
-            Проектируем и внедряем AI-ассистентов, виджеты, CRM-интеграции,
-            аналитику и голосовые сценарии для турагентств, туроператоров,
-            отелей и туристических дестинаций.
+            Проектируем и внедряем AI-решения для туристического бизнеса —
+            от индивидуальных интеллектуальных систем и аналитики до
+            голосовых и текстовых ассистентов.
           </motion.p>
 
           <motion.div
@@ -78,6 +78,14 @@ export function Hero() {
               Смотреть Навылет! AI
             </Link>
           </motion.div>
+
+          <motion.p
+            variants={fadeInUp}
+            className="mt-4 inline-flex items-center gap-2 text-xs font-semibold tracking-wide text-sky"
+          >
+            <ShieldCheck className="h-4 w-4" aria-hidden="true" />
+            Безопасный пилот за 2 недели · обсуждаем результат до старта
+          </motion.p>
 
           <motion.ul
             variants={fadeInUp}
@@ -99,10 +107,9 @@ export function Hero() {
           initial="hidden"
           animate="visible"
           variants={scaleIn}
-          className="relative"
+          className="relative flex items-center justify-center"
         >
-          <div className="absolute -inset-3 rounded-[2.4rem] bg-gradient-to-br from-sky/15 to-accent/15 blur-2xl" />
-          <DemoWidget className="relative" />
+          <OrbitCore />
         </motion.div>
       </div>
     </section>
