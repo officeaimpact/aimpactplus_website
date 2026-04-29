@@ -7,7 +7,7 @@ import { CtaBand } from "@/components/sections/CtaBand";
 import { JsonLd } from "@/components/ui/JsonLd";
 import DemoWidget from "@/components/DemoWidget";
 import { NaviletLiveDemo } from "@/components/sections/NaviletLiveDemo";
-import { NaviletDashboardPreview } from "@/components/sections/NaviletDashboardPreview";
+import { NaviletDashboardSection } from "@/components/sections/NaviletDashboardSection";
 import { FAQSection } from "@/components/sections/FAQ";
 import { pageMetadata } from "@/lib/seo";
 import { naviletFeatures, integrations, site } from "@/lib/site-data";
@@ -78,7 +78,7 @@ export default function NaviletAi() {
 
       <NaviletLiveDemo />
 
-      <NaviletDashboardPreview />
+      <NaviletDashboardSection />
 
       <SectionWrapper
         eyebrow="Интеграции"
