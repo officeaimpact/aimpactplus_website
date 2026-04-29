@@ -5,7 +5,8 @@ import { PageHero } from "@/components/ui/PageHero";
 import { SectionWrapper } from "@/components/ui/SectionWrapper";
 import { CtaBand } from "@/components/sections/CtaBand";
 import { Tag } from "@/components/ui/Tag";
-import { pageMetadata } from "@/lib/seo";
+import { JsonLd } from "@/components/ui/JsonLd";
+import { itemListJsonLd, pageMetadata } from "@/lib/seo";
 import { cases } from "@/lib/site-data";
 
 export const metadata = pageMetadata({
@@ -18,6 +19,11 @@ export const metadata = pageMetadata({
 export default function CasesIndex() {
   return (
     <PageShell>
+      <JsonLd
+        data={itemListJsonLd(
+          cases.map((c) => ({ name: c.title, url: `/cases/${c.slug}` })),
+        )}
+      />
       <PageHero
         eyebrow="Кейсы"
         title="Реальные внедрения AI в туризме"

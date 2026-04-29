@@ -118,3 +118,39 @@ export function serviceJsonLd(input: {
     areaServed: { "@type": "Country", name: "Россия" },
   } as const;
 }
+
+export function itemListJsonLd(items: { name: string; url: string }[]) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    itemListElement: items.map((item, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      name: item.name,
+      url: new URL(item.url, site.domain).toString(),
+    })),
+  } as const;
+}
+
+export function eventJsonLd(input: {
+  name: string;
+  date: string;
+  location: string;
+  description: string;
+}) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Event",
+    name: input.name,
+    description: input.description,
+    location: { "@type": "Place", name: input.location },
+    organizer: {
+      "@type": "Organization",
+      name: site.legalName,
+      url: site.domain,
+    },
+    eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
+    eventStatus: "https://schema.org/EventScheduled",
+    description_note: input.date,
+  } as const;
+}

@@ -4,7 +4,8 @@ import { PageShell } from "@/components/PageShell";
 import { PageHero } from "@/components/ui/PageHero";
 import { SectionWrapper } from "@/components/ui/SectionWrapper";
 import { CtaBand } from "@/components/sections/CtaBand";
-import { pageMetadata } from "@/lib/seo";
+import { JsonLd } from "@/components/ui/JsonLd";
+import { itemListJsonLd, pageMetadata } from "@/lib/seo";
 import { solutions } from "@/lib/site-data";
 
 export const metadata = pageMetadata({
@@ -17,6 +18,14 @@ export const metadata = pageMetadata({
 export default function SolutionsIndex() {
   return (
     <PageShell>
+      <JsonLd
+        data={itemListJsonLd(
+          solutions.map((s) => ({
+            name: s.title,
+            url: `/solutions/${s.slug}`,
+          })),
+        )}
+      />
       <PageHero
         eyebrow="Решения"
         title="AI-решения под сегмент туристического рынка"

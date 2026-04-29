@@ -14,7 +14,8 @@ import { PageHero } from "@/components/ui/PageHero";
 import { SectionWrapper } from "@/components/ui/SectionWrapper";
 import { CtaBand } from "@/components/sections/CtaBand";
 import { CheckCircle2 } from "lucide-react";
-import { pageMetadata } from "@/lib/seo";
+import { JsonLd } from "@/components/ui/JsonLd";
+import { itemListJsonLd, pageMetadata, serviceJsonLd } from "@/lib/seo";
 import { services, type ServiceIcon } from "@/lib/site-data";
 
 const iconMap: Record<ServiceIcon, LucideIcon> = {
@@ -38,6 +39,24 @@ export const metadata = pageMetadata({
 export default function ServicesIndex() {
   return (
     <PageShell>
+      <JsonLd
+        data={itemListJsonLd(
+          services.map((s) => ({
+            name: s.title,
+            url: `/services#${s.slug}`,
+          })),
+        )}
+      />
+      {services.map((s) => (
+        <JsonLd
+          key={s.slug}
+          data={serviceJsonLd({
+            name: s.title,
+            description: s.text,
+            url: `/services#${s.slug}`,
+          })}
+        />
+      ))}
       <PageHero
         eyebrow="Услуги"
         title="8 направлений работы с AI для туризма"
@@ -57,7 +76,11 @@ export default function ServicesIndex() {
           {services.map((s) => {
             const Icon = iconMap[s.icon] ?? Sparkles;
             return (
-              <article key={s.slug} className="card flex h-full flex-col">
+              <article
+                key={s.slug}
+                id={s.slug}
+                className="card flex h-full flex-col scroll-mt-28"
+              >
                 <div className="mb-5 grid h-12 w-12 place-items-center rounded-xl bg-blue-ice text-primary">
                   <Icon className="h-6 w-6" />
                 </div>
