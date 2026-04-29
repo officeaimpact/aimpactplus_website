@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { Compass, ShieldCheck, Users } from "lucide-react";
 import { PageShell } from "@/components/PageShell";
 import { PageHero } from "@/components/ui/PageHero";
@@ -25,25 +24,6 @@ export default function About() {
           { name: "Главная", href: "/" },
           { name: "О компании", href: "/about" },
         ]}
-        aside={
-          <div className="relative isolate flex aspect-square w-full max-w-[460px] items-center justify-center overflow-hidden rounded-[2rem] border border-white/10 bg-white/[0.04] p-10 backdrop-blur-md sm:p-14">
-            <div
-              className="pointer-events-none absolute inset-0 -z-10 opacity-90 blur-3xl"
-              style={{
-                background:
-                  "radial-gradient(circle at 30% 20%, rgba(0,231,253,0.32), transparent 60%), radial-gradient(circle at 80% 80%, rgba(0,151,245,0.32), transparent 60%)",
-              }}
-            />
-            <Image
-              src="/brand/logo.png"
-              alt={site.legalName}
-              width={319}
-              height={72}
-              priority
-              className="h-auto w-full max-w-[260px] brightness-0 invert"
-            />
-          </div>
-        }
       />
 
       <SectionWrapper
