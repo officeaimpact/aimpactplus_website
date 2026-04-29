@@ -5,11 +5,14 @@ import { useEffect, useState } from "react";
 import { Menu, X, ArrowRight } from "lucide-react";
 import { navigation, site } from "@/lib/site-data";
 import { Logo } from "@/components/ui/Logo";
+import { LeadFormModal } from "@/components/LeadFormModal";
+import { track } from "@/lib/analytics";
 import { cn } from "@/lib/cn";
 
 export function Header() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -28,6 +31,12 @@ export function Header() {
       document.body.style.overflow = "";
     };
   }, [open]);
+
+  const openModal = (source: string) => {
+    track("lead_cta_click", { source });
+    setModalOpen(true);
+    setOpen(false);
+  };
 
   return (
     <header
@@ -67,13 +76,14 @@ export function Header() {
           >
             Обсудить проект
           </Link>
-          <Link
-            href="/contact?intent=demo"
+          <button
+            type="button"
+            onClick={() => openModal("header")}
             className="inline-flex items-center gap-2 rounded-full bg-primary px-4 py-2 text-sm font-bold text-white shadow-[var(--shadow-blue)] transition hover:-translate-y-0.5 hover:bg-primary-hover"
           >
             Демо
             <ArrowRight className="h-4 w-4" aria-hidden="true" />
-          </Link>
+          </button>
           <button
             type="button"
             className="grid h-10 w-10 place-items-center rounded-xl border border-blue-100 text-primary transition hover:border-primary hover:bg-blue-50 lg:hidden"
@@ -131,18 +141,24 @@ export function Header() {
               >
                 Обсудить проект
               </Link>
-              <Link
-                href="/contact?intent=demo"
+              <button
+                type="button"
+                onClick={() => openModal("mobile-drawer")}
                 className="btn-primary"
-                onClick={() => setOpen(false)}
               >
                 Записаться на демо
                 <ArrowRight className="h-4 w-4" />
-              </Link>
+              </button>
             </div>
           </nav>
         </div>
       </div>
+
+      <LeadFormModal
+        open={modalOpen}
+        onClose={() => setModalOpen(false)}
+        initialIntent="Запросить демо Навылет! AI"
+      />
     </header>
   );
 }

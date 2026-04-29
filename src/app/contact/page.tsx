@@ -1,14 +1,15 @@
-import { Mail, Phone, MapPin, MessageSquare } from "lucide-react";
+import { Mail, Phone, MapPin } from "lucide-react";
 import { PageShell } from "@/components/PageShell";
 import { PageHero } from "@/components/ui/PageHero";
 import { SectionWrapper } from "@/components/ui/SectionWrapper";
+import { ContactPageClient } from "@/components/ContactPageClient";
 import { pageMetadata } from "@/lib/seo";
 import { site } from "@/lib/site-data";
 
 export const metadata = pageMetadata({
   title: "Контакты — обсудить AI-проект для туризма",
   description:
-    "Оставьте заявку или свяжитесь напрямую: телефон, email, адрес офиса в Москве. Подключаем AI в турбизнес безопасно и быстро.",
+    "Оставьте заявку через форму или свяжитесь напрямую: телефон, email, адрес офиса в Москве. Подключаем AI в турбизнес безопасно и быстро.",
   path: "/contact",
 });
 
@@ -18,7 +19,11 @@ export default function Contact() {
       <PageHero
         eyebrow="Контакты"
         title="Расскажите задачу — мы соберём план AI-внедрения"
-        description="Многоступенчатая форма заявки запускается в Iter 3. Сейчас доступны прямые контакты: телефон, email и физический адрес офиса в Москве."
+        description="4-шаговая форма с сегментацией контакта, компании и задачи. Согласие на обработку персональных данных по 152-ФЗ. Отвечаем в течение рабочего дня."
+        primaryCta="К форме заявки"
+        primaryHref="#lead-form"
+        secondaryCta={`Написать ${site.email}`}
+        secondaryHref={`mailto:${site.email}`}
         crumbs={[
           { name: "Главная", href: "/" },
           { name: "Контакты", href: "/contact" },
@@ -28,7 +33,7 @@ export default function Contact() {
       <SectionWrapper
         eyebrow="Прямые каналы"
         title="Свяжитесь удобным способом"
-        description="Если уже понимаете, что хотите обсудить — пишите или звоните напрямую. Мы отвечаем в рабочее время и быстро возвращаемся, если оставите заявку."
+        description="Если уже понимаете, что хотите обсудить — пишите или звоните. А если нужен полный план AI-внедрения, заполните форму ниже."
       >
         <div className="grid gap-5 md:grid-cols-3">
           <a
@@ -88,35 +93,27 @@ export default function Contact() {
             </div>
           </div>
         </div>
+      </SectionWrapper>
 
-        <div className="mt-12 grid gap-5 lg:grid-cols-[2fr_1fr]">
-          <div className="card flex items-start gap-4 bg-deep text-white">
-            <span className="grid h-12 w-12 shrink-0 place-items-center rounded-xl bg-white/10 text-sky">
-              <MessageSquare className="h-6 w-6" />
-            </span>
-            <div>
-              <h2 className="text-2xl font-black">
-                Многоступенчатая форма заявки — в Iter 3
-              </h2>
-              <p className="mt-3 leading-7 text-blue-100">
-                В следующей итерации будет 4-шаговая форма с сегментацией
-                (контакты → компания → задача → подтверждение), маршрутизацией
-                в Web3Forms / Telegram / CRM, согласием на обработку данных по
-                152-ФЗ и UTM-трекингом источников. Архитектура подробно описана
-                в плане.
-              </p>
-            </div>
-          </div>
-          <div className="card">
-            <h3 className="text-lg font-black text-heading">Реквизиты</h3>
-            <p className="mt-3 text-sm leading-7 text-body">
-              {site.legalName}
-              <br />
-              ИНН {site.inn} · ОГРН {site.ogrn}
+      <section id="lead-form" className="section bg-surface-alt">
+        <div className="mx-auto max-w-3xl px-5 sm:px-8">
+          <div className="mb-10 text-center">
+            <p className="text-xs font-bold uppercase tracking-[0.18em] text-primary">
+              Форма заявки
+            </p>
+            <h2 className="mt-3 text-balance text-3xl font-black tracking-tight text-heading sm:text-4xl">
+              4 коротких шага — и мы свяжемся
+            </h2>
+            <p className="mt-4 text-lg leading-8 text-body">
+              Контакты → компания → задача → подтверждение. Можно отвечать
+              тезисно: детали обсудим в диалоге.
             </p>
           </div>
+          <div className="rounded-[2rem] border border-blue-100 bg-white p-6 shadow-[var(--shadow-card)] sm:p-10">
+            <ContactPageClient />
+          </div>
         </div>
-      </SectionWrapper>
+      </section>
     </PageShell>
   );
 }
