@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
 import { ArrowRight, CheckCircle2, Quote } from "lucide-react";
 import { PageShell } from "@/components/PageShell";
 import { PageHero } from "@/components/ui/PageHero";
@@ -7,9 +8,27 @@ import { SectionWrapper } from "@/components/ui/SectionWrapper";
 import { CtaBand } from "@/components/sections/CtaBand";
 import { JsonLd } from "@/components/ui/JsonLd";
 import { Tag } from "@/components/ui/Tag";
+import { BrandMonogram } from "@/components/ui/BrandMonogram";
+import {
+  SegmentVisual,
+  type SegmentKey,
+} from "@/components/visual/SegmentVisual";
 import { pageMetadata } from "@/lib/seo";
 import { site } from "@/lib/site-data";
 import { cases } from "@/lib/site-data";
+
+const SEGMENT_BY_LABEL: Record<string, SegmentKey> = {
+  Туроператор: "tour-operators",
+  "Сеть турагентств": "travel-agencies",
+  "Средство размещения": "hotels",
+  Турагрегатор: "aggregators",
+  Регион: "destinations",
+  Продукт: "cases",
+};
+
+function caseSegmentKey(segment: string): SegmentKey {
+  return SEGMENT_BY_LABEL[segment] ?? "cases";
+}
 
 export function generateStaticParams() {
   return cases.map((c) => ({ slug: c.slug }));
@@ -74,6 +93,7 @@ export default async function CaseDetail({
           { name: "Кейсы", href: "/cases" },
           { name: c.title, href: `/cases/${c.slug}` },
         ]}
+        aside={<SegmentVisual segment={caseSegmentKey(c.segment)} />}
       />
 
       <SectionWrapper>
@@ -81,6 +101,13 @@ export default async function CaseDetail({
           <div className="prose-card">
             <h2>Клиент</h2>
             <p>{c.client}</p>
+
+            {c.description && (
+              <>
+                <h2>Подробнее о компании</h2>
+                <p>{c.description}</p>
+              </>
+            )}
 
             <h2>Задача</h2>
             <p>{c.challenge}</p>
@@ -113,11 +140,26 @@ export default async function CaseDetail({
           </div>
 
           <aside className="space-y-5">
-            <div className="card">
-              <h3 className="text-sm font-bold uppercase tracking-[0.18em] text-primary">
-                Сегмент
-              </h3>
-              <p className="mt-3 text-lg font-black text-heading">{c.segment}</p>
+            <div className="card flex items-center gap-4">
+              {c.logo ? (
+                <Image
+                  src={c.logo}
+                  alt={c.title}
+                  width={64}
+                  height={64}
+                  className="h-16 w-16 rounded-2xl object-contain"
+                />
+              ) : (
+                <BrandMonogram name={c.title} size="lg" variant="soft" />
+              )}
+              <div>
+                <p className="text-xs font-bold uppercase tracking-[0.18em] text-primary">
+                  Сегмент
+                </p>
+                <p className="mt-1 text-lg font-black text-heading">
+                  {c.segment}
+                </p>
+              </div>
             </div>
             <div className="card">
               <h3 className="text-sm font-bold uppercase tracking-[0.18em] text-primary">

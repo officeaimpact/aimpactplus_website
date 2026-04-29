@@ -19,10 +19,10 @@ export function Trust() {
       <div className="mb-12 flex flex-wrap justify-center gap-3">
         {partners.map((p) => (
           <span
-            key={p}
+            key={p.name}
             className="rounded-full border border-blue-100 bg-white px-5 py-3 text-sm font-bold text-heading shadow-[var(--shadow-soft)]"
           >
-            {p}
+            {p.name}
           </span>
         ))}
       </div>

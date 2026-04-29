@@ -5,16 +5,17 @@ import {
   ChartLine,
   GraduationCap,
   Compass,
-  Eye,
+  LayoutPanelLeft,
   Cloud,
+  CheckCircle2,
   type LucideIcon,
 } from "lucide-react";
 import { PageShell } from "@/components/PageShell";
 import { PageHero } from "@/components/ui/PageHero";
 import { SectionWrapper } from "@/components/ui/SectionWrapper";
 import { CtaBand } from "@/components/sections/CtaBand";
-import { CheckCircle2 } from "lucide-react";
 import { JsonLd } from "@/components/ui/JsonLd";
+import { SegmentVisual } from "@/components/visual/SegmentVisual";
 import { itemListJsonLd, pageMetadata, serviceJsonLd } from "@/lib/seo";
 import { services, type ServiceIcon } from "@/lib/site-data";
 
@@ -25,14 +26,14 @@ const iconMap: Record<ServiceIcon, LucideIcon> = {
   ChartLine,
   GraduationCap,
   Compass,
-  Eye,
+  LayoutPanelLeft,
   Cloud,
 };
 
 export const metadata = pageMetadata({
   title: "Услуги — внедрение AI в туризме",
   description:
-    "Услуги ИИМПАКТ ПЛЮС: разработка кастомных AI-решений, интеграция в CRM, чат-боты, голосовые ассистенты, AI-аналитика, обучение и консалтинг.",
+    "Услуги ИИМПАКТ ПЛЮС: разработка кастомных AI-решений и приложений, интеграции в ПО и CRM, чат-боты, голосовые ассистенты, AI-аналитика, обучение и консалтинг.",
   path: "/services",
 });
 
@@ -59,12 +60,13 @@ export default function ServicesIndex() {
       ))}
       <PageHero
         eyebrow="Услуги"
-        title="8 направлений работы с AI для туризма"
-        description="От стратегии и аудита до разработки кастомных решений, интеграций и обучения команды. Подходим как к продуктовым, так и к точечным задачам."
+        title="Направления работы с AI для туризма"
+        description="От стратегии и аудита до разработки индивидуальных AI-приложений, интеграций, голосовых ассистентов и обучения команды. Работаем как с точечными задачами, так и с продуктовыми внедрениями."
         crumbs={[
           { name: "Главная", href: "/" },
           { name: "Услуги", href: "/services" },
         ]}
+        aside={<SegmentVisual segment="contact" />}
       />
 
       <SectionWrapper
@@ -81,10 +83,10 @@ export default function ServicesIndex() {
                 id={s.slug}
                 className="card flex h-full flex-col scroll-mt-28"
               >
-                <div className="mb-5 grid h-12 w-12 place-items-center rounded-xl bg-blue-ice text-primary">
-                  <Icon className="h-6 w-6" />
+                <div className="mb-5 grid h-12 w-12 place-items-center rounded-2xl bg-gradient-to-br from-primary to-accent text-white shadow-[var(--shadow-blue)]">
+                  <Icon className="h-6 w-6" aria-hidden="true" />
                 </div>
-                <h3 className="text-xl font-black text-heading">{s.title}</h3>
+                <h3 className="text-lg font-black text-heading">{s.title}</h3>
                 <p className="mt-3 grow leading-7 text-body">{s.text}</p>
                 <ul className="mt-5 space-y-2 border-t border-blue-100 pt-4">
                   {s.outcomes.map((o) => (

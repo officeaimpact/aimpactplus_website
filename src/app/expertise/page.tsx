@@ -1,8 +1,11 @@
+import Image from "next/image";
 import { Calendar, MapPin, Award, BadgeCheck, Quote } from "lucide-react";
 import { PageShell } from "@/components/PageShell";
 import { PageHero } from "@/components/ui/PageHero";
 import { SectionWrapper } from "@/components/ui/SectionWrapper";
 import { CtaBand } from "@/components/sections/CtaBand";
+import { BrandMonogram } from "@/components/ui/BrandMonogram";
+import { SegmentVisual } from "@/components/visual/SegmentVisual";
 import { pageMetadata } from "@/lib/seo";
 import { events, partners, testimonials } from "@/lib/site-data";
 
@@ -24,21 +27,34 @@ export default function Expertise() {
           { name: "Главная", href: "/" },
           { name: "Экспертиза", href: "/expertise" },
         ]}
+        aside={<SegmentVisual segment="expertise" />}
       />
 
       <SectionWrapper
-        eyebrow="Партнёрские площадки"
-        title="Где мы выступаем"
-        description="ТПП РФ, РСТ, МГИМО, РЭУ им. Г. В. Плеханова, Ассоциация «ТУРПОМОЩЬ», Интурмаркет, Международный конгресс СНГ и зарубежные туристические форумы."
+        eyebrow="Партнёры"
+        title="С кем мы работаем и где выступаем"
+        description="Сотрудничаем с профессиональными ассоциациями, государственными органами и ведущими университетами."
       >
-        <div className="flex flex-wrap justify-center gap-3">
+        <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
           {partners.map((p) => (
-            <span
-              key={p}
-              className="rounded-full border border-blue-100 bg-white px-5 py-3 text-sm font-bold text-heading shadow-[var(--shadow-soft)]"
+            <div
+              key={p.name}
+              className="card flex h-28 items-center justify-center gap-3 p-5"
             >
-              {p}
-            </span>
+              {p.logo ? (
+                <Image
+                  src={p.logo}
+                  alt={p.name}
+                  width={140}
+                  height={56}
+                  className="h-14 w-auto object-contain"
+                />
+              ) : (
+                <span className="text-center text-sm font-black text-heading">
+                  {p.name}
+                </span>
+              )}
+            </div>
           ))}
         </div>
       </SectionWrapper>
@@ -51,21 +67,37 @@ export default function Expertise() {
       >
         <div className="grid gap-5 md:grid-cols-2">
           {events.map((e) => (
-            <article key={e.title} className="card flex h-full flex-col">
-              <div className="flex flex-wrap gap-3 text-xs font-bold uppercase tracking-[0.18em] text-primary">
-                <span className="inline-flex items-center gap-1.5">
-                  <Calendar className="h-3.5 w-3.5" />
-                  {e.date}
-                </span>
-                <span className="inline-flex items-center gap-1.5">
-                  <MapPin className="h-3.5 w-3.5" />
-                  {e.place}
-                </span>
+            <article
+              key={e.title}
+              className="card flex h-full flex-col overflow-hidden p-0"
+            >
+              {e.image && (
+                <div className="relative aspect-[16/9] w-full overflow-hidden">
+                  <Image
+                    src={e.image}
+                    alt={e.title}
+                    fill
+                    sizes="(min-width: 1024px) 50vw, 100vw"
+                    className="object-cover"
+                  />
+                </div>
+              )}
+              <div className="flex flex-1 flex-col p-6 sm:p-7">
+                <div className="flex flex-wrap gap-3 text-xs font-bold uppercase tracking-[0.18em] text-primary">
+                  <span className="inline-flex items-center gap-1.5">
+                    <Calendar className="h-3.5 w-3.5" />
+                    {e.date}
+                  </span>
+                  <span className="inline-flex items-center gap-1.5">
+                    <MapPin className="h-3.5 w-3.5" />
+                    {e.place}
+                  </span>
+                </div>
+                <h3 className="mt-4 text-lg font-black text-heading sm:text-xl">
+                  {e.title}
+                </h3>
+                <p className="mt-3 grow leading-7 text-body">{e.text}</p>
               </div>
-              <h3 className="mt-4 text-lg font-black text-heading sm:text-xl">
-                {e.title}
-              </h3>
-              <p className="mt-3 grow leading-7 text-body">{e.text}</p>
             </article>
           ))}
         </div>
@@ -121,9 +153,27 @@ export default function Expertise() {
             <blockquote key={t.name} className="card">
               <Quote className="mb-3 h-6 w-6 text-primary/40" />
               <p className="text-lg leading-8 text-heading">«{t.text}»</p>
-              <footer className="mt-6">
-                <p className="font-black text-heading">{t.name}</p>
-                <p className="mt-1 text-sm text-muted">{t.role}</p>
+              <footer className="mt-6 flex items-center gap-3">
+                {t.photo ? (
+                  <Image
+                    src={t.photo}
+                    alt={t.name}
+                    width={48}
+                    height={48}
+                    className="h-12 w-12 rounded-full object-cover"
+                  />
+                ) : (
+                  <BrandMonogram
+                    name={t.name}
+                    size="md"
+                    variant="gradient"
+                    className="rounded-full"
+                  />
+                )}
+                <div>
+                  <p className="font-black text-heading">{t.name}</p>
+                  <p className="mt-0.5 text-sm text-muted">{t.role}</p>
+                </div>
               </footer>
             </blockquote>
           ))}

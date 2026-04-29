@@ -3,6 +3,7 @@ import { PageShell } from "@/components/PageShell";
 import { PageHero } from "@/components/ui/PageHero";
 import { SectionWrapper } from "@/components/ui/SectionWrapper";
 import { ContactPageClient } from "@/components/ContactPageClient";
+import { SegmentVisual } from "@/components/visual/SegmentVisual";
 import { pageMetadata } from "@/lib/seo";
 import { site } from "@/lib/site-data";
 
@@ -28,6 +29,7 @@ export default function Contact() {
           { name: "Главная", href: "/" },
           { name: "Контакты", href: "/contact" },
         ]}
+        aside={<SegmentVisual segment="contact" />}
       />
 
       <SectionWrapper

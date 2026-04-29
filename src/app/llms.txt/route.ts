@@ -33,7 +33,7 @@ ${naviletFeatures.map((f) => `- ${f.title}: ${f.text}`).join("\n")}
 ${cases.map((c) => `- ${c.title} (${c.segment}) — ${site.domain}/cases/${c.slug} — ${c.summary}`).join("\n")}
 
 ## Экспертиза и партнёры
-Выступаем на: ${partners.join(", ")}.
+Выступаем на: ${partners.map((p) => p.name).join(", ")}.
 
 ## Как связаться
 ${site.domain}/contact или email ${site.email}.
