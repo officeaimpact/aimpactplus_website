@@ -5,8 +5,10 @@ import { PageHero } from "@/components/ui/PageHero";
 import { SectionWrapper } from "@/components/ui/SectionWrapper";
 import { CtaBand } from "@/components/sections/CtaBand";
 import { JsonLd } from "@/components/ui/JsonLd";
+import { SegmentVisual } from "@/components/visual/SegmentVisual";
 import { itemListJsonLd, pageMetadata } from "@/lib/seo";
 import { solutions } from "@/lib/site-data";
+import { cn } from "@/lib/cn";
 
 export const metadata = pageMetadata({
   title: "Решения — AI для туризма",
@@ -29,26 +31,35 @@ export default function SolutionsIndex() {
       <PageHero
         eyebrow="Решения"
         title="AI-решения под сегмент туристического рынка"
-        description="Выберите отрасль — и увидите конкретные сценарии, интеграции, ожидаемые результаты и пример сценария AI-ассистента для своей задачи."
+        description="Выберите отрасль — и увидите конкретные сценарии, интеграции, ожидаемые результаты и пример решения для своей задачи."
         secondaryCta="Смотреть продукт"
         secondaryHref="/navilet-ai"
         crumbs={[
           { name: "Главная", href: "/" },
           { name: "Решения", href: "/solutions" },
         ]}
+        aside={<SegmentVisual segment="tour-operators" />}
       />
 
       <SectionWrapper
         eyebrow="Каталог"
-        title="4 направления AI-внедрений"
+        title="Направления AI-внедрений в туризме"
         description="Каждое направление — отдельная страница с описанием задачи, состава решения и сценария старта."
       >
-        <div className="grid gap-5 md:grid-cols-2">
-          {solutions.map((solution) => (
+        <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+          {solutions.map((solution, idx) => (
             <Link
               key={solution.slug}
               href={`/solutions/${solution.slug}`}
-              className="card group flex h-full flex-col"
+              className={cn(
+                "card group flex h-full flex-col",
+                idx === solutions.length - 1 &&
+                  solutions.length % 3 === 1 &&
+                  "lg:col-span-3",
+                idx === solutions.length - 1 &&
+                  solutions.length % 3 === 2 &&
+                  "lg:col-span-2",
+              )}
             >
               <p className="text-xs font-bold uppercase tracking-[0.18em] text-primary">
                 {solution.eyebrow}

@@ -6,8 +6,26 @@ import { PageHero } from "@/components/ui/PageHero";
 import { SectionWrapper } from "@/components/ui/SectionWrapper";
 import { CtaBand } from "@/components/sections/CtaBand";
 import { JsonLd } from "@/components/ui/JsonLd";
+import {
+  SegmentVisual,
+  type SegmentKey,
+} from "@/components/visual/SegmentVisual";
 import { pageMetadata, serviceJsonLd } from "@/lib/seo";
 import { solutions } from "@/lib/site-data";
+
+const SEGMENT_KEYS: ReadonlyArray<SegmentKey> = [
+  "travel-agencies",
+  "tour-operators",
+  "aggregators",
+  "hotels",
+  "destinations",
+];
+
+function asSegmentKey(slug: string): SegmentKey {
+  return (SEGMENT_KEYS as readonly string[]).includes(slug)
+    ? (slug as SegmentKey)
+    : "tour-operators";
+}
 
 export function generateStaticParams() {
   return solutions.map((s) => ({ slug: s.slug }));
@@ -62,6 +80,7 @@ export default async function SolutionDetail({
           { name: "Решения", href: "/solutions" },
           { name: solution.title, href: `/solutions/${solution.slug}` },
         ]}
+        aside={<SegmentVisual segment={asSegmentKey(solution.slug)} />}
       />
 
       <SectionWrapper
