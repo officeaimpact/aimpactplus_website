@@ -1,13 +1,14 @@
 import Image from "next/image";
-import { Calendar, MapPin, Award, BadgeCheck, Quote } from "lucide-react";
+import { Award, BadgeCheck, Quote } from "lucide-react";
 import { PageShell } from "@/components/PageShell";
 import { PageHero } from "@/components/ui/PageHero";
 import { SectionWrapper } from "@/components/ui/SectionWrapper";
 import { CtaBand } from "@/components/sections/CtaBand";
 import { BrandMonogram } from "@/components/ui/BrandMonogram";
 import { SegmentVisual } from "@/components/visual/SegmentVisual";
+import { ExpertiseEventsGrid } from "@/components/sections/ExpertiseEventsGrid";
 import { pageMetadata } from "@/lib/seo";
-import { events, partners, testimonials } from "@/lib/site-data";
+import { partners, testimonials } from "@/lib/site-data";
 
 export const metadata = pageMetadata({
   title: "Экспертиза, выступления и публичная репутация",
@@ -62,45 +63,10 @@ export default function Expertise() {
       <SectionWrapper
         eyebrow="Хроника"
         title="Выступления и мероприятия"
-        description="Фокус на туризме, AI и цифровизации отрасли. Полный список мероприятий с момента старта проекта."
+        description="Фокус на туризме, AI и цифровизации отрасли. Нажмите на карточку — откроется модальное окно с полным описанием и тегами."
         alt
       >
-        <div className="grid gap-5 md:grid-cols-2">
-          {events.map((e) => (
-            <article
-              key={e.title}
-              className="card flex h-full flex-col overflow-hidden p-0"
-            >
-              {e.image && (
-                <div className="relative aspect-[16/9] w-full overflow-hidden">
-                  <Image
-                    src={e.image}
-                    alt={e.title}
-                    fill
-                    sizes="(min-width: 1024px) 50vw, 100vw"
-                    className="object-cover"
-                  />
-                </div>
-              )}
-              <div className="flex flex-1 flex-col p-6 sm:p-7">
-                <div className="flex flex-wrap gap-3 text-xs font-bold uppercase tracking-[0.18em] text-primary">
-                  <span className="inline-flex items-center gap-1.5">
-                    <Calendar className="h-3.5 w-3.5" />
-                    {e.date}
-                  </span>
-                  <span className="inline-flex items-center gap-1.5">
-                    <MapPin className="h-3.5 w-3.5" />
-                    {e.place}
-                  </span>
-                </div>
-                <h3 className="mt-4 text-lg font-black text-heading sm:text-xl">
-                  {e.title}
-                </h3>
-                <p className="mt-3 grow leading-7 text-body">{e.text}</p>
-              </div>
-            </article>
-          ))}
-        </div>
+        <ExpertiseEventsGrid />
       </SectionWrapper>
 
       <SectionWrapper
