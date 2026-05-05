@@ -28,13 +28,13 @@ export function NaviletPreview({ id, merge }: SectionAnchorProps = {}) {
       title="Готовый AI-турменеджер для сайта туристической компании"
       description="Не абстрактный AI, а понятный инструмент продаж: диалог, подбор и карточки туров на базе поисковой системы Tourvisor, FAQ и передача заявки менеджеру. Подключено 15+ компаний отрасли."
     >
-      <div className="grid gap-10 lg:grid-cols-[1fr_440px] lg:items-center">
+      <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,440px)] lg:items-center">
         <motion.div
           initial="hidden"
           whileInView="visible"
           viewport={viewportOnce}
           variants={staggerContainer}
-          className="space-y-4"
+          className="min-w-0 space-y-4"
         >
           {naviletFeatures.map((feature) => (
             <motion.div
@@ -43,7 +43,7 @@ export function NaviletPreview({ id, merge }: SectionAnchorProps = {}) {
               className="flex gap-3 rounded-3xl border border-blue-100 bg-white p-5 shadow-[var(--shadow-soft)]"
             >
               <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-primary" />
-              <div>
+              <div className="min-w-0 flex-1">
                 <p className="font-bold text-heading">{feature.title}</p>
                 <p className="mt-1 text-sm leading-6 text-body">
                   {feature.text}
@@ -77,7 +77,7 @@ export function NaviletPreview({ id, merge }: SectionAnchorProps = {}) {
           whileInView="visible"
           viewport={viewportOnce}
           variants={scaleIn}
-          className="mx-auto w-full max-w-[440px]"
+          className="mx-auto w-full min-w-0 max-w-[440px]"
         >
           <div className="relative">
             <div className="absolute -inset-3 rounded-3xl bg-gradient-to-br from-accent/15 to-sky/15 blur-2xl" />

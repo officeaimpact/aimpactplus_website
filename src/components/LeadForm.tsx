@@ -168,10 +168,7 @@ export function LeadForm({
         e.preventDefault();
         submit();
       }}
-      className={cn(
-        "space-y-6",
-        variant === "modal" && "max-h-[80vh] overflow-y-auto pr-1",
-      )}
+      className="space-y-6"
       noValidate
     >
       <fieldset className="space-y-5">

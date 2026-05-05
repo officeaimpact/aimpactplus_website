@@ -9,6 +9,7 @@ import { Logo } from "@/components/ui/Logo";
 import { LeadFormModal } from "@/components/LeadFormModal";
 import { track } from "@/lib/analytics";
 import { cn } from "@/lib/cn";
+import { lockBodyScroll, unlockBodyScroll } from "@/lib/scroll-lock";
 
 export function Header() {
   const [open, setOpen] = useState(false);
@@ -24,13 +25,10 @@ export function Header() {
   }, []);
 
   useEffect(() => {
-    if (open) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "";
-    }
+    if (!open) return;
+    lockBodyScroll();
     return () => {
-      document.body.style.overflow = "";
+      unlockBodyScroll();
     };
   }, [open]);
 

@@ -1,11 +1,24 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { X } from "lucide-react";
 import { LeadForm } from "./LeadForm";
 import { track } from "@/lib/analytics";
+import { lockBodyScroll, unlockBodyScroll } from "@/lib/scroll-lock";
 
+/**
+ * LeadFormModal — рендерится через React Portal в document.body.
+ *
+ * Почему portal обязателен: модал зовётся из Header, FloatingCTA, DashboardHero,
+ * DashboardCTA. У всех этих родителей где-то выше по дереву есть `backdrop-filter`
+ * (или `transform`), а это по CSS-spec **создаёт containing block** для всех
+ * `position: fixed` потомков. Без portal модал якорится не к viewport, а к
+ * родителю с backdrop-blur, получает его размер (например, 80px высоты шапки)
+ * и пользователь видит контент страницы сквозь backdrop. С portal'ом мы
+ * выпрыгиваем из любых ancestor-стилей и гарантированно покрываем весь экран.
+ */
 export function LeadFormModal({
   open,
   onClose,
@@ -16,6 +29,16 @@ export function LeadFormModal({
   initialIntent?: string;
 }) {
   const ref = useRef<HTMLDivElement>(null);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    /*
+     * Канонический SSR-safe portal pattern: на сервере document.body не существует,
+     * поэтому createPortal нельзя вызвать в render. Дожидаемся mount на клиенте.
+     */
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setMounted(true);
+  }, []);
 
   useEffect(() => {
     if (!open) return;
@@ -23,17 +46,19 @@ export function LeadFormModal({
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") onClose();
     };
-    document.body.style.overflow = "hidden";
+    lockBodyScroll();
     document.addEventListener("keydown", onKey);
     const t = setTimeout(() => ref.current?.focus(), 50);
     return () => {
       document.removeEventListener("keydown", onKey);
-      document.body.style.overflow = "";
+      unlockBodyScroll();
       clearTimeout(t);
     };
   }, [open, onClose]);
 
-  return (
+  if (!mounted) return null;
+
+  const modal = (
     <AnimatePresence>
       {open && (
         <div className="fixed inset-0 z-[80]" role="dialog" aria-modal="true">
@@ -91,4 +116,6 @@ export function LeadFormModal({
       )}
     </AnimatePresence>
   );
+
+  return createPortal(modal, document.body);
 }

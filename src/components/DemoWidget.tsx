@@ -268,7 +268,7 @@ export default function DemoWidget({
 
       <div
         ref={scrollContainerRef}
-        className="flex-1 space-y-3 overflow-y-auto overscroll-contain p-4"
+        className="flex-1 min-w-0 space-y-3 overflow-y-auto overscroll-contain p-4"
       >
         {idleState && (
           <div className="flex h-full flex-col items-center justify-center text-center">
@@ -298,12 +298,12 @@ export default function DemoWidget({
               variants={chatMessageVariant}
               initial="hidden"
               animate="visible"
-              className={`flex gap-2 ${msg.role === "user" ? "flex-row-reverse" : "flex-row"}`}
+              className={`flex min-w-0 gap-2 ${msg.role === "user" ? "flex-row-reverse" : "flex-row"}`}
             >
               {msg.role === "user" ? <UserAvatar /> : <BotAvatar />}
 
               <div
-                className={`flex max-w-[80%] flex-col ${msg.role === "user" ? "items-end" : "items-start"}`}
+                className={`flex min-w-0 max-w-[80%] flex-col ${msg.role === "user" ? "items-end" : "items-start"}`}
               >
                 <div
                   className={`rounded-2xl px-3.5 py-2.5 text-[13px] leading-relaxed ${
@@ -320,7 +320,7 @@ export default function DemoWidget({
                     initial={{ opacity: 0, y: 8 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.3, duration: 0.5 }}
-                    className="mt-2 w-full"
+                    className="mt-2 w-full min-w-0 max-w-full"
                   >
                     <div
                       className="demo-cards-scroll flex gap-2.5 overflow-x-auto pb-2"
@@ -373,7 +373,7 @@ export default function DemoWidget({
               type="text"
               readOnly
               placeholder="Введите ваш запрос..."
-              className="flex-1 rounded-xl border border-[#E0E0E0] bg-white px-3.5 py-2.5 text-sm text-[#2C3E50] outline-none placeholder:text-[#95A5A6]"
+              className="flex-1 min-w-0 rounded-xl border border-[#E0E0E0] bg-white px-3.5 py-2.5 text-[16px] text-[#2C3E50] outline-none placeholder:text-[#95A5A6] sm:text-sm"
             />
             <button
               type="button"

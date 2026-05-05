@@ -51,11 +51,12 @@ export function PageHero({
         <div
           className={cn(
             "grid items-center gap-10",
-            hasAside && "lg:grid-cols-[1.1fr_0.9fr] lg:gap-12",
+            hasAside && "lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)] lg:gap-12",
           )}
         >
           <div
             className={cn(
+              "min-w-0",
               !hasAside && "mx-auto flex max-w-3xl flex-col items-center text-center",
             )}
           >
@@ -116,7 +117,7 @@ export function PageHero({
               )}
             </div>
           </div>
-          {aside && <div className="relative">{aside}</div>}
+          {aside && <div className="relative min-w-0">{aside}</div>}
         </div>
       </div>
     </section>
