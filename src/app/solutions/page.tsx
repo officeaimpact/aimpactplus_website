@@ -13,7 +13,7 @@ import { cn } from "@/lib/cn";
 export const metadata = pageMetadata({
   title: "Решения — AI для туризма",
   description:
-    "Каталог AI-решений ИИМПАКТ ПЛЮС для турагентств, туроператоров, отелей и регионов: ассистенты, виджеты, CRM-интеграции, аналитика и голос.",
+    "Каталог AI-решений ИИМПАКТ ПЛЮС для турагентств, туроператоров, турагрегаторов и средств размещения: ассистенты, виджеты, CRM-интеграции, аналитика и голос.",
   path: "/solutions",
 });
 
@@ -64,7 +64,7 @@ export default function SolutionsIndex() {
               <p className="text-xs font-bold uppercase tracking-[0.18em] text-primary">
                 {solution.eyebrow}
               </p>
-              <h2 className="mt-3 text-2xl font-black text-heading">
+              <h2 className="mt-3 text-2xl font-bold text-heading">
                 {solution.title}
               </h2>
               <p className="mt-3 leading-7 text-body">{solution.summary}</p>

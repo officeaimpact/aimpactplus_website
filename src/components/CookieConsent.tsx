@@ -43,7 +43,7 @@ export function CookieConsent() {
           aria-label="Cookie-согласие"
         >
           <div className="rounded-3xl border border-blue-100 bg-white p-5 shadow-[var(--shadow-card-hover)]">
-            <p className="text-sm font-black text-heading">
+            <p className="text-sm font-bold text-heading">
               Сайт использует cookies
             </p>
             <p className="mt-2 text-xs leading-5 text-body">

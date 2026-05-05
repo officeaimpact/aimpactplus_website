@@ -60,7 +60,7 @@ export default function Offer() {
 
           <h2>5. Контакты Исполнителя</h2>
           <p>
-            {site.address}, email{" "}
+            {site.addressLegal}, email{" "}
             <a href={`mailto:${site.email}`}>{site.email}</a>, телефон{" "}
             <a href={site.phoneHref}>{site.phone}</a>.
           </p>

@@ -8,7 +8,7 @@ export function Footer() {
     <footer className="bg-deep text-white">
       <div className="mx-auto grid max-w-7xl gap-12 px-5 py-16 sm:px-8 lg:grid-cols-[1.1fr_2fr]">
         <div className="space-y-6">
-          <Logo inverted />
+          <Logo />
           <p className="max-w-md text-sm leading-7 text-blue-100">
             {site.description}
           </p>
@@ -32,8 +32,9 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="grid gap-10 sm:grid-cols-3">
+        <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
           <FooterColumn title="Продукт" links={footerLinks.product} />
+          <FooterColumn title="Знания" links={footerLinks.knowledge} />
           <FooterColumn title="Компания" links={footerLinks.company} />
           <FooterColumn title="Правовое" links={footerLinks.legal} />
         </div>
@@ -45,10 +46,13 @@ export function Footer() {
             © {new Date().getFullYear()} {site.legalName}. ИНН {site.inn}. ОГРН{" "}
             {site.ogrn}.
           </span>
-          <span className="flex items-center gap-1.5">
-            Сайт обновлён под бренд {site.brand}
-            <ArrowUpRight className="h-3.5 w-3.5" />
-          </span>
+          <Link
+            href="/contact"
+            className="inline-flex items-center gap-1.5 transition hover:text-white"
+          >
+            Обсудить AI-проект
+            <ArrowUpRight className="h-3.5 w-3.5" aria-hidden="true" />
+          </Link>
         </div>
       </div>
     </footer>
@@ -68,16 +72,34 @@ function FooterColumn({
         {title}
       </p>
       <ul className="space-y-3 text-sm text-blue-100">
-        {links.map((link) => (
-          <li key={link.href}>
-            <Link
-              href={link.href}
-              className="inline-flex items-center gap-1.5 transition hover:text-white"
-            >
-              {link.label}
-            </Link>
-          </li>
-        ))}
+        {links.map((link) => {
+          const isExternal = /^https?:\/\//i.test(link.href);
+          if (isExternal) {
+            return (
+              <li key={link.href}>
+                <a
+                  href={link.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 transition hover:text-white"
+                >
+                  {link.label}
+                  <ArrowUpRight className="h-3.5 w-3.5" aria-hidden="true" />
+                </a>
+              </li>
+            );
+          }
+          return (
+            <li key={link.href}>
+              <Link
+                href={link.href}
+                className="inline-flex items-center gap-1.5 transition hover:text-white"
+              >
+                {link.label}
+              </Link>
+            </li>
+          );
+        })}
       </ul>
     </div>
   );

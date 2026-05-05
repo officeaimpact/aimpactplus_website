@@ -35,7 +35,7 @@ export default function Privacy() {
             определяет порядок обработки и защиты персональных данных
             пользователей сайта {site.domainDisplay}, оператором которых
             является {site.legalName}, ИНН {site.inn}, ОГРН {site.ogrn}, адрес:{" "}
-            {site.address}.
+            {site.addressLegal}.
           </p>
 
           <h2>2. Сбор данных</h2>

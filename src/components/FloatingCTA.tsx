@@ -28,7 +28,7 @@ export function FloatingCTA() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 20 }}
             transition={{ duration: 0.28 }}
-            className="fixed bottom-4 left-1/2 z-40 w-[min(560px,calc(100vw-1.5rem))] -translate-x-1/2"
+            className="fixed bottom-4 left-1/2 z-40 hidden w-[min(560px,calc(100vw-1.5rem))] -translate-x-1/2 sm:block"
           >
             <div className="flex items-center justify-between gap-3 rounded-full border border-white/10 bg-deep/95 px-4 py-2.5 text-white shadow-[0_24px_60px_rgba(0,82,204,0.32)] backdrop-blur-md sm:px-5 sm:py-3">
               <span className="flex items-center gap-2 text-xs font-bold sm:text-sm">

@@ -87,7 +87,10 @@ src/
     rate-limit.ts              # in-memory bucket по IP (10 req/min)
     analytics.ts               # track() + getTrackingMeta()
 public/
-  brand/logo.png               # AIMPACT+ logo (PNG)
+  brand/logo.svg               # Исходник AIMPACT+ от бренда (1:1, для ревизий и SVG-контекстов)
+  brand/logo.png, logo-2x.png  # Растеризованные из logo.svg варианты (Header/Footer через next/image → AVIF/WebP)
+  brand/logo-prev.svg          # Предыдущая версия SVG (бэкап, можно удалить после проверки)
+  brand/logo-original.svg      # Самый ранний файл от пользователя — архив
 ```
 
 ## Информационная архитектура
@@ -100,7 +103,7 @@ public/
 - `/cases` + 4 case-studies.
 - `/services` — 8 услуг (custom-ai, crm-integration, bots-voice, analytics,
   training, consulting, computer-vision, cloud-ai) с anchor-ссылками и Service JSON-LD.
-- `/expertise` — 12+ публичных выступлений, награды, цитаты.
+- `/expertise` — публичные выступления, награды, цитаты.
 - `/about` — миссия, команда, юридические реквизиты.
 - `/contact` — прямые каналы + многошаговая LeadForm.
 - `/privacy`, `/terms`, `/offer` — юридические страницы.
@@ -109,7 +112,7 @@ public/
 ## Бренд и реквизиты
 
 - ООО «ИИМПАКТ ПЛЮС», ИНН 9705243471, ОГРН 1257700255196.
-- Адрес: 115054, Москва, 5-й Монетчиковский пер., д. 16, пом. 2П.
+- Адрес: 121069, г. Москва, Трубниковский переулок, д. 24, стр. 1, пом. 14.
 - ОКВЭД 62.01 (разработка ПО).
 - Учредители: Силагадзе Лукиан Ираклиевич (67%), Погосов Филипп Сергеевич (33%).
 - Зарегистрировано 06.06.2025.
@@ -130,10 +133,12 @@ public/
 См. `LAUNCH_CHECKLIST.md` для запуска. Каналы маршрутизации настраиваются через
 `.env` (см. `.env.example`):
 
-- `WEB3FORMS_ACCESS_KEY` — основной email-relay
+- `WEB3FORMS_ACCESS_KEY` — основной email-relay; ключ генерируется в кабинете
+  https://web3forms.com и **привязан к адресу-получателю**, поэтому регистрировать
+  его нужно под `lids@aimpact.ru` (на этот ящик и будут падать заявки)
 - `TELEGRAM_BOT_TOKEN` + `TELEGRAM_CHAT_ID` — мгновенный пуш
 - `CRM_WEBHOOK_URL` — опциональный webhook (AmoCRM / Bitrix24 / любой POST endpoint)
-- `LEADS_FALLBACK_EMAIL=office@aimpact.ru`
+- `LEADS_FALLBACK_EMAIL=lids@aimpact.ru` — куда уходит письмо в preview-режиме и какой адрес используется как Reply-To, если клиент не оставил email
 
 Защита: zod-валидация, honeypot-поле `website`, rate-limit 10 req/мин на IP,
 UTM/sourcePath/referrer метаданные, согласие 152-ФЗ, server-side логирование.

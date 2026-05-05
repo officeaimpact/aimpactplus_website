@@ -14,19 +14,22 @@ export function CtaBand({
   href?: string;
 }) {
   return (
-    <section className="px-5 py-20 sm:px-8">
-      <div className="hero-shell mx-auto max-w-7xl rounded-[2.4rem] p-8 text-white sm:p-14">
-        <div className="grid gap-8 lg:grid-cols-[1fr_auto] lg:items-center">
+    <section className="px-4 py-14 sm:px-5 sm:py-20 lg:px-8">
+      <div className="hero-shell mx-auto max-w-7xl rounded-[1.75rem] p-6 text-white sm:rounded-[2.4rem] sm:p-10 lg:p-14">
+        <div className="grid gap-6 lg:grid-cols-[1fr_auto] lg:items-center lg:gap-10">
           <div>
             <Badge variant="dark">Следующий шаг</Badge>
-            <h2 className="mt-5 max-w-3xl text-balance text-3xl font-black tracking-tight sm:text-5xl">
+            <h2 className="mt-5 max-w-3xl text-balance text-2xl font-bold leading-[1.15] sm:text-4xl lg:text-5xl">
               {title}
             </h2>
-            <p className="mt-5 max-w-2xl text-lg leading-8 text-blue-100">
+            <p className="mt-4 max-w-2xl text-base leading-7 text-blue-100 sm:text-lg sm:leading-8">
               {text}
             </p>
           </div>
-          <Link href={href} className="btn-primary self-start">
+          <Link
+            href={href}
+            className="btn-primary w-full justify-center self-start sm:w-auto"
+          >
             {cta}
             <ArrowRight className="h-5 w-5" aria-hidden="true" />
           </Link>

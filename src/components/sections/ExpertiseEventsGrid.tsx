@@ -82,7 +82,7 @@ export function ExpertiseEventsGrid() {
                 <MapPin className="h-3 w-3 shrink-0" />
                 {event.place}
               </p>
-              <h3 className="mt-3 line-clamp-2 text-[15px] font-black leading-snug text-heading sm:text-base">
+              <h3 className="mt-3 line-clamp-2 text-[15px] font-bold leading-snug text-heading sm:text-base">
                 {event.title}
               </h3>
               <p className="mt-3 line-clamp-3 grow text-sm leading-6 text-body">

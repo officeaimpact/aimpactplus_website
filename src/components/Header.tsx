@@ -52,11 +52,11 @@ export function Header() {
           : "bg-white/70 backdrop-blur-md",
       )}
     >
-      <div className="mx-auto flex h-20 max-w-7xl items-center justify-between gap-4 px-5 sm:px-8">
+      <div className="mx-auto flex h-20 max-w-7xl items-center gap-4 px-5 sm:px-8 lg:h-[88px] lg:gap-6">
         <Logo />
 
         <nav
-          className="hidden items-center gap-1 lg:flex"
+          className="hidden flex-1 items-center justify-center gap-0.5 lg:flex xl:gap-1"
           aria-label="Основная навигация"
         >
           {navigation.map((item) => {
@@ -67,7 +67,7 @@ export function Header() {
                 href={item.href}
                 aria-current={active ? "page" : undefined}
                 className={cn(
-                  "relative flex h-10 items-center rounded-full px-3.5 text-sm font-semibold transition",
+                  "relative flex h-10 items-center whitespace-nowrap rounded-full px-2.5 text-[13px] font-semibold transition xl:px-3.5 xl:text-sm",
                   active
                     ? "text-primary"
                     : "text-body hover:bg-blue-50 hover:text-primary",
@@ -85,25 +85,25 @@ export function Header() {
           })}
         </nav>
 
-        <div className="flex items-center gap-2">
+        <div className="ml-auto flex items-center gap-2 lg:ml-0">
           <Link
             href={site.phoneHref}
             aria-label={`Позвонить ${site.phone}`}
-            className="hidden h-10 items-center gap-1.5 rounded-full px-3.5 text-sm font-semibold text-body transition hover:bg-blue-50 hover:text-primary md:inline-flex"
+            className="hidden h-10 items-center gap-1.5 whitespace-nowrap rounded-full px-3 text-[13px] font-semibold text-body transition hover:bg-blue-50 hover:text-primary md:inline-flex xl:px-3.5 xl:text-sm"
           >
             <Phone className="h-4 w-4" aria-hidden="true" />
             <span className="hidden xl:inline">{site.phone}</span>
           </Link>
           <Link
             href="/contact"
-            className="hidden h-10 items-center rounded-full border border-blue-200 px-4 text-sm font-semibold text-primary transition hover:border-primary hover:bg-blue-50 sm:inline-flex"
+            className="hidden h-10 items-center whitespace-nowrap rounded-full border border-blue-200 px-3.5 text-[13px] font-semibold text-primary transition hover:border-primary hover:bg-blue-50 sm:inline-flex xl:px-4 xl:text-sm"
           >
             Обсудить проект
           </Link>
           <button
             type="button"
             onClick={() => openModal("header")}
-            className="inline-flex h-10 items-center gap-1.5 rounded-full bg-primary px-4 text-sm font-bold text-white shadow-[var(--shadow-blue)] transition hover:-translate-y-0.5 hover:bg-primary-hover"
+            className="inline-flex h-10 items-center gap-1.5 whitespace-nowrap rounded-full bg-primary px-3.5 text-[13px] font-bold text-white shadow-[var(--shadow-blue)] transition hover:-translate-y-0.5 hover:bg-primary-hover xl:px-4 xl:text-sm"
           >
             Демо
             <ArrowRight className="h-4 w-4" aria-hidden="true" />

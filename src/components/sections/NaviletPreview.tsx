@@ -2,21 +2,33 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { ArrowRight, CheckCircle2 } from "lucide-react";
-import { fadeInUp, scaleIn, staggerContainer, viewportOnce } from "@/lib/animations";
-import { naviletFeatures } from "@/lib/site-data";
+import { ArrowRight, CheckCircle2, ExternalLink } from "lucide-react";
+import {
+  fadeInUp,
+  scaleIn,
+  staggerContainer,
+  viewportOnce,
+} from "@/lib/animations";
+import { naviletFeatures, site } from "@/lib/site-data";
 import { SectionWrapper } from "@/components/ui/SectionWrapper";
 import DemoWidget from "@/components/DemoWidget";
 import { demoScenarios } from "@/lib/scenarios";
 
-export function NaviletPreview() {
+type SectionAnchorProps = {
+  id?: string;
+  merge?: "top" | "bottom" | "both";
+};
+
+export function NaviletPreview({ id, merge }: SectionAnchorProps = {}) {
   return (
     <SectionWrapper
+      id={id}
+      merge={merge}
       eyebrow="Навылет! AI"
       title="Готовый AI-турменеджер для сайта туристической компании"
-      description="Не абстрактный AI, а понятный интерфейс продаж: диалог, подбор, карточки туров, FAQ и передача заявки менеджеру."
+      description="Не абстрактный AI, а понятный инструмент продаж: диалог, подбор и карточки туров на базе поисковой системы Tourvisor, FAQ и передача заявки менеджеру. Подключено 15+ компаний отрасли."
     >
-      <div className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
+      <div className="grid gap-10 lg:grid-cols-[1fr_440px] lg:items-center">
         <motion.div
           initial="hidden"
           whileInView="visible"
@@ -39,11 +51,24 @@ export function NaviletPreview() {
               </div>
             </motion.div>
           ))}
-          <motion.div variants={fadeInUp}>
-            <Link href="/navilet-ai" className="btn-primary mt-2">
+          <motion.div
+            variants={fadeInUp}
+            className="mt-2 flex flex-col gap-3 sm:flex-row"
+          >
+            <Link href="/navilet-ai" className="btn-primary flex-1 justify-center sm:flex-initial">
               Открыть страницу продукта
               <ArrowRight className="h-5 w-5" aria-hidden="true" />
             </Link>
+            <a
+              href={site.naviletWebsite}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-outline flex-1 justify-center sm:flex-initial"
+              aria-label={`Перейти на сайт продукта ${site.naviletWebsiteDisplay} (откроется в новой вкладке)`}
+            >
+              Перейти на {site.naviletWebsiteDisplay}
+              <ExternalLink className="h-4 w-4" aria-hidden="true" />
+            </a>
           </motion.div>
         </motion.div>
 
@@ -52,10 +77,18 @@ export function NaviletPreview() {
           whileInView="visible"
           viewport={viewportOnce}
           variants={scaleIn}
-          className="relative"
+          className="mx-auto w-full max-w-[440px]"
         >
-          <div className="absolute -inset-3 rounded-3xl bg-gradient-to-br from-accent/15 to-sky/15 blur-2xl" />
-          <DemoWidget scenario={demoScenarios[0]} className="relative" />
+          <div className="relative">
+            <div className="absolute -inset-3 rounded-3xl bg-gradient-to-br from-accent/15 to-sky/15 blur-2xl" />
+            <DemoWidget scenario={demoScenarios[0]} className="relative" />
+          </div>
+          <p className="mt-4 text-center text-[11px] leading-5 text-muted">
+            Подбор и карточки туров — на базе{" "}
+            <span className="font-semibold text-heading">
+              поисковой системы Tourvisor
+            </span>
+          </p>
         </motion.div>
       </div>
     </SectionWrapper>

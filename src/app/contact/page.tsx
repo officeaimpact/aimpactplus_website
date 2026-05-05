@@ -20,7 +20,7 @@ export default function Contact() {
       <PageHero
         eyebrow="Контакты"
         title="Расскажите задачу — мы соберём план AI-внедрения"
-        description="4-шаговая форма с сегментацией контакта, компании и задачи. Согласие на обработку персональных данных по 152-ФЗ. Отвечаем в течение рабочего дня."
+        description="Короткая форма на одной странице. Заполняется за минуту. Отвечаем в течение рабочего дня. Согласие на обработку персональных данных по 152-ФЗ."
         primaryCta="К форме заявки"
         primaryHref="#lead-form"
         secondaryCta={`Написать ${site.email}`}
@@ -49,7 +49,7 @@ export default function Contact() {
               <p className="text-xs font-bold uppercase tracking-[0.18em] text-primary">
                 Телефон
               </p>
-              <p className="mt-1.5 text-lg font-black text-heading">
+              <p className="mt-1.5 text-lg font-bold text-heading">
                 {site.phone}
               </p>
               <p className="mt-2 text-sm text-muted">
@@ -69,7 +69,7 @@ export default function Contact() {
               <p className="text-xs font-bold uppercase tracking-[0.18em] text-primary">
                 Email
               </p>
-              <p className="mt-1.5 break-all text-lg font-black text-heading">
+              <p className="mt-1.5 break-all text-lg font-bold text-heading">
                 {site.email}
               </p>
               <p className="mt-2 text-sm text-muted">
@@ -86,8 +86,8 @@ export default function Contact() {
               <p className="text-xs font-bold uppercase tracking-[0.18em] text-primary">
                 Офис
               </p>
-              <p className="mt-1.5 text-lg font-black text-heading">
-                Москва, Замоскворечье
+              <p className="mt-1.5 text-lg font-bold text-heading">
+                Москва
               </p>
               <p className="mt-2 text-sm leading-6 text-muted">
                 {site.addressShort}
@@ -103,12 +103,12 @@ export default function Contact() {
             <p className="text-xs font-bold uppercase tracking-[0.18em] text-primary">
               Форма заявки
             </p>
-            <h2 className="mt-3 text-balance text-3xl font-black tracking-tight text-heading sm:text-4xl">
-              4 коротких шага — и мы свяжемся
+            <h2 className="mt-3 text-balance text-3xl font-bold text-heading sm:text-4xl">
+              Всё в одном экране — заполняется за минуту
             </h2>
             <p className="mt-4 text-lg leading-8 text-body">
-              Контакты → компания → задача → подтверждение. Можно отвечать
-              тезисно: детали обсудим в диалоге.
+              Имя, контакт, цель и направление — этого достаточно, чтобы мы
+              связались и предметно обсудили задачу.
             </p>
           </div>
           <div className="rounded-[2rem] border border-blue-100 bg-white p-6 shadow-[var(--shadow-card)] sm:p-10">

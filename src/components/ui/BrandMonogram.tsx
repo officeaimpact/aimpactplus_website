@@ -46,7 +46,7 @@ export function BrandMonogram({
       aria-label={name}
       title={name}
       className={cn(
-        "inline-flex shrink-0 items-center justify-center rounded-2xl font-black tracking-[0.04em]",
+        "inline-flex shrink-0 items-center justify-center rounded-2xl font-bold tracking-[0.04em]",
         sizeClass,
         variantClass,
         className,

@@ -1,9 +1,10 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import type { ReactNode } from "react";
-import { Badge } from "./Badge";
 import type { Crumb } from "./Breadcrumbs";
+import { JsonLd } from "./JsonLd";
 import { cn } from "@/lib/cn";
+import { breadcrumbJsonLd } from "@/lib/seo";
 
 export function PageHero({
   eyebrow,
@@ -16,7 +17,7 @@ export function PageHero({
   crumbs,
   aside,
 }: {
-  eyebrow: string;
+  eyebrow?: string;
   title: ReactNode;
   description: ReactNode;
   primaryCta?: string;
@@ -27,20 +28,30 @@ export function PageHero({
   aside?: ReactNode;
 }) {
   const hasAside = Boolean(aside);
+  // eyebrow намеренно не отображается — оставлен в API для обратной совместимости
+  void eyebrow;
+  const isExternal = (href?: string) =>
+    Boolean(href && /^https?:\/\//i.test(href));
+  const primaryExternal = isExternal(primaryHref);
+  const secondaryExternal = isExternal(secondaryHref);
+
   return (
     <section className="hero-shell text-white">
-      <div className="mx-auto max-w-7xl px-5 py-20 sm:px-8 lg:py-28">
+      {crumbs && crumbs.length > 1 && (
+        <JsonLd data={breadcrumbJsonLd(crumbs)} />
+      )}
+      <div className="mx-auto max-w-7xl px-5 py-16 sm:px-8 sm:py-20 lg:py-28">
         {crumbs && (
           <div
-            className={cn("mb-8", !hasAside && "mx-auto max-w-3xl text-center")}
+            className={cn("mb-6 sm:mb-8", !hasAside && "mx-auto max-w-3xl text-center")}
           >
             <CrumbsDark items={crumbs} centered={!hasAside} />
           </div>
         )}
         <div
           className={cn(
-            "grid items-center gap-12",
-            hasAside && "lg:grid-cols-[1.1fr_0.9fr]",
+            "grid items-center gap-10",
+            hasAside && "lg:grid-cols-[1.1fr_0.9fr] lg:gap-12",
           )}
         >
           <div
@@ -48,13 +59,12 @@ export function PageHero({
               !hasAside && "mx-auto flex max-w-3xl flex-col items-center text-center",
             )}
           >
-            <Badge variant="dark">{eyebrow}</Badge>
-            <h1 className="mt-7 text-balance text-4xl font-black leading-[1.05] tracking-tight sm:text-5xl lg:text-6xl">
+            <h1 className="text-balance text-[2rem] font-bold leading-[1.12] sm:text-5xl lg:text-6xl">
               {title}
             </h1>
             <p
               className={cn(
-                "mt-5 text-pretty text-lg leading-8 text-blue-100",
+                "mt-5 text-pretty text-base leading-7 text-blue-100 sm:text-lg sm:leading-8",
                 hasAside ? "max-w-2xl" : "max-w-2xl",
               )}
             >
@@ -62,18 +72,47 @@ export function PageHero({
             </p>
             <div
               className={cn(
-                "mt-8 flex flex-col gap-3 sm:flex-row",
-                !hasAside && "justify-center",
+                "mt-8 flex w-full flex-col gap-3 sm:w-auto sm:flex-row sm:flex-wrap",
+                !hasAside && "sm:justify-center",
               )}
             >
-              <Link href={primaryHref} className="btn-primary">
-                {primaryCta}
-                <ArrowRight className="h-5 w-5" aria-hidden="true" />
-              </Link>
-              {secondaryCta && secondaryHref && (
-                <Link href={secondaryHref} className="btn-secondary-dark">
-                  {secondaryCta}
+              {primaryExternal ? (
+                <a
+                  href={primaryHref}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn-primary w-full justify-center sm:w-auto"
+                >
+                  {primaryCta}
+                  <ArrowRight className="h-5 w-5" aria-hidden="true" />
+                </a>
+              ) : (
+                <Link
+                  href={primaryHref}
+                  className="btn-primary w-full justify-center sm:w-auto"
+                >
+                  {primaryCta}
+                  <ArrowRight className="h-5 w-5" aria-hidden="true" />
                 </Link>
+              )}
+              {secondaryCta && secondaryHref && (
+                secondaryExternal ? (
+                  <a
+                    href={secondaryHref}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="btn-secondary-dark w-full justify-center sm:w-auto"
+                  >
+                    {secondaryCta}
+                  </a>
+                ) : (
+                  <Link
+                    href={secondaryHref}
+                    className="btn-secondary-dark w-full justify-center sm:w-auto"
+                  >
+                    {secondaryCta}
+                  </Link>
+                )
               )}
             </div>
           </div>

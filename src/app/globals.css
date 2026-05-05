@@ -58,6 +58,11 @@
 html {
   scroll-behavior: smooth;
   scroll-padding-top: 96px;
+  /* `overflow-x: clip` отрезает любой случайный horizontal-overflow
+   * (декоративные blob'ы, абсолютно позиционированные элементы, очень длинный
+   * inline-контент), не создавая отдельный scroll-container и не ломая
+   * sticky-позиционирование. Фикс симптома «съезжает на мобиле». */
+  overflow-x: clip;
 }
 
 body {
@@ -68,6 +73,9 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
+  /* Дублируем на body для Safari < 16: clip на html не везде каскадирует
+   * корректно, особенно в Safari iOS. */
+  overflow-x: clip;
 }
 
 ::selection {
@@ -88,150 +96,184 @@ button:disabled {
 h1,
 h2,
 h3,
-h4 {
+h4,
+h5,
+h6 {
   font-family: var(--font-display);
-  letter-spacing: -0.015em;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.font-display {
+  font-family: var(--font-display);
+}
+
+.font-body {
+  font-family: var(--font-sans);
 }
 
 /* === Section spacing === */
 .section {
   padding-block: clamp(4.5rem, 8vw, 7rem);
+  /* Совпадает с scroll-padding-top на html — высота sticky-шапки + дыхание.
+   * Если когда-то вернём якорную панель сверху, поднимем до 120-128px. */
+  scroll-margin-top: 96px;
 }
 
-/* === Hero shell with gradient + blobs === */
-.hero-shell {
-  position: relative;
-  isolation: isolate;
-  overflow: hidden;
+/* Модификаторы для лёгкого слияния парных секций — уменьшают отступы там,
+ * где блоки логически продолжают друг друга (problem→solutions, expertise→trust). */
+.section--merge-top {
+  padding-top: clamp(1.25rem, 2vw, 2rem);
 }
 
-.hero-shell::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: -2;
-  background:
-    radial-gradient(circle at 78% 18%, rgba(0, 231, 253, 0.26), transparent 28rem),
-    radial-gradient(circle at 10% 82%, rgba(0, 151, 245, 0.42), transparent 30rem),
-    linear-gradient(135deg, #001229 0%, #002152 50%, #06133d 100%);
+.section--merge-bottom {
+  padding-bottom: clamp(1.25rem, 2vw, 2rem);
 }
 
-.hero-shell::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  opacity: 0.18;
-  background-image:
-    linear-gradient(rgba(255, 255, 255, 0.18) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.18) 1px, transparent 1px);
-  background-size: 72px 72px;
-  mask-image: linear-gradient(to bottom, black, transparent 88%);
-}
+/* === Component layer ===
+ * Все компонент-классы, которые задают «дефолтный вид» (background, border,
+ * padding, color), помещены в @layer components. Это критично для Tailwind v4:
+ * cascade layer order — `theme, base, components, utilities`. Утилиты вроде
+ * `bg-deep`, `text-white`, `bg-gradient-to-br ...` находятся в @layer utilities
+ * и **корректно переопределяют** этот дефолт. Раньше `.card { background:#fff }`
+ * жил вне @layer и побеждал utilities → `<div class="card bg-deep">` оставался
+ * белым с уже-светлым текстом → нечитаемый бокс. */
+@layer components {
+  /* === Hero shell with gradient + blobs === */
+  .hero-shell {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+  }
 
-/* === Buttons === */
-.btn-primary,
-.btn-secondary,
-.btn-secondary-dark,
-.btn-outline {
-  display: inline-flex;
-  min-height: 3rem;
-  align-items: center;
-  justify-content: center;
-  gap: 0.6rem;
-  border-radius: var(--radius-pill);
-  padding: 0.85rem 1.5rem;
-  font-weight: 800;
-  font-size: 0.95rem;
-  letter-spacing: -0.01em;
-  transition:
-    transform 180ms ease,
-    background-color 180ms ease,
-    border-color 180ms ease,
-    color 180ms ease,
-    box-shadow 180ms ease;
-  white-space: nowrap;
-}
+  .hero-shell::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -2;
+    background:
+      radial-gradient(circle at 78% 18%, rgba(0, 231, 253, 0.26), transparent 28rem),
+      radial-gradient(circle at 10% 82%, rgba(0, 151, 245, 0.42), transparent 30rem),
+      linear-gradient(135deg, #001229 0%, #002152 50%, #06133d 100%);
+  }
 
-.btn-primary {
-  background: linear-gradient(135deg, #0052cc 0%, #0062ef 55%, #0097f5 100%);
-  color: #ffffff;
-  box-shadow: var(--shadow-blue);
-}
+  .hero-shell::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    opacity: 0.18;
+    background-image:
+      linear-gradient(rgba(255, 255, 255, 0.18) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.18) 1px, transparent 1px);
+    background-size: 72px 72px;
+    mask-image: linear-gradient(to bottom, black, transparent 88%);
+  }
 
-.btn-primary:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 22px 70px rgba(0, 82, 204, 0.32);
-}
+  /* === Buttons === */
+  .btn-primary,
+  .btn-secondary,
+  .btn-secondary-dark,
+  .btn-outline {
+    display: inline-flex;
+    min-height: 3rem;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    border-radius: var(--radius-pill);
+    padding: 0.85rem 1.5rem;
+    font-weight: 800;
+    font-size: 0.95rem;
+    letter-spacing: -0.01em;
+    transition:
+      transform 180ms ease,
+      background-color 180ms ease,
+      border-color 180ms ease,
+      color 180ms ease,
+      box-shadow 180ms ease;
+    white-space: nowrap;
+  }
 
-.btn-secondary {
-  border: 1px solid rgba(0, 82, 204, 0.2);
-  background: #ffffff;
-  color: var(--color-primary);
-}
+  .btn-primary {
+    background: linear-gradient(135deg, #0052cc 0%, #0062ef 55%, #0097f5 100%);
+    color: #ffffff;
+    box-shadow: var(--shadow-blue);
+  }
 
-.btn-secondary:hover {
-  border-color: var(--color-primary);
-  background: var(--color-blue-50);
-}
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 22px 70px rgba(0, 82, 204, 0.32);
+  }
 
-.btn-secondary-dark {
-  border: 1px solid rgba(255, 255, 255, 0.24);
-  background: rgba(255, 255, 255, 0.08);
-  color: #ffffff;
-  backdrop-filter: blur(8px);
-}
+  .btn-secondary {
+    border: 1px solid rgba(0, 82, 204, 0.2);
+    background: #ffffff;
+    color: var(--color-primary);
+  }
 
-.btn-secondary-dark:hover {
-  background: rgba(255, 255, 255, 0.16);
-  border-color: rgba(255, 255, 255, 0.4);
-}
+  .btn-secondary:hover {
+    border-color: var(--color-primary);
+    background: var(--color-blue-50);
+  }
 
-.btn-outline {
-  border: 1px solid rgba(0, 82, 204, 0.18);
-  background: transparent;
-  color: var(--color-heading);
-}
+  .btn-secondary-dark {
+    border: 1px solid rgba(255, 255, 255, 0.24);
+    background: rgba(255, 255, 255, 0.08);
+    color: #ffffff;
+    backdrop-filter: blur(8px);
+  }
 
-.btn-outline:hover {
-  border-color: var(--color-primary);
-  color: var(--color-primary);
-}
+  .btn-secondary-dark:hover {
+    background: rgba(255, 255, 255, 0.16);
+    border-color: rgba(255, 255, 255, 0.4);
+  }
 
-/* === Cards === */
-.card {
-  border: 1px solid rgba(0, 82, 204, 0.1);
-  border-radius: var(--radius-card);
-  background: #ffffff;
-  padding: clamp(1.25rem, 2.6vw, 2rem);
-  box-shadow: var(--shadow-card);
-  transition:
-    transform 200ms ease,
-    box-shadow 200ms ease,
-    border-color 200ms ease;
-  position: relative;
-}
+  .btn-outline {
+    border: 1px solid rgba(0, 82, 204, 0.18);
+    background: transparent;
+    color: var(--color-heading);
+  }
 
-.card:hover {
-  transform: translateY(-4px);
-  border-color: rgba(0, 151, 245, 0.28);
-  box-shadow: var(--shadow-card-hover);
-}
+  .btn-outline:hover {
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+  }
 
-.card-flat {
-  border: 1px solid rgba(0, 82, 204, 0.08);
-  border-radius: var(--radius-card);
-  background: var(--color-surface-alt);
-  padding: clamp(1.25rem, 2.6vw, 2rem);
-}
+  /* === Cards === */
+  .card {
+    border: 1px solid rgba(0, 82, 204, 0.1);
+    border-radius: var(--radius-card);
+    background: #ffffff;
+    padding: clamp(1.25rem, 2.6vw, 2rem);
+    box-shadow: var(--shadow-card);
+    transition:
+      transform 200ms ease,
+      box-shadow 200ms ease,
+      border-color 200ms ease;
+    position: relative;
+  }
 
-.dashboard-card {
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  border-radius: var(--radius-card-lg);
-  background: rgba(255, 255, 255, 0.08);
-  padding: clamp(1.25rem, 3vw, 2rem);
-  box-shadow: 0 28px 80px rgba(0, 0, 0, 0.32);
-  backdrop-filter: blur(18px);
+  .card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(0, 151, 245, 0.28);
+    box-shadow: var(--shadow-card-hover);
+  }
+
+  .card-flat {
+    border: 1px solid rgba(0, 82, 204, 0.08);
+    border-radius: var(--radius-card);
+    background: var(--color-surface-alt);
+    padding: clamp(1.25rem, 2.6vw, 2rem);
+  }
+
+  .dashboard-card {
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: var(--radius-card-lg);
+    background: rgba(255, 255, 255, 0.08);
+    padding: clamp(1.25rem, 3vw, 2rem);
+    box-shadow: 0 28px 80px rgba(0, 0, 0, 0.32);
+    backdrop-filter: blur(18px);
+  }
 }
 
 /* === Form fields === */
@@ -268,6 +310,79 @@ h4 {
 
 .field::placeholder {
   color: var(--color-muted);
+}
+
+/* === Long-form article typography (guides, blog) === */
+.prose-article {
+  color: var(--color-body);
+  font-size: 1.0625rem;
+  line-height: 1.78;
+}
+
+.prose-article > * + * {
+  margin-top: 1.05rem;
+}
+
+.prose-article h2 {
+  margin-top: 2.75rem;
+  font-size: 1.65rem;
+  line-height: 1.2;
+  color: var(--color-heading);
+  scroll-margin-top: 7rem;
+}
+
+.prose-article h3 {
+  margin-top: 2rem;
+  font-size: 1.25rem;
+  line-height: 1.3;
+  color: var(--color-heading);
+}
+
+.prose-article p,
+.prose-article li {
+  color: var(--color-body);
+}
+
+.prose-article ul {
+  list-style: disc;
+  padding-left: 1.25rem;
+}
+
+.prose-article ol {
+  list-style: decimal;
+  padding-left: 1.4rem;
+}
+
+.prose-article ul li + li,
+.prose-article ol li + li {
+  margin-top: 0.4rem;
+}
+
+.prose-article strong {
+  font-weight: 700;
+  color: var(--color-heading);
+}
+
+.prose-article a {
+  color: var(--color-primary);
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
+}
+
+.prose-article a:hover {
+  color: var(--color-primary-hover);
+}
+
+.prose-article blockquote {
+  margin-top: 1.6rem;
+  padding: 1.25rem 1.4rem;
+  border-left: 3px solid var(--color-primary);
+  background: var(--color-blue-50);
+  border-radius: 0 1rem 1rem 0;
+  font-style: normal;
+  color: var(--color-heading);
 }
 
 /* === Prose card for legal pages === */
@@ -361,6 +476,67 @@ h4 {
   outline: 2px solid var(--color-accent);
   outline-offset: 3px;
   border-radius: 6px;
+}
+
+/* === Ambient brand animations (CSS-only, reduce JS work) === */
+@keyframes brand-blob-cyan {
+  0%   { transform: translate3d(0, 0, 0) scale(1); }
+  35%  { transform: translate3d(18px, -10px, 0) scale(1.05); }
+  65%  { transform: translate3d(-8px, 14px, 0) scale(0.96); }
+  100% { transform: translate3d(0, 0, 0) scale(1); }
+}
+
+@keyframes brand-blob-blue {
+  0%   { transform: translate3d(0, 0, 0) scale(1); }
+  35%  { transform: translate3d(-14px, 12px, 0) scale(1.04); }
+  65%  { transform: translate3d(10px, -14px, 0) scale(0.95); }
+  100% { transform: translate3d(0, 0, 0) scale(1); }
+}
+
+@keyframes brand-pulse {
+  0%   { transform: scale(1);    opacity: 0.6; }
+  50%  { transform: scale(2.2);  opacity: 0;   }
+  100% { transform: scale(1);    opacity: 0.6; }
+}
+
+@keyframes brand-fade-up {
+  from { opacity: 0; transform: translate3d(0, 8px, 0); }
+  to   { opacity: 1; transform: translate3d(0, 0, 0); }
+}
+
+/* Композиции блоков, заменяющие framer-motion в декоративных слоях */
+.brand-blob {
+  position: absolute;
+  border-radius: 9999px;
+  pointer-events: none;
+  filter: blur(90px);
+  opacity: 0.6;
+  will-change: transform;
+}
+
+.brand-blob--cyan {
+  background: radial-gradient(circle at 50% 50%, rgba(0, 231, 253, 0.55), transparent 65%);
+  animation: brand-blob-cyan 22s ease-in-out infinite;
+}
+
+.brand-blob--blue {
+  background: radial-gradient(circle at 50% 50%, rgba(0, 151, 245, 0.55), transparent 65%);
+  filter: blur(100px);
+  animation: brand-blob-blue 28s ease-in-out infinite;
+  animation-delay: 0.6s;
+}
+
+.brand-pulse-dot {
+  animation: brand-pulse 1.8s ease-in-out infinite;
+}
+
+.brand-fade-up {
+  animation: brand-fade-up 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.brand-fade-up--delayed {
+  animation: brand-fade-up 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: 0.4s;
 }
 
 /* === Reduced motion === */

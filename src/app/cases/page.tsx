@@ -15,7 +15,7 @@ import { cases } from "@/lib/site-data";
 export const metadata = pageMetadata({
   title: "Кейсы AI-внедрений в туризме",
   description:
-    "Кейсы ИИМПАКТ ПЛЮС: туроператор «КарелияГид», «Сеть Магазинов Горящих Путёвок», хостел Delas и продукт Навылет! AI.",
+    "Кейсы ИИМПАКТ ПЛЮС: «Сеть Магазинов Горящих Путёвок», мини-гостиница Delas и собственный продукт «Навылет! AI» (на базе поисковой системы Tourvisor) с подключением 15+ компаний отрасли.",
   path: "/cases",
 });
 
@@ -43,7 +43,7 @@ export default function CasesIndex() {
         title="Подобрали по сегментам"
         description="Туроператор, сеть турагентств, средство размещения и продуктовое внедрение Навылет! AI."
       >
-        <div className="grid gap-5 md:grid-cols-2">
+        <div className="mx-auto grid max-w-6xl gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {cases.map((c) => (
             <Link
               key={c.slug}
@@ -65,7 +65,7 @@ export default function CasesIndex() {
                 <ArrowRight className="h-5 w-5 text-primary transition group-hover:translate-x-1" />
               </div>
               <Tag className="self-start">{c.segment}</Tag>
-              <h2 className="mt-3 text-2xl font-black text-heading">
+              <h2 className="mt-3 text-2xl font-bold text-heading">
                 {c.title}
               </h2>
               <p className="mt-3 leading-7 text-body">{c.summary}</p>

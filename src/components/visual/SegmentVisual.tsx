@@ -8,6 +8,7 @@ import {
   Compass,
   LayoutGrid,
   MapPin,
+  Mic2,
   MessageSquare,
   Phone,
   Sparkles,
@@ -22,7 +23,6 @@ export type SegmentKey =
   | "tour-operators"
   | "aggregators"
   | "hotels"
-  | "destinations"
   | "cases"
   | "expertise"
   | "contact"
@@ -33,9 +33,8 @@ const KIND_BY_SEGMENT: Record<SegmentKey, VisualKind> = {
   "tour-operators": "catalog",
   aggregators: "grid",
   hotels: "rooms",
-  destinations: "map",
   cases: "results",
-  expertise: "badges",
+  expertise: "speaking",
   contact: "channels",
   about: "compass",
 };
@@ -48,6 +47,7 @@ type VisualKind =
   | "map"
   | "results"
   | "badges"
+  | "speaking"
   | "channels"
   | "compass";
 
@@ -62,7 +62,7 @@ export function SegmentVisual({
   return (
     <div
       className={cn(
-        "relative isolate aspect-square w-full max-w-[460px] overflow-hidden rounded-[2rem] border border-white/10 bg-white/[0.05] p-6 backdrop-blur-md sm:p-8",
+        "relative isolate mx-auto aspect-[5/4] w-full max-w-[460px] overflow-hidden rounded-[1.5rem] border border-white/10 bg-white/[0.05] p-5 backdrop-blur-md sm:aspect-square sm:rounded-[2rem] sm:p-8",
         className,
       )}
       aria-hidden="true"
@@ -81,6 +81,7 @@ export function SegmentVisual({
       {kind === "map" && <MapVisual />}
       {kind === "results" && <ResultsVisual />}
       {kind === "badges" && <BadgesVisual />}
+      {kind === "speaking" && <SpeakingVisual />}
       {kind === "channels" && <ChannelsVisual />}
       {kind === "compass" && <CompassVisual />}
     </div>
@@ -185,7 +186,7 @@ function AggregatorGridVisual() {
               )}
               <span className="text-xs font-bold">{it.title}</span>
             </div>
-            <p className="mt-2 text-base font-black">{it.price}</p>
+            <p className="mt-2 text-base font-bold">{it.price}</p>
           </motion.div>
         );
       })}
@@ -203,7 +204,7 @@ function RoomsVisual() {
             <Building2 className="h-5 w-5" />
           </span>
           <div>
-            <p className="text-sm font-black">Хостел Delas</p>
+            <p className="text-sm font-bold">Мини-гостиница Delas</p>
             <p className="text-xs text-blue-100/70">Москва · 4 номера</p>
           </div>
         </div>
@@ -324,12 +325,89 @@ function ResultsVisual() {
           className="flex flex-col justify-between rounded-2xl border border-white/10 bg-white/[0.05] p-4 text-white"
         >
           <Star className="h-4 w-4 text-sky" />
-          <p className="mt-2 text-3xl font-black tracking-tight text-white">
+          <p className="mt-2 text-3xl font-bold text-white">
             {it.v}
           </p>
           <p className="mt-1 text-xs leading-5 text-blue-100/85">{it.l}</p>
         </motion.div>
       ))}
+    </div>
+  );
+}
+
+function SpeakingVisual() {
+  const reduced = useReducedMotion();
+  const speakings = [
+    {
+      tag: "Конгресс",
+      title: "Международный конгресс туроператоров",
+      place: "Москва · ТПП РФ",
+    },
+    {
+      tag: "Конгресс",
+      title: "III Конгресс туроператоров",
+      place: "Сочи · Газпром Поляна",
+    },
+    {
+      tag: "Совет",
+      title: "Совет ТПП РФ по применению AI в бизнесе",
+      place: "Москва",
+    },
+    {
+      tag: "Конгресс",
+      title: "Международный конгресс по AI в турагентствах",
+      place: "Минск, Беларусь",
+    },
+    {
+      tag: "Форум",
+      title: "Открытый Дагестан",
+      place: "Махачкала",
+    },
+  ];
+
+  return (
+    <div className="relative flex h-full flex-col gap-3">
+      <div className="flex items-center gap-2.5 px-1 pb-1 text-white">
+        <span className="grid h-9 w-9 place-items-center rounded-xl bg-gradient-to-br from-primary to-accent shadow-[var(--shadow-blue)]">
+          <Mic2 className="h-4 w-4" />
+        </span>
+        <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-blue-100/80">
+          Где мы выступаем
+        </p>
+      </div>
+
+      <div className="flex flex-1 flex-col gap-2">
+        {speakings.map((s, i) => (
+          <motion.div
+            key={s.title}
+            initial={reduced ? { opacity: 1 } : { opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ ...baseTransition, delay: 0.1 + i * 0.06 }}
+            className="group relative flex items-center gap-3 overflow-hidden rounded-2xl border border-white/10 bg-white/[0.05] px-3.5 py-2.5 text-white"
+          >
+            <div className="pointer-events-none absolute -right-12 -top-12 h-24 w-24 rounded-full bg-accent/15 blur-2xl" />
+            <span className="relative shrink-0 rounded-full border border-white/10 bg-white/[0.06] px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-[0.14em] text-blue-100/85">
+              {s.tag}
+            </span>
+            <div className="relative min-w-0 flex-1">
+              <p className="line-clamp-1 text-[13px] font-bold leading-tight text-white">
+                {s.title}
+              </p>
+              <p className="mt-0.5 flex items-center gap-1 text-[11px] text-blue-100/70">
+                <MapPin className="h-3 w-3 shrink-0" />
+                {s.place}
+              </p>
+            </div>
+          </motion.div>
+        ))}
+      </div>
+
+      <div className="flex items-center justify-between rounded-2xl border border-white/10 bg-white/[0.04] px-3.5 py-2 text-[11px] text-blue-100/80">
+        <span className="flex items-center gap-1.5 font-bold text-white">
+          <Star className="h-3 w-3 text-sky" /> Партнёры
+        </span>
+        <span className="font-semibold">ТПП РФ · РСТ · МГИМО · РЭУ</span>
+      </div>
     </div>
   );
 }

@@ -15,9 +15,20 @@ import { faqJsonLd, pageMetadata } from "@/lib/seo";
 import { faq } from "@/lib/site-data";
 
 export const metadata = pageMetadata({
-  title: "AI-решения для туристического бизнеса от ИИМПАКТ ПЛЮС",
+  title:
+    "Внедрение ИИ в туризм — AI-ассистенты для турагентств, отелей и туроператоров | ИИМПАКТ ПЛЮС",
   description:
-    "Многостраничный B2B-портал AI-решений для туризма: Навылет! AI, кейсы, CRM-интеграции, AI-ассистенты, аналитика и заявки.",
+    "Внедряем ИИ в туризм с 2023 года. Готовый AI-турменеджер «Навылет! AI» на базе поисковой системы Tourvisor, AI-аналитика, голосовые ассистенты и CRM-интеграции. 15+ компаний отрасли. Пилот за 2 недели, договор и согласие 152-ФЗ.",
+  keywords: [
+    "внедрить ИИ в туризме",
+    "внедрение ИИ в туризме",
+    "внедрение AI в туризм",
+    "ИИ для турагентства",
+    "AI для туристического бизнеса",
+    "AI-турменеджер",
+    "AI-ассистент для турагентства",
+    "AI-интегратор туризм",
+  ],
 });
 
 export default function Home() {
@@ -25,15 +36,17 @@ export default function Home() {
     <PageShell>
       <JsonLd data={faqJsonLd([...faq])} />
       <Hero />
-      <Audience />
-      <ProblemSolution />
-      <SolutionsMap />
-      <NaviletPreview />
-      <HowItWorks />
-      <CasesPreview />
-      <Trust />
-      <ExpertiseTeaser />
-      <FAQSection />
+      <Audience id="audience" />
+      {/* Пара: «Что мы решаем» — проблема и сразу карта решений на ней */}
+      <ProblemSolution id="solutions" merge="bottom" />
+      <SolutionsMap merge="top" />
+      <NaviletPreview id="product" />
+      <HowItWorks id="how-it-works" />
+      <CasesPreview id="cases" />
+      {/* Пара: «Доверие» — экспертиза в аудитории и отзывы профессионалов */}
+      <ExpertiseTeaser id="trust" merge="bottom" />
+      <Trust merge="top" />
+      <FAQSection id="faq" />
       <CtaBand />
     </PageShell>
   );

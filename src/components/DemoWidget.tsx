@@ -233,10 +233,10 @@ export default function DemoWidget({
 
   return (
     <div
-      className={`relative flex h-[480px] flex-col overflow-hidden rounded-2xl border border-[#E0E0E0]/50 bg-white shadow-xl sm:h-[600px] ${className}`}
+      className={`relative flex h-[480px] w-full flex-col overflow-hidden rounded-2xl border border-[#E0E0E0]/50 bg-white shadow-xl sm:h-[600px] ${className}`}
     >
       <div
-        className="flex items-center gap-3 px-4 py-3"
+        className="flex items-center gap-3 px-3.5 py-3 sm:px-4"
         style={{
           background: "linear-gradient(135deg, #0062EF, #0097F5, #00CCF5)",
         }}
@@ -389,15 +389,24 @@ export default function DemoWidget({
             </button>
           </div>
         )}
-        <div className="mt-2 text-center text-[10px] text-[#BDC3C7]">
-          Powered by{" "}
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src="/navilet/logo-short.svg"
-            alt="Навылет! AI"
-            className="ml-0.5 inline-block h-3 align-middle"
-            draggable={false}
-          />
+        <div className="mt-2 flex flex-wrap items-center justify-center gap-x-1.5 gap-y-0.5 text-center text-[10px] leading-4 text-[#BDC3C7]">
+          <span className="inline-flex items-center gap-1">
+            Powered by
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/navilet/logo-short.svg"
+              alt="Навылет! AI"
+              className="inline-block h-3 align-middle"
+              draggable={false}
+            />
+          </span>
+          <span aria-hidden="true" className="text-[#D9DEE3]">
+            ·
+          </span>
+          <span>
+            работает на{" "}
+            <span className="font-semibold text-[#7F8C8D]">Tourvisor</span>
+          </span>
         </div>
       </div>
     </div>

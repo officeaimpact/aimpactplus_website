@@ -9,22 +9,30 @@ export function Logo({
   inverted?: boolean;
   size?: "sm" | "md";
 }) {
-  const height = size === "sm" ? 32 : 40;
+  // Размеры выверены под высоту шапки/футера: ≈50% высоты контейнера на любом
+  // брейкпойнте — лаконично, не перегружает композицию. Aspect-ratio логотипа
+  // 1795:654 (≈2.745:1), его и передаём в next/image.
   return (
     <Link
       href="/"
-      className="flex items-center transition hover:opacity-90"
+      className="inline-flex items-center transition hover:opacity-90 focus-visible:opacity-100"
       aria-label="AIMPACT+ — На главную"
     >
       <Image
         src="/brand/logo.png"
-        alt="AIMPACT+"
-        width={319}
-        height={72}
+        alt="AIMPACT+ — AI-решения для туристического бизнеса"
+        width={1795}
+        height={654}
         priority
-        sizes="180px"
-        style={{ height: `${height}px`, width: "auto" }}
-        className={cn(inverted && "brightness-0 invert")}
+        sizes={size === "sm" ? "110px" : "(min-width: 1024px) 140px, 120px"}
+        className={cn(
+          "block w-auto select-none",
+          size === "sm"
+            ? "h-[28px] sm:h-[32px]"
+            : "h-9 sm:h-10 lg:h-11",
+          inverted && "brightness-0 invert",
+        )}
+        draggable={false}
       />
     </Link>
   );

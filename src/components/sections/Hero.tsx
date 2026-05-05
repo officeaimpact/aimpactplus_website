@@ -2,8 +2,7 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { ArrowRight, CheckCircle2, ShieldCheck } from "lucide-react";
-import { Badge } from "@/components/ui/Badge";
+import { ArrowRight, ShieldCheck } from "lucide-react";
 import { HeroWordmark } from "@/components/visual/HeroWordmark";
 import {
   fadeInUp,
@@ -11,32 +10,27 @@ import {
   scaleIn,
   staggerContainer,
 } from "@/lib/animations";
-import { trustItems } from "@/lib/site-data";
 
-const title = "AI-решения для туристического бизнеса";
-const titleAccent = "от ИИМПАКТ ПЛЮС";
+const title = "Внедряем ИИ в туризм";
+const titleAccent = "от пилота за 2 недели до собственного AI-продукта";
 
 export function Hero() {
   const words = title.split(" ");
 
   return (
     <section className="hero-shell text-white">
-      <div className="mx-auto grid min-h-[640px] max-w-7xl items-center gap-12 px-5 py-24 sm:px-8 lg:grid-cols-[1.05fr_0.95fr] lg:py-28">
+      <div className="mx-auto grid max-w-7xl items-center gap-10 px-5 py-14 sm:px-8 sm:py-24 lg:min-h-[640px] lg:grid-cols-[1.1fr_0.9fr] lg:gap-16 lg:py-28">
         <motion.div
           initial="hidden"
           animate="visible"
           variants={staggerContainer}
         >
-          <motion.div variants={fadeInUp}>
-            <Badge variant="dark">AI-интегратор для туризма · Москва</Badge>
-          </motion.div>
-
           <motion.h1
             initial="hidden"
             animate="visible"
             variants={staggerContainer}
-            className="mt-7 text-balance text-4xl font-black leading-[1.05] tracking-tight sm:text-6xl lg:text-7xl"
-            style={{ letterSpacing: "-0.02em" }}
+            className="text-balance font-display text-[1.75rem] font-bold leading-[1.12] min-[420px]:text-[2rem] sm:text-5xl lg:text-6xl xl:text-[3.75rem]"
+            style={{ letterSpacing: "-0.012em" }}
           >
             {words.map((w, i) => (
               <motion.span
@@ -48,10 +42,9 @@ export function Hero() {
                 {w}
               </motion.span>
             ))}
-            <br />
             <motion.span
               variants={heroWordVariant}
-              className="text-gradient"
+              className="mt-2 block text-gradient text-[1.4rem] leading-[1.18] min-[420px]:text-[1.6rem] sm:text-[2.1rem] lg:text-[2.6rem] xl:text-[2.9rem]"
             >
               {titleAccent}
             </motion.span>
@@ -59,22 +52,30 @@ export function Hero() {
 
           <motion.p
             variants={fadeInUp}
-            className="mt-6 max-w-2xl text-pretty text-lg leading-8 text-blue-100 sm:text-xl"
+            className="mt-6 max-w-2xl text-pretty text-base leading-7 text-blue-100 sm:text-xl sm:leading-8"
           >
-            Проектируем и внедряем AI-решения для туристического бизнеса —
-            от индивидуальных интеллектуальных систем и аналитики до
-            голосовых и текстовых ассистентов.
+            ИИМПАКТ ПЛЮС — российский AI-интегратор для туризма с 2023 года.
+            Запускаем AI-ассистентов, голосовых помощников и AI-аналитику
+            для турагентств, туроператоров, отелей и агрегаторов.
+            Готовый продукт «Навылет! AI» — на базе поисковой системы
+            Tourvisor — уже работает у 15+ компаний отрасли.
           </motion.p>
 
           <motion.div
             variants={fadeInUp}
-            className="mt-8 flex flex-col gap-3 sm:flex-row"
+            className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap"
           >
-            <Link href="/contact" className="btn-primary">
-              Получить аудит AI-возможностей
+            <Link
+              href="/contact"
+              className="btn-primary w-full justify-center sm:w-auto"
+            >
+              Получить AI-аудит
               <ArrowRight className="h-5 w-5" aria-hidden="true" />
             </Link>
-            <Link href="/navilet-ai" className="btn-secondary-dark">
+            <Link
+              href="/navilet-ai"
+              className="btn-secondary-dark w-full justify-center sm:w-auto"
+            >
               Смотреть Навылет! AI
             </Link>
           </motion.div>
@@ -84,23 +85,8 @@ export function Hero() {
             className="mt-4 inline-flex items-center gap-2 text-xs font-semibold tracking-wide text-sky"
           >
             <ShieldCheck className="h-4 w-4" aria-hidden="true" />
-            Безопасный пилот за 2 недели · обсуждаем результат до старта
+            Пилот без риска для текущих продаж · согласие 152-ФЗ
           </motion.p>
-
-          <motion.ul
-            variants={fadeInUp}
-            className="mt-10 grid gap-2.5 text-sm text-blue-100/90 sm:grid-cols-2"
-          >
-            {trustItems.map((item) => (
-              <li key={item} className="flex items-start gap-2">
-                <CheckCircle2
-                  className="mt-0.5 h-4 w-4 shrink-0 text-sky"
-                  aria-hidden="true"
-                />
-                {item}
-              </li>
-            ))}
-          </motion.ul>
         </motion.div>
 
         <motion.div

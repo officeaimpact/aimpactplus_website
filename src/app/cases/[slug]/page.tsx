@@ -1,7 +1,12 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowRight, CheckCircle2, Quote } from "lucide-react";
+import {
+  ArrowRight,
+  CheckCircle2,
+  ExternalLink,
+  Quote,
+} from "lucide-react";
 import { PageShell } from "@/components/PageShell";
 import { PageHero } from "@/components/ui/PageHero";
 import { SectionWrapper } from "@/components/ui/SectionWrapper";
@@ -13,16 +18,14 @@ import {
   SegmentVisual,
   type SegmentKey,
 } from "@/components/visual/SegmentVisual";
-import { pageMetadata } from "@/lib/seo";
-import { site } from "@/lib/site-data";
-import { cases } from "@/lib/site-data";
+import { caseStudyJsonLd, pageMetadata } from "@/lib/seo";
+import { cases, site } from "@/lib/site-data";
 
 const SEGMENT_BY_LABEL: Record<string, SegmentKey> = {
   Туроператор: "tour-operators",
   "Сеть турагентств": "travel-agencies",
   "Средство размещения": "hotels",
   Турагрегатор: "aggregators",
-  Регион: "destinations",
   Продукт: "cases",
 };
 
@@ -41,11 +44,19 @@ export async function generateMetadata({
 }) {
   const { slug } = await params;
   const c = cases.find((x) => x.slug === slug);
-  if (!c) return pageMetadata({ title: "Кейс не найден", description: "" });
+  if (!c)
+    return pageMetadata({ title: "Кейс не найден", description: "" });
   return pageMetadata({
     title: `Кейс: ${c.title}`,
     description: c.summary,
     path: `/cases/${c.slug}`,
+    ogType: "article",
+    keywords: [
+      `${c.client} AI`,
+      `${c.segment} AI`,
+      `кейс AI ${c.segment}`,
+      `внедрение ИИ ${c.segment}`,
+    ],
   });
 }
 
@@ -58,36 +69,32 @@ export default async function CaseDetail({
   const c = cases.find((x) => x.slug === slug);
   if (!c) notFound();
 
-  const jsonLd = {
-    "@context": "https://schema.org",
-    "@type": "Article",
-    headline: c.title,
-    description: c.summary,
-    author: {
-      "@type": "Organization",
-      name: site.legalName,
-    },
-    publisher: {
-      "@type": "Organization",
-      name: site.legalName,
-      url: site.domain,
-    },
-    about: c.client,
-  };
-
   const others = cases.filter((x) => x.slug !== slug).slice(0, 3);
+  const isNaviletProduct = c.slug === "navilet-ai-product";
 
   return (
     <PageShell>
-      <JsonLd data={jsonLd} />
+      <JsonLd
+        data={caseStudyJsonLd({
+          title: c.title,
+          summary: c.summary,
+          url: `/cases/${c.slug}`,
+          client: c.client,
+          segment: c.segment,
+        })}
+      />
       <PageHero
         eyebrow={c.segment}
         title={c.title}
         description={c.summary}
-        primaryCta="Хочу похожий результат"
-        primaryHref={`/contact?intent=${encodeURIComponent("Похожий кейс: " + c.title)}`}
-        secondaryCta="Все кейсы"
-        secondaryHref="/cases"
+        primaryCta={isNaviletProduct ? "Запросить демо" : "Хочу похожий результат"}
+        primaryHref={
+          isNaviletProduct
+            ? "/contact?intent=demo"
+            : `/contact?intent=${encodeURIComponent("Похожий кейс: " + c.title)}`
+        }
+        secondaryCta={isNaviletProduct ? "Перейти на navilet.ru" : "Все кейсы"}
+        secondaryHref={isNaviletProduct ? site.naviletWebsite : "/cases"}
         crumbs={[
           { name: "Главная", href: "/" },
           { name: "Кейсы", href: "/cases" },
@@ -96,7 +103,41 @@ export default async function CaseDetail({
         aside={<SegmentVisual segment={caseSegmentKey(c.segment)} />}
       />
 
-      <SectionWrapper>
+      {c.metrics && c.metrics.length > 0 && (
+        <SectionWrapper merge="bottom">
+          <div className="mx-auto max-w-6xl">
+            <div className="mb-4 flex flex-wrap items-baseline justify-between gap-2">
+              <p className="text-xs font-bold uppercase tracking-[0.18em] text-primary">
+                Эффект по проекту
+              </p>
+              <p className="text-xs italic text-muted">
+                Метрики — оценка по проекту. Точные значения зависят от
+                сезонности, трафика и базовой автоматизации до пилота.
+              </p>
+            </div>
+            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+              {c.metrics.map((m) => (
+                <div
+                  key={m.label}
+                  className="card flex flex-col gap-2 border-blue-100"
+                >
+                  <p className="text-xs font-bold uppercase tracking-[0.16em] text-muted">
+                    {m.label}
+                  </p>
+                  <p className="text-3xl font-bold text-gradient sm:text-4xl">
+                    {m.value}
+                  </p>
+                  {m.note && (
+                    <p className="text-xs leading-5 text-body">{m.note}</p>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+        </SectionWrapper>
+      )}
+
+      <SectionWrapper merge={c.metrics && c.metrics.length > 0 ? "top" : undefined}>
         <div className="grid gap-8 lg:grid-cols-[2fr_1fr]">
           <div className="prose-card">
             <h2>Клиент</h2>
@@ -123,7 +164,11 @@ export default async function CaseDetail({
             </ul>
 
             <h2>Интеграции</h2>
-            <p>{c.integrations.join(" · ")}</p>
+            <ul className="mt-3 list-disc pl-5">
+              {c.integrations.map((i) => (
+                <li key={i}>{i}</li>
+              ))}
+            </ul>
 
             {c.quote && (
               <>
@@ -144,7 +189,7 @@ export default async function CaseDetail({
               {c.logo ? (
                 <Image
                   src={c.logo}
-                  alt={c.title}
+                  alt={`Логотип ${c.title}`}
                   width={64}
                   height={64}
                   className="h-16 w-16 rounded-2xl object-contain"
@@ -152,11 +197,11 @@ export default async function CaseDetail({
               ) : (
                 <BrandMonogram name={c.title} size="lg" variant="soft" />
               )}
-              <div>
+              <div className="min-w-0">
                 <p className="text-xs font-bold uppercase tracking-[0.18em] text-primary">
                   Сегмент
                 </p>
-                <p className="mt-1 text-lg font-black text-heading">
+                <p className="mt-1 text-lg font-bold text-heading">
                   {c.segment}
                 </p>
               </div>
@@ -177,6 +222,26 @@ export default async function CaseDetail({
                 ))}
               </ul>
             </div>
+            {isNaviletProduct && (
+              <div className="card flex flex-col gap-3 bg-deep text-white">
+                <p className="text-xs font-bold uppercase tracking-[0.18em] text-sky">
+                  Сайт продукта
+                </p>
+                <p className="text-sm leading-7 text-blue-100">
+                  Подробнее о продукте «Навылет! AI», демо и партнёрской
+                  программе — на отдельной площадке.
+                </p>
+                <a
+                  href={site.naviletWebsite}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn-primary mt-1 justify-center"
+                >
+                  Открыть {site.naviletWebsiteDisplay}
+                  <ExternalLink className="h-4 w-4" />
+                </a>
+              </div>
+            )}
           </aside>
         </div>
       </SectionWrapper>
@@ -193,7 +258,7 @@ export default async function CaseDetail({
                 <Tag>{o.segment}</Tag>
                 <ArrowRight className="h-5 w-5 text-primary transition group-hover:translate-x-1" />
               </div>
-              <h3 className="text-xl font-black text-heading">{o.title}</h3>
+              <h3 className="text-xl font-bold text-heading">{o.title}</h3>
               <p className="mt-3 grow text-sm leading-6 text-body">
                 {o.summary}
               </p>
@@ -202,7 +267,15 @@ export default async function CaseDetail({
         </div>
       </SectionWrapper>
 
-      <CtaBand title="Хотите похожий результат?" />
+      <CtaBand
+        title={
+          isNaviletProduct
+            ? "Готовы подключить Навылет! AI?"
+            : "Хотите похожий результат?"
+        }
+        cta={isNaviletProduct ? "Запросить демо" : undefined}
+        href={isNaviletProduct ? "/contact?intent=demo" : undefined}
+      />
     </PageShell>
   );
 }

@@ -119,7 +119,7 @@ export function EventModal({
 
                 <h2
                   id="event-modal-title"
-                  className="text-balance text-xl font-black leading-snug text-heading sm:text-2xl"
+                  className="text-balance text-xl font-bold leading-snug text-heading sm:text-2xl"
                 >
                   {event.title}
                 </h2>

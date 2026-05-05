@@ -8,9 +8,53 @@ import { partners, testimonials } from "@/lib/site-data";
 import { SectionWrapper } from "@/components/ui/SectionWrapper";
 import { BrandMonogram } from "@/components/ui/BrandMonogram";
 
-export function Trust() {
+type Testimonial = (typeof testimonials)[number];
+
+function TestimonialCard({ t }: { t: Testimonial }) {
+  return (
+    <motion.blockquote variants={fadeInUp} className="card relative">
+      <Quote className="mb-3 h-6 w-6 text-primary/40" aria-hidden="true" />
+      <p className="text-lg leading-8 text-heading">«{t.text}»</p>
+      <footer className="mt-6 flex items-center gap-4">
+        {t.photo ? (
+          <Image
+            src={t.photo}
+            alt={t.name}
+            width={128}
+            height={128}
+            sizes="64px"
+            className="h-16 w-16 shrink-0 rounded-full object-cover ring-2 ring-blue-100"
+          />
+        ) : (
+          <BrandMonogram
+            name={t.name}
+            size="lg"
+            variant="gradient"
+            className="h-16 w-16 rounded-full text-base"
+          />
+        )}
+        <div>
+          <p className="font-bold text-heading">{t.name}</p>
+          <p className="mt-0.5 text-sm text-muted">{t.role}</p>
+        </div>
+      </footer>
+    </motion.blockquote>
+  );
+}
+
+type SectionAnchorProps = {
+  id?: string;
+  merge?: "top" | "bottom" | "both";
+};
+
+export function Trust({ id, merge }: SectionAnchorProps = {}) {
+  const grid = testimonials.slice(0, 4);
+  const featured = testimonials[4];
+
   return (
     <SectionWrapper
+      id={id}
+      merge={merge}
       eyebrow="Экспертиза"
       title="О нас говорят профессионалы туристической отрасли"
       description="Мы выступаем на площадках ТПП РФ, РСТ, МГИМО и РЭУ им. Г. В. Плеханова. Цитаты — из публичных выступлений и отзывов клиентов."
@@ -34,40 +78,22 @@ export function Trust() {
         viewport={viewportOnce}
         className="grid gap-5 md:grid-cols-2"
       >
-        {testimonials.slice(0, 4).map((t) => (
-          <motion.blockquote
-            key={t.name}
-            variants={fadeInUp}
-            className="card relative"
-          >
-            <Quote className="mb-3 h-6 w-6 text-primary/40" aria-hidden="true" />
-            <p className="text-lg leading-8 text-heading">«{t.text}»</p>
-            <footer className="mt-6 flex items-center gap-4">
-              {t.photo ? (
-                <Image
-                  src={t.photo}
-                  alt={t.name}
-                  width={128}
-                  height={128}
-                  sizes="64px"
-                  className="h-16 w-16 shrink-0 rounded-full object-cover ring-2 ring-blue-100"
-                />
-              ) : (
-                <BrandMonogram
-                  name={t.name}
-                  size="lg"
-                  variant="gradient"
-                  className="h-16 w-16 rounded-full text-base"
-                />
-              )}
-              <div>
-                <p className="font-black text-heading">{t.name}</p>
-                <p className="mt-0.5 text-sm text-muted">{t.role}</p>
-              </div>
-            </footer>
-          </motion.blockquote>
+        {grid.map((t) => (
+          <TestimonialCard key={t.name} t={t} />
         ))}
       </motion.div>
+
+      {featured && (
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={viewportOnce}
+          variants={staggerContainer}
+          className="mx-auto mt-5 grid max-w-3xl"
+        >
+          <TestimonialCard t={featured} />
+        </motion.div>
+      )}
     </SectionWrapper>
   );
 }

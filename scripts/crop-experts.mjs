@@ -33,6 +33,13 @@ const tasks = [
     out: `${OUT}/romanova.jpg`,
     extract: { left: 0, top: 0, width: 300, height: 300 },
   },
+  // Агафонов — 1024×581 landscape со сцены; зумируем на голову+плечи,
+  // отрезая фон с логотипами по краям и нижнюю часть со столом.
+  {
+    src: `${ASSETS}/image-8c2e2679-9c67-47f7-8058-127f103b3e00.png`,
+    out: `${OUT}/agafonov.jpg`,
+    extract: { left: 320, top: 30, width: 460, height: 460 },
+  },
 ];
 
 for (const t of tasks) {

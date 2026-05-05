@@ -33,12 +33,12 @@ const iconMap: Record<string, LucideIcon> = {
 };
 
 export function NaviletLiveDemo() {
-  const [active, setActive] = useState<DemoScenario | null>(null);
+  const [active, setActive] = useState<DemoScenario>(demoScenarios[0]);
+  const [replayKey, setReplayKey] = useState(0);
 
   const handleClick = (scenario: DemoScenario) => {
-    if (active?.id === scenario.id) {
-      setActive(null);
-      setTimeout(() => setActive(scenario), 50);
+    if (active.id === scenario.id) {
+      setReplayKey((k) => k + 1);
     } else {
       setActive(scenario);
     }
@@ -59,17 +59,28 @@ export function NaviletLiveDemo() {
         className="grid gap-8 lg:grid-cols-[440px_1fr] lg:gap-10"
       >
         <motion.div variants={slideInLeft} className="order-2 lg:order-1">
-          <div className="relative">
+          <div className="relative mx-auto w-full max-w-[440px]">
             <div className="absolute -inset-3 rounded-3xl bg-gradient-to-br from-accent/10 to-sky/10 blur-2xl" />
-            <DemoWidget scenario={active} className="relative" />
+            <DemoWidget
+              key={`${active.id}-${replayKey}`}
+              scenario={active}
+              className="relative"
+            />
           </div>
+          <p className="mx-auto mt-4 max-w-[440px] text-center text-[11px] leading-5 text-muted">
+            Подбор и карточки туров — на базе{" "}
+            <span className="font-semibold text-heading">
+              поисковой системы Tourvisor
+            </span>
+            . Цены, наличие и фото отелей подтягиваются из её актуальной выдачи.
+          </p>
         </motion.div>
 
         <motion.div variants={slideInRight} className="order-1 lg:order-2">
           <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
             {demoScenarios.map((s) => {
               const Icon = iconMap[s.icon] ?? Globe;
-              const isActive = active?.id === s.id;
+              const isActive = active.id === s.id;
               return (
                 <motion.button
                   key={s.id}
@@ -98,7 +109,7 @@ export function NaviletLiveDemo() {
                   <div className="min-w-0">
                     <p
                       className={cn(
-                        "text-sm font-black",
+                        "text-sm font-bold",
                         isActive ? "text-accent" : "text-heading",
                       )}
                     >

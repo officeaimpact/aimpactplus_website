@@ -7,7 +7,6 @@ import {
   BriefcaseBusiness,
   Hotel,
   LayoutGrid,
-  Map,
   Store,
   type LucideIcon,
 } from "lucide-react";
@@ -20,15 +19,21 @@ const iconMap: Record<AudienceIcon, LucideIcon> = {
   BriefcaseBusiness,
   LayoutGrid,
   Hotel,
-  Map,
 };
 
-export function Audience() {
+type SectionAnchorProps = {
+  id?: string;
+  merge?: "top" | "bottom" | "both";
+};
+
+export function Audience({ id, merge }: SectionAnchorProps = {}) {
   return (
     <SectionWrapper
+      id={id}
+      merge={merge}
       eyebrow="Для кого"
-      title="Главная — это не лендинг, а портал входа"
-      description="Каждый сегмент попадает на свою страницу с конкретными сценариями, интеграциями и ожидаемыми результатами — без общего обзора."
+      title="Решения под ваш сегмент туристического бизнеса"
+      description="Турагентство, туроператор, агрегатор или средство размещения — у каждого направления свой набор сценариев, интеграций и измеримых эффектов от внедрения ИИ."
       alt
     >
       <motion.div
@@ -36,7 +41,7 @@ export function Audience() {
         initial="hidden"
         whileInView="visible"
         viewport={viewportOnce}
-        className="grid gap-5 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5"
+        className="grid gap-5 md:grid-cols-2 lg:grid-cols-4"
       >
         {audiencePaths.map((item) => {
           const Icon = iconMap[item.icon] ?? Store;
@@ -44,19 +49,20 @@ export function Audience() {
             <motion.div key={item.href} variants={fadeInUp}>
               <Link
                 href={item.href}
-                className="card group flex h-full flex-col"
+                className="card group relative flex h-full flex-col overflow-hidden"
               >
-                <div className="mb-5 grid h-12 w-12 place-items-center rounded-2xl bg-gradient-to-br from-primary to-accent text-white shadow-[var(--shadow-blue)] transition group-hover:scale-105">
+                <div className="pointer-events-none absolute -right-10 -top-10 h-32 w-32 rounded-full bg-accent/[0.06] transition-all duration-500 group-hover:scale-[1.6] group-hover:bg-accent/[0.12]" />
+                <div className="relative mb-5 grid h-12 w-12 place-items-center rounded-2xl bg-gradient-to-br from-primary to-accent text-white shadow-[var(--shadow-blue)] transition group-hover:scale-105 group-hover:rotate-3">
                   <Icon className="h-6 w-6" aria-hidden="true" />
                 </div>
-                <h3 className="text-lg font-black text-heading">
+                <h3 className="relative text-lg font-bold text-heading">
                   {item.title}
                 </h3>
-                <p className="mt-3 grow text-sm leading-6 text-body">
+                <p className="relative mt-3 grow text-sm leading-6 text-body">
                   {item.description}
                 </p>
-                <span className="mt-6 inline-flex items-center gap-2 text-sm font-bold text-primary">
-                  Подробнее
+                <span className="relative mt-6 inline-flex items-center gap-2 text-sm font-bold text-primary">
+                  Открыть направление
                   <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" />
                 </span>
               </Link>

@@ -10,9 +10,16 @@ import { SectionWrapper } from "@/components/ui/SectionWrapper";
 import { Tag } from "@/components/ui/Tag";
 import { BrandMonogram } from "@/components/ui/BrandMonogram";
 
-export function CasesPreview() {
+type SectionAnchorProps = {
+  id?: string;
+  merge?: "top" | "bottom" | "both";
+};
+
+export function CasesPreview({ id, merge }: SectionAnchorProps = {}) {
   return (
     <SectionWrapper
+      id={id}
+      merge={merge}
       eyebrow="Кейсы"
       title="Доказательства из туристического рынка"
       description="Реальные внедрения у туроператоров, агентств и средств размещения. Каждый кейс — отдельная страница с задачей, решением и результатами."
@@ -22,7 +29,7 @@ export function CasesPreview() {
         initial="hidden"
         whileInView="visible"
         viewport={viewportOnce}
-        className="grid gap-5 md:grid-cols-2 lg:grid-cols-4"
+        className="mx-auto grid max-w-6xl gap-5 sm:grid-cols-2 lg:grid-cols-3"
       >
         {cases.map((c) => (
           <motion.div key={c.slug} variants={fadeInUp}>
@@ -45,7 +52,7 @@ export function CasesPreview() {
                 <ArrowRight className="h-5 w-5 text-primary transition group-hover:translate-x-1" />
               </div>
               <Tag className="self-start">{c.segment}</Tag>
-              <h3 className="mt-3 text-lg font-black text-heading">
+              <h3 className="mt-3 text-lg font-bold text-heading">
                 {c.title}
               </h3>
               <p className="mt-3 grow text-sm leading-6 text-body">

@@ -36,28 +36,9 @@ export default function Expertise() {
         title="С кем мы работаем и сотрудничаем"
         description="Сотрудничаем с профессиональными ассоциациями, государственными органами и ведущими университетами туристической отрасли."
       >
-        <div className="mx-auto grid max-w-6xl grid-cols-2 gap-5 sm:grid-cols-3 lg:grid-cols-5">
+        <div className="mx-auto grid max-w-6xl grid-cols-2 gap-5 sm:grid-cols-3 lg:grid-cols-4">
           {partners.map((p) => (
-            <div
-              key={p.name}
-              title={p.name}
-              className="group relative flex h-32 items-center justify-center overflow-hidden rounded-[1.5rem] border border-blue-100 bg-white p-6 shadow-[var(--shadow-soft)] transition-all duration-300 hover:-translate-y-1 hover:border-accent/30 hover:shadow-[var(--shadow-card-hover)]"
-            >
-              <div className="pointer-events-none absolute -right-10 -top-10 h-28 w-28 rounded-full bg-accent/[0.05] transition-all duration-500 group-hover:scale-[1.8] group-hover:bg-accent/[0.08]" />
-              {p.logo ? (
-                <Image
-                  src={p.logo}
-                  alt={p.name}
-                  width={240}
-                  height={96}
-                  className="relative h-16 w-auto max-w-[180px] object-contain transition-transform duration-300 group-hover:scale-110 sm:h-20"
-                />
-              ) : (
-                <span className="relative text-center text-base font-black text-heading">
-                  {p.name}
-                </span>
-              )}
-            </div>
+            <PartnerLogoTile key={p.name} item={p} />
           ))}
         </div>
       </SectionWrapper>
@@ -82,7 +63,7 @@ export default function Expertise() {
               <Award className="h-6 w-6" />
             </span>
             <div>
-              <h3 className="text-lg font-black text-heading">
+              <h3 className="text-lg font-bold text-heading">
                 Благодарность за вклад в развитие AI-технологий в туризме
               </h3>
               <p className="mt-2 text-sm leading-7 text-body">
@@ -98,7 +79,7 @@ export default function Expertise() {
               <BadgeCheck className="h-6 w-6" />
             </span>
             <div>
-              <h3 className="text-lg font-black text-heading">
+              <h3 className="text-lg font-bold text-heading">
                 Член Комитета ТПП РФ по предпринимательству в сфере туризма
               </h3>
               <p className="mt-2 text-sm leading-7 text-body">
@@ -116,37 +97,82 @@ export default function Expertise() {
         title="О нас говорят отраслевые эксперты"
         alt
       >
-        <div className="grid gap-5 md:grid-cols-2">
-          {testimonials.map((t) => (
-            <blockquote key={t.name} className="card">
-              <Quote className="mb-3 h-6 w-6 text-primary/40" />
-              <p className="text-lg leading-8 text-heading">«{t.text}»</p>
-              <footer className="mt-6 flex items-center gap-4">
-                {t.photo ? (
-                  <Image
-                    src={t.photo}
-                    alt={t.name}
-                    width={128}
-                    height={128}
-                    sizes="64px"
-                    className="h-16 w-16 shrink-0 rounded-full object-cover ring-2 ring-blue-100"
-                  />
-                ) : (
-                  <BrandMonogram
-                    name={t.name}
-                    size="lg"
-                    variant="gradient"
-                    className="h-16 w-16 rounded-full text-base"
-                  />
-                )}
-                <div>
-                  <p className="font-black text-heading">{t.name}</p>
-                  <p className="mt-0.5 text-sm text-muted">{t.role}</p>
+        {(() => {
+          const grid = testimonials.slice(0, 4);
+          const featured = testimonials[4];
+          return (
+            <>
+              <div className="grid gap-5 md:grid-cols-2">
+                {grid.map((t) => (
+                  <blockquote key={t.name} className="card">
+                    <Quote className="mb-3 h-6 w-6 text-primary/40" />
+                    <p className="text-lg leading-8 text-heading">«{t.text}»</p>
+                    <footer className="mt-6 flex items-center gap-4">
+                      {t.photo ? (
+                        <Image
+                          src={t.photo}
+                          alt={t.name}
+                          width={128}
+                          height={128}
+                          sizes="64px"
+                          className="h-16 w-16 shrink-0 rounded-full object-cover ring-2 ring-blue-100"
+                        />
+                      ) : (
+                        <BrandMonogram
+                          name={t.name}
+                          size="lg"
+                          variant="gradient"
+                          className="h-16 w-16 rounded-full text-base"
+                        />
+                      )}
+                      <div>
+                        <p className="font-bold text-heading">{t.name}</p>
+                        <p className="mt-0.5 text-sm text-muted">{t.role}</p>
+                      </div>
+                    </footer>
+                  </blockquote>
+                ))}
+              </div>
+              {featured && (
+                <div className="mx-auto mt-5 max-w-3xl">
+                  <blockquote className="card">
+                    <Quote className="mb-3 h-6 w-6 text-primary/40" />
+                    <p className="text-lg leading-8 text-heading">
+                      «{featured.text}»
+                    </p>
+                    <footer className="mt-6 flex items-center gap-4">
+                      {featured.photo ? (
+                        <Image
+                          src={featured.photo}
+                          alt={featured.name}
+                          width={128}
+                          height={128}
+                          sizes="64px"
+                          className="h-16 w-16 shrink-0 rounded-full object-cover ring-2 ring-blue-100"
+                        />
+                      ) : (
+                        <BrandMonogram
+                          name={featured.name}
+                          size="lg"
+                          variant="gradient"
+                          className="h-16 w-16 rounded-full text-base"
+                        />
+                      )}
+                      <div>
+                        <p className="font-bold text-heading">
+                          {featured.name}
+                        </p>
+                        <p className="mt-0.5 text-sm text-muted">
+                          {featured.role}
+                        </p>
+                      </div>
+                    </footer>
+                  </blockquote>
                 </div>
-              </footer>
-            </blockquote>
-          ))}
-        </div>
+              )}
+            </>
+          );
+        })()}
       </SectionWrapper>
 
       <CtaBand
@@ -156,5 +182,33 @@ export default function Expertise() {
         href="/contact?intent=speaker"
       />
     </PageShell>
+  );
+}
+
+function PartnerLogoTile({
+  item,
+}: {
+  item: { name: string; logo?: string };
+}) {
+  return (
+    <div
+      title={item.name}
+      className="group relative flex h-32 items-center justify-center overflow-hidden rounded-[1.5rem] border border-blue-100 bg-white p-6 shadow-[var(--shadow-soft)] transition-all duration-300 hover:-translate-y-1 hover:border-accent/30 hover:shadow-[var(--shadow-card-hover)]"
+    >
+      <div className="pointer-events-none absolute -right-10 -top-10 h-28 w-28 rounded-full bg-accent/[0.05] transition-all duration-500 group-hover:scale-[1.8] group-hover:bg-accent/[0.08]" />
+      {item.logo ? (
+        <Image
+          src={item.logo}
+          alt={item.name}
+          width={240}
+          height={96}
+          className="relative h-16 w-auto max-w-[180px] object-contain transition-transform duration-300 group-hover:scale-110 sm:h-20"
+        />
+      ) : (
+        <span className="relative text-center text-base font-bold text-heading">
+          {item.name}
+        </span>
+      )}
+    </div>
   );
 }
