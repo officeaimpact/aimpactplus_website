@@ -1,12 +1,7 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
-import {
-  ArrowRight,
-  CheckCircle2,
-  ExternalLink,
-  Quote,
-} from "lucide-react";
+import { ArrowRight, CheckCircle2, Quote } from "lucide-react";
 import { PageShell } from "@/components/PageShell";
 import { PageHero } from "@/components/ui/PageHero";
 import { SectionWrapper } from "@/components/ui/SectionWrapper";
@@ -19,14 +14,13 @@ import {
   type SegmentKey,
 } from "@/components/visual/SegmentVisual";
 import { caseStudyJsonLd, pageMetadata } from "@/lib/seo";
-import { cases, site } from "@/lib/site-data";
+import { cases } from "@/lib/site-data";
 
 const SEGMENT_BY_LABEL: Record<string, SegmentKey> = {
   Туроператор: "tour-operators",
   "Сеть турагентств": "travel-agencies",
   "Средство размещения": "hotels",
   Турагрегатор: "aggregators",
-  Продукт: "cases",
 };
 
 function caseSegmentKey(segment: string): SegmentKey {
@@ -70,7 +64,6 @@ export default async function CaseDetail({
   if (!c) notFound();
 
   const others = cases.filter((x) => x.slug !== slug).slice(0, 3);
-  const isNaviletProduct = c.slug === "navilet-ai-product";
 
   return (
     <PageShell>
@@ -87,14 +80,10 @@ export default async function CaseDetail({
         eyebrow={c.segment}
         title={c.title}
         description={c.summary}
-        primaryCta={isNaviletProduct ? "Запросить демо" : "Хочу похожий результат"}
-        primaryHref={
-          isNaviletProduct
-            ? "/contact?intent=demo"
-            : `/contact?intent=${encodeURIComponent("Похожий кейс: " + c.title)}`
-        }
-        secondaryCta={isNaviletProduct ? "Перейти на navilet.ru" : "Все кейсы"}
-        secondaryHref={isNaviletProduct ? site.naviletWebsite : "/cases"}
+        primaryCta="Хочу похожий результат"
+        primaryHref={`/contact?intent=${encodeURIComponent("Похожий кейс: " + c.title)}`}
+        secondaryCta="Все кейсы"
+        secondaryHref="/cases"
         crumbs={[
           { name: "Главная", href: "/" },
           { name: "Кейсы", href: "/cases" },
@@ -226,26 +215,6 @@ export default async function CaseDetail({
                 ))}
               </ul>
             </div>
-            {isNaviletProduct && (
-              <div className="card flex flex-col gap-3 bg-deep text-white">
-                <p className="text-xs font-bold uppercase tracking-[0.18em] text-sky">
-                  Сайт продукта
-                </p>
-                <p className="text-sm leading-7 text-blue-100">
-                  Подробнее о продукте «Навылет! AI», демо и партнёрской
-                  программе — на отдельной площадке.
-                </p>
-                <a
-                  href={site.naviletWebsite}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="btn-primary mt-1 justify-center"
-                >
-                  Открыть {site.naviletWebsiteDisplay}
-                  <ExternalLink className="h-4 w-4" />
-                </a>
-              </div>
-            )}
           </aside>
         </div>
       </SectionWrapper>
@@ -271,15 +240,7 @@ export default async function CaseDetail({
         </div>
       </SectionWrapper>
 
-      <CtaBand
-        title={
-          isNaviletProduct
-            ? "Готовы подключить Навылет! AI?"
-            : "Хотите похожий результат?"
-        }
-        cta={isNaviletProduct ? "Запросить демо" : undefined}
-        href={isNaviletProduct ? "/contact?intent=demo" : undefined}
-      />
+      <CtaBand title="Хотите похожий результат?" />
     </PageShell>
   );
 }

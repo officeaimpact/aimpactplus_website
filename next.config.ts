@@ -23,6 +23,13 @@ const nextConfig: NextConfig = {
       { source: "/o-kompanii", destination: "/about", permanent: true },
       { source: "/kontakty", destination: "/contact", permanent: true },
       { source: "/navilet", destination: "/navilet-ai", permanent: true },
+      // Навылет! AI больше не отдельный кейс, а наш продукт — старый
+      // case-URL отправляем на страницу продукта (сохраняем уже накопленный SEO-вес).
+      {
+        source: "/cases/navilet-ai-product",
+        destination: "/navilet-ai",
+        permanent: true,
+      },
     ];
   },
   async headers() {
