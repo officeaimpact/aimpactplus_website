@@ -204,7 +204,7 @@ function RoomsVisual() {
             <Building2 className="h-5 w-5" />
           </span>
           <div>
-            <p className="text-sm font-bold">Мини-гостиница Delas</p>
+            <p className="text-sm font-bold">Отель Delas</p>
             <p className="text-xs text-blue-100/70">Москва · 4 номера</p>
           </div>
         </div>

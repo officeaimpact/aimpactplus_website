@@ -30,6 +30,13 @@ const nextConfig: NextConfig = {
         destination: "/navilet-ai",
         permanent: true,
       },
+      // Кейс «Мини-гостиница Delas» переименован в «Отель Delas» —
+      // меняем slug на otel-delas, старый URL переадресуем (301).
+      {
+        source: "/cases/hostel-delas",
+        destination: "/cases/otel-delas",
+        permanent: true,
+      },
     ];
   },
   async headers() {
