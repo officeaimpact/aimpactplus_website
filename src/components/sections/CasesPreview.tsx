@@ -42,9 +42,13 @@ export function CasesPreview({ id, merge }: SectionAnchorProps = {}) {
                   <Image
                     src={c.logo}
                     alt={c.title}
-                    width={48}
+                    width={c.logoWide ? 160 : 48}
                     height={48}
-                    className="h-12 w-12 rounded-2xl object-contain"
+                    className={
+                      c.logoWide
+                        ? "h-12 w-auto max-w-[160px] object-contain"
+                        : "h-12 w-12 rounded-2xl object-contain"
+                    }
                   />
                 ) : (
                   <BrandMonogram name={c.title} size="md" variant="soft" />

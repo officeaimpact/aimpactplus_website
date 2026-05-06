@@ -190,9 +190,13 @@ export default async function CaseDetail({
                 <Image
                   src={c.logo}
                   alt={`Логотип ${c.title}`}
-                  width={64}
+                  width={c.logoWide ? 220 : 64}
                   height={64}
-                  className="h-16 w-16 rounded-2xl object-contain"
+                  className={
+                    c.logoWide
+                      ? "h-16 w-auto max-w-[220px] object-contain"
+                      : "h-16 w-16 rounded-2xl object-contain"
+                  }
                 />
               ) : (
                 <BrandMonogram name={c.title} size="lg" variant="soft" />

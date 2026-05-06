@@ -15,7 +15,7 @@ import { cases } from "@/lib/site-data";
 export const metadata = pageMetadata({
   title: "Кейсы AI-внедрений в туризме",
   description:
-    "Кейсы ИИМПАКТ ПЛЮС: «Сеть Магазинов Горящих Путёвок», мини-гостиница Delas и собственный продукт «Навылет! AI» (на базе поисковой системы Tourvisor) с подключением 15+ компаний отрасли.",
+    "Кейсы ИИМПАКТ ПЛЮС: корпоративный AI-ассистент для туроператора «ИНФОФЛОТ», «Сеть Магазинов Горящих Путёвок», мини-гостиница Delas и собственный продукт «Навылет! AI» (на базе поисковой системы Tourvisor) с подключением 15+ компаний отрасли.",
   path: "/cases",
 });
 
@@ -41,7 +41,7 @@ export default function CasesIndex() {
       <SectionWrapper
         eyebrow="Список"
         title="Подобрали по сегментам"
-        description="Туроператор, сеть турагентств, средство размещения и продуктовое внедрение Навылет! AI."
+        description="Туроператор речных круизов, сеть турагентств, средство размещения и продуктовое внедрение Навылет! AI."
       >
         <div className="mx-auto grid max-w-6xl gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {cases.map((c) => (
@@ -55,9 +55,13 @@ export default function CasesIndex() {
                   <Image
                     src={c.logo}
                     alt={c.title}
-                    width={56}
+                    width={c.logoWide ? 200 : 56}
                     height={56}
-                    className="h-14 w-14 rounded-2xl object-contain"
+                    className={
+                      c.logoWide
+                        ? "h-14 w-auto max-w-[200px] object-contain"
+                        : "h-14 w-14 rounded-2xl object-contain"
+                    }
                   />
                 ) : (
                   <BrandMonogram name={c.title} size="lg" variant="soft" />
