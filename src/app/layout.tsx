@@ -56,6 +56,17 @@ export const metadata: Metadata = {
     "ИИМПАКТ",
   ],
   category: "Information Technology",
+  icons: {
+    icon: [
+      { url: "/icon.svg", type: "image/svg+xml" },
+      { url: "/icon.png", type: "image/png", sizes: "32x32" },
+      { url: "/icon-192.png", type: "image/png", sizes: "192x192" },
+      { url: "/icon-512.png", type: "image/png", sizes: "512x512" },
+    ],
+    apple: [{ url: "/apple-icon.png", sizes: "180x180", type: "image/png" }],
+    shortcut: ["/icon.png"],
+  },
+  manifest: "/manifest.webmanifest",
   formatDetection: {
     email: false,
     telephone: false,
