@@ -28,12 +28,12 @@ export default function robots(): MetadataRoute.Robots {
       {
         userAgent: "*",
         allow: "/",
-        disallow: ["/api/"],
+        disallow: ["/api/", "/email/"],
       },
       {
         userAgent: llmAndSearchBots,
         allow: ["/", "/llms.txt", "/llms-full.txt"],
-        disallow: ["/api/"],
+        disallow: ["/api/", "/email/"],
       },
     ],
     sitemap: absoluteUrl("/sitemap.xml"),

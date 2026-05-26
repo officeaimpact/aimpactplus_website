@@ -39,6 +39,13 @@ const nextConfig: NextConfig = {
       },
     ];
   },
+  async rewrites() {
+    // Чистые URL для статичного HTML-письма: /email и /email/ → /email/index.html
+    return [
+      { source: "/email", destination: "/email/index.html" },
+      { source: "/email/", destination: "/email/index.html" },
+    ];
+  },
   async headers() {
     return [
       {
