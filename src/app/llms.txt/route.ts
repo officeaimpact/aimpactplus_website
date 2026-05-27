@@ -7,6 +7,7 @@ import {
 } from "@/lib/site-data";
 import { blogPosts } from "@/lib/blog-data";
 import { guides } from "@/lib/guides-data";
+import { cities } from "@/lib/cities-data";
 
 export const dynamic = "force-static";
 
@@ -67,6 +68,14 @@ ${blogPosts
   .map(
     (b) =>
       `- [${b.title}](${site.domain}/blog/${b.slug}): ${b.description}`,
+  )
+  .join("\n")}
+
+## География (локальные посадочные)
+${cities
+  .map(
+    (c) =>
+      `- [${c.title}](${site.domain}/cities/${c.slug}): ${c.description}`,
   )
   .join("\n")}
 

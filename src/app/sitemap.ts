@@ -2,6 +2,7 @@ import type { MetadataRoute } from "next";
 import { absoluteUrl, solutions, cases, services } from "@/lib/site-data";
 import { guides } from "@/lib/guides-data";
 import { blogPosts } from "@/lib/blog-data";
+import { cities } from "@/lib/cities-data";
 
 /**
  * Стабильные lastModified-даты — единственная дата обновления контентного
@@ -22,6 +23,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/expertise",
     "/guides",
     "/blog",
+    "/cities",
     "/about",
     "/contact",
     "/privacy",
@@ -69,6 +71,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.75,
   }));
 
+  const cityPaths: MetadataRoute.Sitemap = cities.map((c) => ({
+    url: absoluteUrl(`/cities/${c.slug}`),
+    lastModified: STATIC_PAGES_UPDATED,
+    changeFrequency: "monthly",
+    priority: 0.7,
+  }));
+
   return [
     ...staticPaths,
     ...solutionPaths,
@@ -76,5 +85,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...servicePaths,
     ...guidePaths,
     ...blogPaths,
+    ...cityPaths,
   ];
 }

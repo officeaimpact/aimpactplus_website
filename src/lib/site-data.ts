@@ -76,6 +76,7 @@ export const footerLinks = {
   ],
   company: [
     { label: "О компании", href: "/about" },
+    { label: "Города работы", href: "/cities" },
     { label: "Контакты", href: "/contact" },
   ],
   legal: [

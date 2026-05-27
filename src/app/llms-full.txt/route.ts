@@ -14,6 +14,7 @@ import {
 } from "@/lib/site-data";
 import { guides } from "@/lib/guides-data";
 import { blogPosts } from "@/lib/blog-data";
+import { cities } from "@/lib/cities-data";
 
 export const dynamic = "force-static";
 
@@ -208,6 +209,25 @@ URL: ${site.domain}/blog/${b.slug}
 Время чтения: ${b.readingTime}
 
 ${b.description}`,
+  )
+  .join("\n\n")}
+
+## География работы (локальные посадочные)
+
+${cities
+  .map(
+    (c) =>
+      `### ${c.title}
+URL: ${site.domain}/cities/${c.slug}
+Город: ${c.name} (предложный: ${c.nameLocative})
+
+${c.marketContext}
+
+Сегменты:
+${c.segments.map((s) => `- ${s.label}: ${s.note}`).join("\n")}
+
+Локальные FAQ:
+${c.localFaq.map((f) => `- ${f.question} → ${f.answer}`).join("\n")}`,
   )
   .join("\n\n")}
 
