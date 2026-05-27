@@ -230,7 +230,7 @@ export function LeadForm({
           value={values.context}
           onChange={(v) => setField("context", v)}
           error={errors.context}
-          placeholder="Например: нужен AI-ассистент на сайт + интеграция с AmoCRM"
+          placeholder="Например: нужен ИИ-ассистент на сайт + интеграция с AmoCRM"
         />
       </fieldset>
 

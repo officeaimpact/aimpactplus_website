@@ -14,7 +14,7 @@ function resolveIntent(raw: string | null): string | undefined {
   if (trimmed === "navilet-partner") return "Партнёрство по Навылет! AI";
   // Если входит в стандартный список — оставляем как есть.
   if ((leadIntents as readonly string[]).includes(trimmed)) return trimmed;
-  // Иначе — это произвольный intent (например, "Заявка на услугу: AI-аналитика").
+  // Иначе — это произвольный intent (например, "Заявка на услугу: ИИ-аналитика").
   // Ограничим длину, чтобы не было XSS/перегруза формы.
   return trimmed.slice(0, 160);
 }

@@ -20,7 +20,7 @@ export function Logo({
     >
       <Image
         src="/brand/logo.png"
-        alt="AIMPACT+ — AI-решения для туристического бизнеса"
+        alt="AIMPACT+ — ИИ-решения для туристического бизнеса"
         width={1795}
         height={654}
         priority

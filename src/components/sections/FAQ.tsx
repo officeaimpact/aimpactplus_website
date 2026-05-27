@@ -6,19 +6,40 @@ import { fadeInUp, staggerContainer, viewportOnce } from "@/lib/animations";
 import { faq } from "@/lib/site-data";
 import { SectionWrapper } from "@/components/ui/SectionWrapper";
 
-type SectionAnchorProps = {
+type FAQItem = { question: string; answer: string };
+
+type FAQSectionProps = {
   id?: string;
   merge?: "top" | "bottom" | "both";
+  /** Кастомный массив вопросов. По умолчанию — общий site-data.faq. */
+  items?: ReadonlyArray<FAQItem>;
+  /** Заголовок секции. */
+  title?: string;
+  /** Подзаголовок-описание. */
+  description?: string;
+  /** Eyebrow (метка над заголовком). */
+  eyebrow?: string;
 };
 
-export function FAQSection({ id, merge }: SectionAnchorProps = {}) {
+const DEFAULT_TITLE = "Короткие ответы на вопросы клиентов";
+const DEFAULT_DESCRIPTION =
+  "Отвечаем на самые частые вопросы про сроки, бренд, интеграции и старт работы.";
+
+export function FAQSection({
+  id,
+  merge,
+  items = faq,
+  title = DEFAULT_TITLE,
+  description = DEFAULT_DESCRIPTION,
+  eyebrow = "FAQ",
+}: FAQSectionProps = {}) {
   return (
     <SectionWrapper
       id={id}
       merge={merge}
-      eyebrow="FAQ"
-      title="Короткие ответы на вопросы клиентов"
-      description="Отвечаем на самые частые вопросы про сроки, бренд, интеграции и старт работы."
+      eyebrow={eyebrow}
+      title={title}
+      description={description}
     >
       <motion.div
         variants={staggerContainer}
@@ -27,7 +48,7 @@ export function FAQSection({ id, merge }: SectionAnchorProps = {}) {
         viewport={viewportOnce}
         className="mx-auto grid max-w-4xl gap-4"
       >
-        {faq.map((item) => (
+        {items.map((item) => (
           <motion.details
             key={item.question}
             variants={fadeInUp}

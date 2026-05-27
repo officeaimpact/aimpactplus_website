@@ -42,12 +42,12 @@ export async function generateMetadata({
 
 const HOWTO_STEPS = [
   {
-    name: "AI-аудит (1–2 недели)",
+    name: "ИИ-аудит (1–2 недели)",
     text: "Анализ воронки заявок, каналов коммуникации, CRM и базы типовых вопросов. На выходе — карта точек потерь и приоритеты автоматизации.",
   },
   {
     name: "Прототип и сценарии (1–2 недели)",
-    text: "Рабочий прототип AI-ассистента, диалоговые сценарии и FAQ-база. Проверяем гипотезы на реальных кейсах ещё до интеграции.",
+    text: "Рабочий прототип ИИ-ассистента, диалоговые сценарии и FAQ-база. Проверяем гипотезы на реальных кейсах ещё до интеграции.",
   },
   {
     name: "Безопасная интеграция (2–4 недели)",
@@ -99,8 +99,8 @@ export default async function GuideDetail({
         eyebrow="Гайд"
         title={guide.title}
         description={guide.description}
-        primaryCta="Получить AI-аудит"
-        primaryHref="/contact?intent=Получить%20аудит%20AI-возможностей"
+        primaryCta="Получить ИИ-аудит"
+        primaryHref="/contact?intent=Получить%20аудит%20ИИ-возможностей"
         secondaryCta="Смотреть Навылет! AI"
         secondaryHref="/navilet-ai"
         crumbs={[
@@ -116,8 +116,8 @@ export default async function GuideDetail({
           readingTime={guide.readingTime}
           toc={[...kakVnedritIiVTurizmeToc]}
           cta={{
-            href: "/contact?intent=Получить%20аудит%20AI-возможностей",
-            label: "Получить AI-аудит",
+            href: "/contact?intent=Получить%20аудит%20ИИ-возможностей",
+            label: "Получить ИИ-аудит",
           }}
         >
           <KakVnedritIiVTurizme />
@@ -126,7 +126,7 @@ export default async function GuideDetail({
 
       <CtaBand
         title="Готовы запустить пилот ИИ в своей компании?"
-        text="Опишите задачу — соберём прототип AI-решения и план безопасного пилота."
+        text="Опишите задачу — соберём прототип ИИ-решения и план безопасного пилота."
       />
     </PageShell>
   );

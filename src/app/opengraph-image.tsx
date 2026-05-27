@@ -2,7 +2,7 @@ import { ImageResponse } from "next/og";
 import { site } from "@/lib/site-data";
 
 export const runtime = "edge";
-export const alt = `${site.brand} — AI-решения для туристического бизнеса`;
+export const alt = `${site.brand} — ИИ-решения для туристического бизнеса`;
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -99,7 +99,7 @@ export default function OgImage() {
             maxWidth: "92%",
           }}
         >
-          AI-решения для туристического бизнеса
+          ИИ-решения для туристического бизнеса
         </div>
 
         {/* Подзаголовок */}
@@ -114,7 +114,7 @@ export default function OgImage() {
             lineHeight: 1.35,
           }}
         >
-          ИИМПАКТ ПЛЮС — IT-команда AI-интеграций для туризма с 2023 года
+          ИИМПАКТ ПЛЮС — IT-команда ИИ-интеграций для туризма с 2023 года
         </div>
 
         {/* Низ: бейджи */}
@@ -129,7 +129,7 @@ export default function OgImage() {
         >
           {[
             "Навылет! AI",
-            "15+ компаний",
+            "10+ компаний",
             "Fast Track IT · Сколково",
             site.domainDisplay,
           ].map((badge) => (

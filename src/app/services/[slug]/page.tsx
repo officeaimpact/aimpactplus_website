@@ -79,7 +79,7 @@ export default async function ServiceDetail({
           name: service.title,
           description: service.text,
           url: `/services/${service.slug}`,
-          serviceType: "AI integration for tourism",
+          serviceType: "Внедрение ИИ в туризм",
           audience: "Tourism business",
         })}
       />

@@ -3,7 +3,7 @@ import { ArrowRight } from "lucide-react";
 import { Badge } from "@/components/ui/Badge";
 
 export function CtaBand({
-  title = "Готовы обсудить AI-решение для вашего туристического бизнеса?",
+  title = "Готовы обсудить ИИ-решение для вашего туристического бизнеса?",
   text = "Покажем демо, оценим сценарии автоматизации и предложим безопасный план пилота. Без обязательств.",
   cta = "Оставить заявку",
   href = "/contact",

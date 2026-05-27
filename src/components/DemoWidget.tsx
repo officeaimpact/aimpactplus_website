@@ -244,7 +244,7 @@ export default function DemoWidget({
         <div className="flex h-9 w-9 items-center justify-center overflow-hidden rounded-full bg-white/20 p-1">
           <Image
             src="/navilet/logo-icon.svg"
-            alt="Навылет! AI — AI-турменеджер"
+            alt="Навылет! AI — ИИ-турменеджер для сайта туристической компании"
             width={28}
             height={24}
             className="h-6 w-auto brightness-0 invert"
@@ -285,7 +285,7 @@ export default function DemoWidget({
               Выберите сценарий
             </p>
             <p className="max-w-[240px] text-xs leading-relaxed text-muted">
-              Нажмите на один из сценариев, чтобы увидеть AI-ассистента в
+              Нажмите на один из сценариев, чтобы увидеть ИИ-ассистента в
               действии
             </p>
           </div>

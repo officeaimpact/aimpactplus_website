@@ -60,7 +60,7 @@ export default function RealWidgetContent({
               className="rounded-lg border border-[#E2E8F0] bg-white text-[#1E293B] px-2 py-1"
               style={{ fontSize: 6.5 * s, minHeight: 24 * s, lineHeight: 1.4 }}
             >
-              Здравствуйте! 👋 Я ваш AI-ассистент. Помогу подобрать идеальный тур.
+              Здравствуйте! 👋 Я ваш ИИ-ассистент. Помогу подобрать идеальный тур.
             </div>
           </FormField>
 
@@ -222,7 +222,7 @@ export default function RealWidgetContent({
                     className="bg-white rounded-xl rounded-bl-sm shadow-sm px-1.5 py-1 text-[#1E293B]"
                     style={{ fontSize: 6 * s, lineHeight: 1.4 }}
                   >
-                    Здравствуйте! 👋 Я ваш AI-ассистент. Помогу подобрать идеальный тур.
+                    Здравствуйте! 👋 Я ваш ИИ-ассистент. Помогу подобрать идеальный тур.
                   </div>
                 </div>
               </div>

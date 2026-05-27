@@ -3,8 +3,16 @@ import { absoluteUrl, solutions, cases, services } from "@/lib/site-data";
 import { guides } from "@/lib/guides-data";
 import { blogPosts } from "@/lib/blog-data";
 
+/**
+ * Стабильные lastModified-даты — единственная дата обновления контентного
+ * блока. Меняем вручную, когда правим контент (так Google и Яндекс не будут
+ * получать «обновлено сейчас» при каждом билде, что ухудшает trust).
+ */
+const STATIC_PAGES_UPDATED = new Date("2026-05-27");
+const SOLUTIONS_UPDATED = new Date("2026-05-27");
+const SERVICES_UPDATED = new Date("2026-05-27");
+
 export default function sitemap(): MetadataRoute.Sitemap {
-  const now = new Date();
   const staticPaths: MetadataRoute.Sitemap = [
     "/",
     "/solutions",
@@ -21,28 +29,28 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/offer",
   ].map((path) => ({
     url: absoluteUrl(path),
-    lastModified: now,
+    lastModified: STATIC_PAGES_UPDATED,
     changeFrequency: path === "/" ? "weekly" : "monthly",
     priority: path === "/" ? 1 : 0.7,
   }));
 
   const solutionPaths: MetadataRoute.Sitemap = solutions.map((s) => ({
     url: absoluteUrl(`/solutions/${s.slug}`),
-    lastModified: now,
+    lastModified: SOLUTIONS_UPDATED,
     changeFrequency: "monthly",
     priority: 0.8,
   }));
 
   const casePaths: MetadataRoute.Sitemap = cases.map((c) => ({
     url: absoluteUrl(`/cases/${c.slug}`),
-    lastModified: now,
+    lastModified: c.dateModifiedISO ? new Date(c.dateModifiedISO) : STATIC_PAGES_UPDATED,
     changeFrequency: "monthly",
     priority: 0.8,
   }));
 
   const servicePaths: MetadataRoute.Sitemap = services.map((s) => ({
     url: absoluteUrl(`/services/${s.slug}`),
-    lastModified: now,
+    lastModified: SERVICES_UPDATED,
     changeFrequency: "monthly",
     priority: 0.7,
   }));

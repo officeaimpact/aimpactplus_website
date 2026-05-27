@@ -46,10 +46,14 @@ export async function generateMetadata({
     path: `/cases/${c.slug}`,
     ogType: "article",
     keywords: [
+      `${c.client} ИИ`,
       `${c.client} AI`,
+      `${c.segment} ИИ`,
       `${c.segment} AI`,
+      `кейс ИИ ${c.segment}`,
       `кейс AI ${c.segment}`,
       `внедрение ИИ ${c.segment}`,
+      `внедрение AI ${c.segment}`,
     ],
   });
 }
@@ -74,6 +78,9 @@ export default async function CaseDetail({
           url: `/cases/${c.slug}`,
           client: c.client,
           segment: c.segment,
+          image: c.logo,
+          datePublishedISO: c.datePublishedISO,
+          dateModifiedISO: c.dateModifiedISO,
         })}
       />
       <PageHero
@@ -197,8 +204,23 @@ export default async function CaseDetail({
                 <p className="mt-1 text-lg font-bold text-heading">
                   {c.segment}
                 </p>
+                {c.status === "design" && (
+                  <p className="mt-2 inline-flex items-center rounded-full border border-amber-200 bg-amber-50 px-2.5 py-1 text-[11px] font-bold uppercase tracking-[0.12em] text-amber-700">
+                    Проектирование
+                  </p>
+                )}
               </div>
             </div>
+            {c.status === "design" && (
+              <div className="rounded-2xl border border-amber-200 bg-amber-50/60 p-4 text-sm leading-6 text-amber-900">
+                <p className="font-bold">Статус проекта: проектирование</p>
+                <p className="mt-1 text-amber-800">
+                  Этот кейс описывает архитектуру ИИ-решения, дорожную карту и
+                  техническое задание. Production-метрики появятся после
+                  запуска пилотного контура.
+                </p>
+              </div>
+            )}
             <div className="card">
               <h3 className="text-sm font-bold uppercase tracking-[0.18em] text-primary">
                 Что получили

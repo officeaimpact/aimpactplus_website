@@ -27,14 +27,14 @@ export default function DashboardHero() {
         >
           <Badge className="mb-6">Личный кабинет</Badge>
 
-          <motion.h1
+          <motion.h2
             variants={fadeInUp}
             className="mb-6 font-display text-3xl font-bold leading-[1.1] text-heading sm:text-5xl lg:text-[3.5rem]"
             style={{ letterSpacing: "-0.02em" }}
           >
             Полный контроль над вашим{" "}
-            <span className="text-accent">AI-ассистентом</span>
-          </motion.h1>
+            <span className="text-accent">ИИ-ассистентом</span>
+          </motion.h2>
 
           <motion.p
             variants={fadeInUp}

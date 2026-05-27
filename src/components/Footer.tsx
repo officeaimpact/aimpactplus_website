@@ -50,7 +50,7 @@ export function Footer() {
             href="/contact"
             className="inline-flex items-center gap-1.5 transition hover:text-white"
           >
-            Обсудить AI-проект
+            Обсудить ИИ-проект
             <ArrowUpRight className="h-3.5 w-3.5" aria-hidden="true" />
           </Link>
         </div>

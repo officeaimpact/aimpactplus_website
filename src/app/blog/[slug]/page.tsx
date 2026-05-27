@@ -61,8 +61,8 @@ export default async function BlogPostPage({
         eyebrow="Блог"
         title={post.title}
         description={post.description}
-        primaryCta="Получить AI-аудит"
-        primaryHref="/contact?intent=Получить%20аудит%20AI-возможностей"
+        primaryCta="Получить ИИ-аудит"
+        primaryHref="/contact?intent=Получить%20аудит%20ИИ-возможностей"
         secondaryCta="Смотреть Навылет! AI"
         secondaryHref="/navilet-ai"
         crumbs={[
@@ -87,7 +87,7 @@ export default async function BlogPostPage({
       )}
 
       <CtaBand
-        title="Хотите увидеть AI-турменеджер «вживую»?"
+        title="Хотите увидеть ИИ-турменеджер «вживую»?"
         text="За 10 минут покажем демо, обсудим сценарии под ваш бренд и оценим срок пилота."
         cta="Запросить демо"
       />

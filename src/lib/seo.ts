@@ -16,24 +16,38 @@ type SeoInput = {
   ogImage?: string;
 };
 
+// SEO ключи: держим обе формы (ИИ и AI), потому что в рунете ищут оба варианта.
+// Видимый body-текст переведён на ИИ — для русскоязычных пользователей и LLM.
 const BASE_KEYWORDS: ReadonlyArray<string> = [
-  "AI в туризме",
   "ИИ в туризме",
+  "AI в туризме",
+  "искусственный интеллект в туризме",
+  "внедрение ИИ в туризм",
+  "внедрение AI в туризм",
+  "ИИ-ассистент для турагентства",
   "AI-ассистент для турагентства",
+  "ИИ-ассистент для туроператора",
   "AI-ассистент для туроператора",
   "ИИ для турбизнеса",
-  "Навылет AI",
-  "ИИМПАКТ ПЛЮС",
-  "AIMPACT",
+  "ИИ-турменеджер",
   "AI-турменеджер",
+  "ИИ-чат-бот для сайта",
   "AI-чат-бот для сайта",
   "автоматизация турагентства",
+  "ИИ-аналитика для туризма",
   "AI-аналитика туризм",
+  "ИИ для отеля",
   "AI для отеля",
+  "ИИ для турагрегатора",
   "AI для турагрегатора",
+  "ИИ-интегратор Россия",
   "AI-интегратор Россия",
-  "AI-внедрение туризм",
   "цифровизация туризма",
+  "Навылет AI",
+  "Навылет",
+  "ИИМПАКТ ПЛЮС",
+  "AIMPACT",
+  "Tourvisor ИИ",
   "Tourvisor AI",
 ];
 
@@ -134,15 +148,26 @@ export function organizationJsonLd() {
     ],
     description: site.description,
     url: site.domain,
-    logo: absoluteUrl("/icon"),
-    image: absoluteUrl("/apple-icon"),
+    // Логотип отдаём как ImageObject с реальными размерами — Google требует
+    // именно ImageObject для богатых результатов, а не строковый URL.
+    logo: {
+      "@type": "ImageObject",
+      url: absoluteUrl("/icon-512.png"),
+      width: 512,
+      height: 512,
+    },
+    image: {
+      "@type": "ImageObject",
+      url: absoluteUrl("/apple-icon.png"),
+      width: 180,
+      height: 180,
+    },
     email: site.email,
     telephone: site.phone,
     taxID: site.inn,
     foundingDate: "2025-06-06",
     founders: [
       { "@type": "Person", name: "Силагадзе Лукиан Ираклиевич" },
-      { "@type": "Person", name: "Погосов Филипп Сергеевич" },
     ],
     address: {
       "@type": "PostalAddress",
@@ -153,16 +178,16 @@ export function organizationJsonLd() {
     },
     areaServed: { "@type": "Country", name: "Россия" },
     knowsAbout: [
-      "Искусственный интеллект",
-      "AI-ассистенты",
-      "Автоматизация туризма",
-      "Чат-боты для турагентств",
-      "Голосовые ассистенты",
-      "AI-аналитика",
-      "Tourvisor",
-      "AmoCRM",
-      "Bitrix24",
-      "Внедрение AI в туризм",
+      "Искусственный интеллект в туризме",
+      "Внедрение ИИ в туристический бизнес",
+      "ИИ-ассистенты для турагентств и туроператоров",
+      "Автоматизация продаж туров",
+      "ИИ-чат-боты и голосовые ассистенты",
+      "ИИ-аналитика для туризма",
+      "Интеграция с Tourvisor",
+      "Интеграция с AmoCRM",
+      "Интеграция с Bitrix24",
+      "Интеграция с UON CRM",
     ],
     contactPoint: [
       {
@@ -179,6 +204,9 @@ export function organizationJsonLd() {
 }
 
 export function websiteJsonLd() {
+  // SearchAction намеренно НЕ добавляем: реальной поисковой страницы на сайте
+  // нет, а Google штрафует «фейковые» SearchAction. Если позже сделаем /search —
+  // вернём это поле с настоящим target.
   return {
     "@context": "https://schema.org",
     "@type": "WebSite",
@@ -191,11 +219,6 @@ export function websiteJsonLd() {
       "@type": "Organization",
       name: site.legalName,
       url: site.domain,
-    },
-    potentialAction: {
-      "@type": "SearchAction",
-      target: `${site.domain}?q={search_term_string}`,
-      "query-input": "required name=search_term_string",
     },
   } as const;
 }
@@ -240,7 +263,7 @@ export function serviceJsonLd(input: {
     "@type": "Service",
     name: input.name,
     description: input.description,
-    serviceType: input.serviceType ?? "AI integration for tourism",
+    serviceType: input.serviceType ?? "Внедрение ИИ в туризм",
     url: absoluteUrl(input.url),
     provider: {
       "@type": "Organization",
@@ -273,7 +296,7 @@ export function productJsonLd(input: {
       name: site.legalName,
       url: site.domain,
     },
-    category: "AI assistant for tourism",
+    category: "ИИ-ассистент для туризма",
     url: absoluteUrl(input.url),
     image: input.image ? absoluteUrl(input.image) : undefined,
   } as const;
@@ -309,7 +332,9 @@ export function articleJsonLd(input: {
       url: site.domain,
       logo: {
         "@type": "ImageObject",
-        url: absoluteUrl("/icon"),
+        url: absoluteUrl("/icon-512.png"),
+        width: 512,
+        height: 512,
       },
     },
   } as const;
@@ -343,7 +368,15 @@ export function caseStudyJsonLd(input: {
   url: string;
   client: string;
   segment: string;
+  /** ISO-дата публикации кейса (если не задана — используется dateModified). */
+  datePublishedISO?: string;
+  /** ISO-дата последней редакции кейса. */
+  dateModifiedISO?: string;
+  /** URL картинки/логотипа кейса (для богатых результатов). */
+  image?: string;
 }) {
+  const dateModified = input.dateModifiedISO ?? "2025-10-01";
+  const datePublished = input.datePublishedISO ?? dateModified;
   return {
     "@context": "https://schema.org",
     "@type": "Article",
@@ -353,6 +386,9 @@ export function caseStudyJsonLd(input: {
     inLanguage: "ru-RU",
     about: input.client,
     articleSection: input.segment,
+    datePublished,
+    dateModified,
+    image: input.image ? absoluteUrl(input.image) : undefined,
     isPartOf: {
       "@type": "WebSite",
       url: site.domain,
@@ -360,11 +396,18 @@ export function caseStudyJsonLd(input: {
     author: {
       "@type": "Organization",
       name: site.legalName,
+      url: site.domain,
     },
     publisher: {
       "@type": "Organization",
       name: site.legalName,
       url: site.domain,
+      logo: {
+        "@type": "ImageObject",
+        url: absoluteUrl("/icon-512.png"),
+        width: 512,
+        height: 512,
+      },
     },
   } as const;
 }
@@ -384,7 +427,10 @@ export function itemListJsonLd(items: { name: string; url: string }[]) {
 
 export function eventJsonLd(input: {
   name: string;
-  date: string;
+  /** ISO-дата начала события (например, "2025-09-25"). */
+  startDate: string;
+  /** ISO-дата окончания. Если событие однодневное — можно не задавать. */
+  endDate?: string;
   location: string;
   description: string;
 }) {
@@ -393,6 +439,8 @@ export function eventJsonLd(input: {
     "@type": "Event",
     name: input.name,
     description: input.description,
+    startDate: input.startDate,
+    ...(input.endDate ? { endDate: input.endDate } : {}),
     location: { "@type": "Place", name: input.location },
     organizer: {
       "@type": "Organization",
@@ -401,6 +449,5 @@ export function eventJsonLd(input: {
     },
     eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
     eventStatus: "https://schema.org/EventScheduled",
-    description_note: input.date,
   } as const;
 }

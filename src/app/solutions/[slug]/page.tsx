@@ -68,7 +68,7 @@ export default async function SolutionDetail({
           name: solution.title,
           description: solution.summary,
           url: `/solutions/${solution.slug}`,
-          serviceType: "AI integration for tourism",
+          serviceType: "Внедрение ИИ в туризм",
         })}
       />
       <PageHero
@@ -90,7 +90,7 @@ export default async function SolutionDetail({
       <SectionWrapper
         eyebrow="Что болит у сегмента"
         title="Какие проблемы закрывает ИИ"
-        description="Точки потерь, которые ежедневно сокращают выручку и нагружают команду. Мы измеряем их на старте и закрываем точечными AI-сценариями."
+        description="Точки потерь, которые ежедневно сокращают выручку и нагружают команду. Мы измеряем их на старте и закрываем точечными ИИ-сценариями."
       >
         <div className="grid gap-5 md:grid-cols-3">
           {solution.painPoints.map((p) => (
@@ -111,7 +111,7 @@ export default async function SolutionDetail({
       <SectionWrapper
         eyebrow="Сценарии ИИ"
         title="Как именно ИИ работает в этом бизнесе"
-        description="Конкретные диалоги и операции, которые забирает у людей AI-ассистент. Каждый сценарий измеряется отдельно и подключается без остановки текущих процессов."
+        description="Конкретные диалоги и операции, которые забирает у людей ИИ-ассистент. Каждый сценарий измеряется отдельно и подключается без остановки текущих процессов."
         alt
       >
         <div className="grid gap-5 md:grid-cols-2">

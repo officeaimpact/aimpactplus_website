@@ -490,7 +490,7 @@ function CompassVisual() {
         <Compass className="h-14 w-14 text-sky" />
       </motion.div>
       <p className="max-w-[16rem] text-center text-sm font-semibold text-blue-100">
-        AI-интегратор для туризма с фокусом на безопасное внедрение
+        ИИ-интегратор для туризма с фокусом на безопасное внедрение
       </p>
     </div>
   );

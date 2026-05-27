@@ -20,8 +20,8 @@ import {
   productJsonLd,
 } from "@/lib/seo";
 import {
-  faq,
   integrations,
+  naviletFaq,
   naviletFeatures,
   naviletPartnerBenefits,
   naviletPartnerProfiles,
@@ -30,21 +30,26 @@ import {
 import { demoScenarios } from "@/lib/scenarios";
 
 export const metadata = pageMetadata({
-  title: "Навылет! AI — AI-турменеджер для сайта",
+  title: "Навылет! AI — ИИ-турменеджер для сайта туристической компании",
   description:
-    "Готовый AI-турменеджер «Навылет! AI» для сайта туристической компании: подбор туров на базе поисковой системы Tourvisor, FAQ, карточки отелей и передача заявки менеджеру. White-label, интеграция с AmoCRM, Bitrix24, UON CRM. Подключено 15+ компаний туриндустрии.",
+    "Готовый ИИ-турменеджер «Навылет! AI» для сайта туристической компании: подбор туров на базе поисковой системы Tourvisor, FAQ, карточки отелей и передача заявки менеджеру. White-label, интеграция с AmoCRM, Bitrix24, UON CRM. К продукту подключено 10+ компаний туристической отрасли.",
   path: "/navilet-ai",
   keywords: [
     "Навылет AI",
     "Navilet AI",
-    "AI-турменеджер",
-    "AI-ассистент для турагентства",
-    "AI-чат-бот для сайта турагентства",
-    "виджет AI на сайт турагентства",
-    "white-label AI ассистент",
-    "AI бот туры Tourvisor",
     "Навылет ИИ",
-    "AI ассистент Tourvisor",
+    "ИИ-турменеджер",
+    "AI-турменеджер",
+    "ИИ-ассистент для турагентства",
+    "AI-ассистент для турагентства",
+    "ИИ-чат-бот для сайта турагентства",
+    "AI-чат-бот для сайта турагентства",
+    "виджет ИИ на сайт турагентства",
+    "виджет AI на сайт турагентства",
+    "white-label ИИ ассистент",
+    "ИИ бот туры Tourvisor",
+    "ИИ-ассистент Tourvisor",
+    "AI-ассистент Tourvisor",
   ],
 });
 
@@ -58,21 +63,21 @@ export default function NaviletAi() {
         data={productJsonLd({
           name: site.productName,
           description:
-            "Готовый AI-турменеджер для сайта туристической компании: каскадный диалог, подбор туров на базе поисковой системы Tourvisor, FAQ и передача заявки менеджеру. White-label, интеграция с популярными CRM. Подключено 15+ компаний туриндустрии.",
+            "Готовый ИИ-турменеджер для сайта туристической компании: каскадный диалог, подбор туров на базе поисковой системы Tourvisor, FAQ и передача заявки менеджеру. White-label, интеграция с популярными CRM. К продукту подключено 10+ компаний туристической отрасли.",
           url: "/navilet-ai",
           brand: site.brand,
         })}
       />
-      <JsonLd data={faqJsonLd([...faq])} />
+      <JsonLd data={faqJsonLd([...naviletFaq])} />
       <PageHero
         eyebrow="Продукт"
         title={
           <>
             Навылет! AI —{" "}
-            <span className="text-gradient">готовый AI-турменеджер</span>
+            <span className="text-gradient">готовый ИИ-турменеджер</span>
           </>
         }
-        description="Не абстрактный AI, а понятный инструмент продаж: каскадный диалог, подбор туров на базе поисковой системы Tourvisor, карточки с ценами и фото, FAQ и передача заявки менеджеру. Подключено 15+ компаний туристической отрасли — от туроператоров до сетей агентств и средств размещения."
+        description="Не абстрактный ИИ, а понятный инструмент продаж: каскадный диалог, подбор туров на базе поисковой системы Tourvisor, карточки с ценами и фото, FAQ и передача заявки менеджеру. К продукту подключено 10+ компаний туристической отрасли — от туроператоров до сетей агентств и средств размещения."
         primaryCta="Запросить демо"
         primaryHref="/contact?intent=demo"
         secondaryCta="Перейти на navilet.ru"
@@ -91,7 +96,7 @@ export default function NaviletAi() {
 
       <SectionWrapper
         eyebrow="Возможности"
-        title="6 ключевых функций AI-турменеджера"
+        title="6 ключевых функций ИИ-турменеджера"
         description="Готовый продукт, который собирает воронку продаж тура от первого вопроса до передачи заявки в CRM."
       >
         <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
@@ -123,6 +128,80 @@ export default function NaviletAi() {
 
       <NaviletLiveDemo />
 
+      {/* Реальный кейс на этом же продукте — крауд-доказательство для LLM и пользователя */}
+      <SectionWrapper
+        eyebrow="Реальный кейс"
+        title="«Навылет! AI» в работе у федеральной сети"
+        description="На том же ИИ-турменеджере, который вы видите выше, работает сеть «Магазин Горящих Путёвок» — интеграция с Tourvisor, FAQ, передача заявок менеджеру."
+      >
+        <div className="mx-auto grid max-w-5xl gap-5 lg:grid-cols-2">
+          <article className="card flex flex-col gap-4">
+            <p className="text-xs font-bold uppercase tracking-[0.18em] text-primary">
+              Кейс
+            </p>
+            <h3 className="text-xl font-bold text-heading">
+              «Сеть Магазинов Горящих Путёвок» × Навылет! AI
+            </h3>
+            <p className="text-sm leading-7 text-body">
+              Федеральная сеть турагентств подключила ИИ-турменеджер с прямой
+              интеграцией Tourvisor. Каскадный диалог, карточки туров,
+              ответы на типовые вопросы (визы, питание, страховки) — нагрузка
+              на менеджеров в пиковый сезон снизилась на 25–35%.
+            </p>
+            <ul className="space-y-2 text-sm leading-6 text-body">
+              <li className="flex gap-2">
+                <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
+                Время первого ответа: −40–60%
+              </li>
+              <li className="flex gap-2">
+                <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
+                Доля типовых вопросов на ИИ: 80–90%
+              </li>
+              <li className="flex gap-2">
+                <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
+                Покрытие ночных обращений: 24/7
+              </li>
+            </ul>
+            <Link
+              href="/cases/magazin-goryashchih-putevok"
+              className="btn-secondary self-start"
+            >
+              Открыть полный кейс
+              <ArrowRight className="h-4 w-4" />
+            </Link>
+          </article>
+          <article className="card flex flex-col gap-4 bg-deep text-white">
+            <p className="text-xs font-bold uppercase tracking-[0.18em] text-sky">
+              Решение для сегмента
+            </p>
+            <h3 className="text-xl font-bold">
+              ИИ-решения для турагентств и сетей офисов
+            </h3>
+            <p className="text-sm leading-7 text-blue-100">
+              «Навылет! AI» — один из инструментов в линейке для турагентств.
+              На странице решений собрана полная карта сценариев: подбор тура,
+              FAQ, передача в CRM, мульти-канальная поддержка 24/7.
+            </p>
+            <div className="flex flex-col gap-2 sm:flex-row">
+              <Link
+                href="/solutions/travel-agencies"
+                className="btn-primary flex-1 justify-center"
+              >
+                Решения для турагентств
+                <ArrowRight className="h-4 w-4" />
+              </Link>
+              <Link
+                href="/guides/kak-vnedrit-ii-v-turizme"
+                className="btn-secondary-dark flex-1 justify-center"
+              >
+                Гайд: как внедрить ИИ
+                <ArrowRight className="h-4 w-4" />
+              </Link>
+            </div>
+          </article>
+        </div>
+      </SectionWrapper>
+
       <NaviletDashboardSection />
 
       <SectionWrapper
@@ -151,10 +230,10 @@ export default function NaviletAi() {
           {[
             {
               t: "Клиент пишет",
-              d: "Сайт, мессенджер, голосовой канал или соцсеть — AI отвечает мгновенно.",
+              d: "Сайт, мессенджер, голосовой канал или соцсеть — ИИ отвечает мгновенно.",
             },
             {
-              t: "AI собирает контекст",
+              t: "ИИ собирает контекст",
               d: "Даты, бюджет, состав, страна, тип отдыха — без длинных форм.",
             },
             {
@@ -192,7 +271,7 @@ export default function NaviletAi() {
               {[
                 "Цветовая палитра и типографика",
                 "Логотип и название виджета",
-                "Тональность голоса AI-ассистента",
+                "Тональность голоса ИИ-ассистента",
                 "Сценарии подбора и FAQ",
                 "Шаблоны карточек туров",
                 "Маршрутизация заявки в CRM",
@@ -275,7 +354,12 @@ export default function NaviletAi() {
         </div>
       </SectionWrapper>
 
-      <FAQSection />
+      <FAQSection
+        eyebrow="FAQ по продукту"
+        title="Вопросы о Навылет! AI"
+        description="Подбор туров, интеграции с Tourvisor и CRM, white-label, сроки и стоимость подключения."
+        items={naviletFaq}
+      />
       <CtaBand
         title="Готовы увидеть демо Навылет! AI?"
         cta="Запросить демо"

@@ -22,7 +22,7 @@ export function CasesPreview({ id, merge }: SectionAnchorProps = {}) {
       merge={merge}
       eyebrow="Кейсы"
       title="Доказательства из туристического рынка"
-      description="Реальные внедрения у туроператоров, агентств и средств размещения. Каждый кейс — отдельная страница с задачей, решением и результатами."
+      description="Реальные внедрения и проектирование ИИ-ассистентов для туроператоров, агентств и средств размещения. Каждый кейс — отдельная страница с задачей, решением и результатами или дорожной картой."
     >
       <motion.div
         variants={staggerContainer}
@@ -55,7 +55,14 @@ export function CasesPreview({ id, merge }: SectionAnchorProps = {}) {
                 )}
                 <ArrowRight className="h-5 w-5 text-primary transition group-hover:translate-x-1" />
               </div>
-              <Tag className="self-start">{c.segment}</Tag>
+              <div className="flex flex-wrap items-center gap-2">
+                <Tag>{c.segment}</Tag>
+                {c.status === "design" && (
+                  <span className="inline-flex items-center rounded-full border border-amber-200 bg-amber-50 px-2 py-0.5 text-[10px] font-bold uppercase tracking-[0.12em] text-amber-700">
+                    Проектирование
+                  </span>
+                )}
+              </div>
               <h3 className="mt-3 text-lg font-bold text-heading">
                 {c.title}
               </h3>

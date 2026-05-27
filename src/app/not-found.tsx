@@ -1,6 +1,20 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { PageShell } from "@/components/PageShell";
+
+// 404 страница: запрещаем индексацию, чтобы поисковики не подхватывали
+// soft-404 как обычный документ и не тратили краулинг-бюджет.
+export const metadata: Metadata = {
+  title: "404 — страница не найдена | ИИМПАКТ ПЛЮС",
+  description:
+    "Запрошенная страница не найдена. Вернитесь на главную сайта ИИ-Туризм (ИИМПАКТ ПЛЮС) или посмотрите кейсы и продукт «Навылет! AI».",
+  robots: {
+    index: false,
+    follow: true,
+    googleBot: { index: false, follow: true },
+  },
+};
 
 export default function NotFound() {
   return (

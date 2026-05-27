@@ -11,8 +11,8 @@ import {
   staggerContainer,
 } from "@/lib/animations";
 
-const title = "Внедряем ИИ в туризм";
-const titleAccent = "от пилота за 2 недели до собственного AI-продукта";
+const title = "Внедряем искусственный интеллект в туризм";
+const titleAccent = "от пилота за 2 недели до собственного ИИ-продукта";
 
 export function Hero() {
   const words = title.split(" ");
@@ -54,11 +54,11 @@ export function Hero() {
             variants={fadeInUp}
             className="mt-6 max-w-2xl text-pretty text-base leading-7 text-blue-100 sm:text-xl sm:leading-8"
           >
-            ИИМПАКТ ПЛЮС — российский AI-интегратор для туризма с 2023 года.
-            Запускаем AI-ассистентов, голосовых помощников и AI-аналитику
+            ИИМПАКТ ПЛЮС — российский ИИ-интегратор для туризма с 2023 года.
+            Запускаем ИИ-ассистентов, голосовых помощников и ИИ-аналитику
             для турагентств, туроператоров, отелей и агрегаторов.
             Готовый продукт «Навылет! AI» — на базе поисковой системы
-            Tourvisor — уже работает у 15+ компаний отрасли.
+            Tourvisor — уже работает у 10+ компаний отрасли.
           </motion.p>
 
           <motion.div
@@ -69,7 +69,7 @@ export function Hero() {
               href="/contact"
               className="btn-primary w-full justify-center sm:w-auto"
             >
-              Получить AI-аудит
+              Получить ИИ-аудит
               <ArrowRight className="h-5 w-5" aria-hidden="true" />
             </Link>
             <Link
