@@ -4,11 +4,18 @@ import { PageHero } from "@/components/ui/PageHero";
 import { CtaBand } from "@/components/sections/CtaBand";
 import { JsonLd } from "@/components/ui/JsonLd";
 import { ArticleShell } from "@/components/guides/ArticleShell";
+import { AuthorBio } from "@/components/blog/AuthorBio";
+import { ArticleMeta } from "@/components/blog/ArticleMeta";
 import {
   ChtoTakoeAiTurmenedzher,
   chtoTakoeAiTurmenedzherToc,
 } from "@/components/blog/ChtoTakoeAiTurmenedzher";
-import { articleJsonLd, pageMetadata } from "@/lib/seo";
+import {
+  IiAssistentVsChatBot,
+  iiAssistentVsChatBotFaq,
+  iiAssistentVsChatBotToc,
+} from "@/components/blog/IiAssistentVsChatBot";
+import { articleJsonLd, faqJsonLd, pageMetadata } from "@/lib/seo";
 import { blogPosts, getBlogPost } from "@/lib/blog-data";
 
 type Params = { slug: string };
@@ -44,6 +51,7 @@ export default async function BlogPostPage({
   if (!post) notFound();
 
   const isStarter = slug === "chto-takoe-ai-turmenedzher";
+  const isVsChatBot = slug === "ii-assistent-vs-chat-bot";
 
   return (
     <PageShell>
@@ -54,8 +62,14 @@ export default async function BlogPostPage({
           url: `/blog/${post.slug}`,
           dateModifiedISO: post.publishedISO,
           datePublishedISO: post.publishedISO,
+          articleSection: post.category,
+          authorIsFounder: true,
+          keywords: post.keywords,
         })}
       />
+      {isVsChatBot && (
+        <JsonLd data={faqJsonLd([...iiAssistentVsChatBotFaq])} />
+      )}
 
       <PageHero
         eyebrow="Блог"
@@ -72,6 +86,12 @@ export default async function BlogPostPage({
         ]}
       />
 
+      <ArticleMeta
+        publishedDisplay={post.publishedDisplay}
+        publishedISO={post.publishedISO}
+        readingTime={post.readingTime}
+      />
+
       {isStarter && (
         <ArticleShell
           updated={post.publishedDisplay}
@@ -85,6 +105,22 @@ export default async function BlogPostPage({
           <ChtoTakoeAiTurmenedzher />
         </ArticleShell>
       )}
+
+      {isVsChatBot && (
+        <ArticleShell
+          updated={post.publishedDisplay}
+          readingTime={post.readingTime}
+          toc={[...iiAssistentVsChatBotToc]}
+          cta={{
+            href: "/contact?intent=Получить%20ИИ-аудит",
+            label: "Получить ИИ-аудит",
+          }}
+        >
+          <IiAssistentVsChatBot />
+        </ArticleShell>
+      )}
+
+      <AuthorBio />
 
       <CtaBand
         title="Хотите увидеть ИИ-турменеджер «вживую»?"

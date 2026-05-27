@@ -302,6 +302,103 @@ export function productJsonLd(input: {
   } as const;
 }
 
+/**
+ * Person JSON-LD для основателя. Используется как `author` в Article-схемах,
+ * чтобы Google и Яндекс понимали реального автора-эксперта (E-E-A-T).
+ * URL `/about#author-lukian` указывает на якорь страницы /about с био.
+ */
+export function founderPersonJsonLd() {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "@id": absoluteUrl("/about#author-lukian"),
+    name: site.ceo,
+    givenName: "Лукиан",
+    familyName: "Силагадзе",
+    additionalName: "Ираклиевич",
+    jobTitle: "Генеральный директор и основатель ИИМПАКТ ПЛЮС",
+    description:
+      "Эксперт по искусственному интеллекту и цифровым технологиям в туризме, член Комитета ТПП РФ по предпринимательству в сфере туризма. Спикер ТПП РФ, РСТ, МГИМО, РЭУ им. Г. В. Плеханова.",
+    knowsAbout: [
+      "Искусственный интеллект в туризме",
+      "Внедрение ИИ в туристический бизнес",
+      "ИИ-ассистенты и чат-боты",
+      "Голосовые ИИ-ассистенты",
+      "Интеграции с Tourvisor, AmoCRM, Bitrix24",
+      "152-ФЗ при работе с персональными данными туристов",
+    ],
+    worksFor: {
+      "@type": "Organization",
+      name: site.legalName,
+      url: site.domain,
+    },
+    memberOf: {
+      "@type": "Organization",
+      name: "Торгово-промышленная палата Российской Федерации",
+      url: "https://tpprf.ru/",
+    },
+    url: absoluteUrl("/about#author-lukian"),
+    sameAs: [site.domain, site.naviletWebsite],
+  } as const;
+}
+
+/**
+ * Краткая ссылка-на-Person — для использования внутри других JSON-LD
+ * (Article.author, Article.creator). Использует @id, чтобы Google связал
+ * Person с его полным описанием на /about.
+ */
+export const founderAuthorRef = {
+  "@type": "Person",
+  "@id": absoluteUrl("/about#author-lukian"),
+  name: site.ceo,
+  url: absoluteUrl("/about#author-lukian"),
+} as const;
+
+/**
+ * LocalBusiness JSON-LD — для страницы /about. Это сильный сигнал для
+ * Яндекс.Карт и локального поиска: офис в Москве, конкретный адрес и
+ * телефон. Точные координаты офиса можно уточнить позднее.
+ */
+export function localBusinessJsonLd() {
+  return {
+    "@context": "https://schema.org",
+    "@type": "ProfessionalService",
+    "@id": absoluteUrl("/about#local-business"),
+    name: site.brand,
+    legalName: site.legalName,
+    description: site.description,
+    url: site.domain,
+    image: absoluteUrl("/og/og-default.png"),
+    logo: absoluteUrl("/icon-512.png"),
+    email: site.email,
+    telephone: site.phone,
+    taxID: site.inn,
+    priceRange: "₽₽",
+    areaServed: { "@type": "Country", name: "Россия" },
+    address: {
+      "@type": "PostalAddress",
+      streetAddress: "Трубниковский переулок, д. 24, стр. 1, помещение 14",
+      addressLocality: "Москва",
+      postalCode: "121069",
+      addressCountry: "RU",
+    },
+    openingHoursSpecification: [
+      {
+        "@type": "OpeningHoursSpecification",
+        dayOfWeek: [
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Friday",
+        ],
+        opens: "10:00",
+        closes: "19:00",
+      },
+    ],
+  } as const;
+}
+
 export function articleJsonLd(input: {
   title: string;
   description: string;
@@ -309,23 +406,35 @@ export function articleJsonLd(input: {
   datePublishedISO?: string;
   dateModifiedISO: string;
   image?: string;
+  /** Раздел/категория статьи — для articleSection (важно для LLM-классификации). */
+  articleSection?: string;
+  /** Если true — author = основатель Лукиан (Person). Иначе автор — Organization. */
+  authorIsFounder?: boolean;
+  /** Ключевые слова (через запятую) — для Article.keywords. */
+  keywords?: string[];
 }) {
+  const author = input.authorIsFounder
+    ? founderAuthorRef
+    : {
+        "@type": "Organization" as const,
+        name: site.legalName,
+        url: site.domain,
+      };
   return {
     "@context": "https://schema.org",
     "@type": "Article",
     headline: input.title,
     description: input.description,
     url: absoluteUrl(input.url),
+    mainEntityOfPage: absoluteUrl(input.url),
     inLanguage: "ru-RU",
     datePublished: input.datePublishedISO ?? input.dateModifiedISO,
     dateModified: input.dateModifiedISO,
     image: input.image ? absoluteUrl(input.image) : undefined,
+    articleSection: input.articleSection,
+    keywords: input.keywords?.join(", "),
     isPartOf: { "@type": "WebSite", url: site.domain },
-    author: {
-      "@type": "Organization",
-      name: site.legalName,
-      url: site.domain,
-    },
+    author,
     publisher: {
       "@type": "Organization",
       name: site.legalName,

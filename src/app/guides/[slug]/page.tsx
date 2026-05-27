@@ -4,6 +4,8 @@ import { PageHero } from "@/components/ui/PageHero";
 import { CtaBand } from "@/components/sections/CtaBand";
 import { JsonLd } from "@/components/ui/JsonLd";
 import { ArticleShell } from "@/components/guides/ArticleShell";
+import { AuthorBio } from "@/components/blog/AuthorBio";
+import { ArticleMeta } from "@/components/blog/ArticleMeta";
 import {
   KakVnedritIiVTurizme,
   kakVnedritIiVTurizmeFaq,
@@ -78,6 +80,9 @@ export default async function GuideDetail({
           description: guide.description,
           url: `/guides/${guide.slug}`,
           dateModifiedISO: guide.updatedISO,
+          articleSection: "Гайды",
+          authorIsFounder: true,
+          keywords: guide.keywords,
         })}
       />
       {isFlagship && (
@@ -110,6 +115,13 @@ export default async function GuideDetail({
         ]}
       />
 
+      <ArticleMeta
+        publishedDisplay={guide.updated}
+        publishedISO={guide.updatedISO}
+        readingTime={guide.readingTime}
+        updatedLabel
+      />
+
       {isFlagship && (
         <ArticleShell
           updated={guide.updated}
@@ -123,6 +135,8 @@ export default async function GuideDetail({
           <KakVnedritIiVTurizme />
         </ArticleShell>
       )}
+
+      <AuthorBio />
 
       <CtaBand
         title="Готовы запустить пилот ИИ в своей компании?"

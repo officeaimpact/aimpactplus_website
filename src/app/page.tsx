@@ -6,6 +6,7 @@ import { SolutionsMap } from "@/components/sections/SolutionsMap";
 import { HowItWorks } from "@/components/sections/HowItWorks";
 import { NaviletPreview } from "@/components/sections/NaviletPreview";
 import { CasesPreview } from "@/components/sections/CasesPreview";
+import { LatestContent } from "@/components/sections/LatestContent";
 import { Trust } from "@/components/sections/Trust";
 import { ExpertiseTeaser } from "@/components/sections/ExpertiseTeaser";
 import { FAQSection } from "@/components/sections/FAQ";
@@ -51,6 +52,7 @@ export default function Home() {
       {/* Пара: «Доверие» — экспертиза в аудитории и отзывы профессионалов */}
       <ExpertiseTeaser id="trust" merge="bottom" />
       <Trust merge="top" />
+      <LatestContent />
       <FAQSection id="faq" />
       <CtaBand />
     </PageShell>

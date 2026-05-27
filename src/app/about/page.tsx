@@ -15,7 +15,12 @@ import { PageShell } from "@/components/PageShell";
 import { PageHero } from "@/components/ui/PageHero";
 import { SectionWrapper } from "@/components/ui/SectionWrapper";
 import { CtaBand } from "@/components/sections/CtaBand";
-import { pageMetadata } from "@/lib/seo";
+import { JsonLd } from "@/components/ui/JsonLd";
+import {
+  founderPersonJsonLd,
+  localBusinessJsonLd,
+  pageMetadata,
+} from "@/lib/seo";
 import { site } from "@/lib/site-data";
 
 export const metadata = pageMetadata({
@@ -85,6 +90,8 @@ const keyEvents = [
 export default function About() {
   return (
     <PageShell>
+      <JsonLd data={localBusinessJsonLd()} />
+      <JsonLd data={founderPersonJsonLd()} />
       <PageHero
         eyebrow="О компании"
         title={`${site.legalName} — IT-команда внедрения ИИ в туризм с 2023 года`}
@@ -258,6 +265,90 @@ export default function About() {
             <ArrowRight className="h-4 w-4" />
           </Link>
         </div>
+      </SectionWrapper>
+
+      <SectionWrapper
+        id="author-lukian"
+        eyebrow="Основатель"
+        title="Силагадзе Лукиан Ираклиевич — эксперт по ИИ в туризме"
+        description="Генеральный директор и основатель ИИМПАКТ ПЛЮС. Эксперт по искусственному интеллекту и цифровым технологиям в туризме, член Комитета ТПП РФ по предпринимательству в сфере туризма."
+        alt
+      >
+        <article className="card mx-auto flex max-w-4xl flex-col gap-6 sm:flex-row sm:items-start">
+          <span className="grid h-20 w-20 shrink-0 place-items-center rounded-3xl bg-gradient-to-br from-primary to-accent text-3xl font-bold text-white shadow-[var(--shadow-blue)]">
+            СЛ
+          </span>
+          <div className="flex-1">
+            <p className="text-2xl font-bold text-heading">
+              {site.ceo}
+            </p>
+            <p className="mt-1 text-sm font-semibold text-primary">
+              Генеральный директор и основатель {site.brand}
+            </p>
+            <div className="mt-5 space-y-4 leading-7 text-body">
+              <p>
+                С 2023 года руководит проектами по внедрению искусственного
+                интеллекта в туристический бизнес: ИИ-турменеджер «Навылет!
+                AI», ИИ-ассистенты для туроператоров и отелей, голосовые
+                сценарии, ИИ-аналитика, CRM-интеграции. К продукту «Навылет!
+                AI» подключены 10+ компаний туристической отрасли.
+              </p>
+              <p>
+                Член Комитета ТПП РФ по предпринимательству в сфере туризма.
+                Регулярно выступает на профильных площадках: Совет ТПП РФ по
+                применению ИИ в бизнесе, Российский союз туриндустрии (РСТ),
+                МГИМО, РЭУ им. Г.&nbsp;В.&nbsp;Плеханова, международные
+                конгрессы туроператоров в Москве, Сочи, Минске.
+              </p>
+              <p>
+                В октябре 2024 года получил почётную благодарность от
+                вице-президента РСТ Юрия Барзыкина и заместителя председателя
+                комитета Госдумы по туризму Натальи Костенко за «Вклад в
+                развитие ИИ-технологий в туризме».
+              </p>
+            </div>
+            <ul className="mt-6 grid gap-2 text-sm leading-6 text-body sm:grid-cols-2">
+              <li className="flex gap-2">
+                <BadgeCheck
+                  className="mt-0.5 h-4 w-4 shrink-0 text-primary"
+                  aria-hidden="true"
+                />
+                Эксперт по ИИ в туризме при Комитете ТПП РФ
+              </li>
+              <li className="flex gap-2">
+                <BadgeCheck
+                  className="mt-0.5 h-4 w-4 shrink-0 text-primary"
+                  aria-hidden="true"
+                />
+                Спикер ТПП РФ, РСТ, МГИМО, РЭУ им. Г. В. Плеханова
+              </li>
+              <li className="flex gap-2">
+                <BadgeCheck
+                  className="mt-0.5 h-4 w-4 shrink-0 text-primary"
+                  aria-hidden="true"
+                />
+                Доклады в Москве, Сочи, Минске, Актау, Махачкале
+              </li>
+              <li className="flex gap-2">
+                <BadgeCheck
+                  className="mt-0.5 h-4 w-4 shrink-0 text-primary"
+                  aria-hidden="true"
+                />
+                Команда прошла Fast Track IT в Фонде «Сколково»
+              </li>
+            </ul>
+            <div className="mt-6 flex flex-wrap gap-3">
+              <Link href="/expertise" className="btn-secondary">
+                Все выступления и публикации
+                <ArrowRight className="h-4 w-4" />
+              </Link>
+              <Link href="/contact" className="btn-primary">
+                Связаться напрямую
+                <ArrowRight className="h-4 w-4" />
+              </Link>
+            </div>
+          </div>
+        </article>
       </SectionWrapper>
 
       <SectionWrapper
