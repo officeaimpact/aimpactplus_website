@@ -12,6 +12,11 @@ import {
   kakVnedritIiVTurizmeToc,
 } from "@/components/guides/KakVnedritIiVTurizme";
 import {
+  SkolkoStoitVnedrenieIi,
+  skolkoStoitVnedrenieIiFaq,
+  skolkoStoitVnedrenieIiToc,
+} from "@/components/guides/SkolkoStoitVnedrenieIi";
+import {
   articleJsonLd,
   faqJsonLd,
   howToJsonLd,
@@ -71,6 +76,7 @@ export default async function GuideDetail({
   if (!guide) notFound();
 
   const isFlagship = slug === "kak-vnedrit-ii-v-turizme";
+  const isCost = slug === "skolko-stoit-vnedrenie-ii-v-turizme";
 
   return (
     <PageShell>
@@ -98,6 +104,10 @@ export default async function GuideDetail({
           />
           <JsonLd data={faqJsonLd(kakVnedritIiVTurizmeFaq)} />
         </>
+      )}
+
+      {isCost && (
+        <JsonLd data={faqJsonLd([...skolkoStoitVnedrenieIiFaq])} />
       )}
 
       <PageHero
@@ -133,6 +143,20 @@ export default async function GuideDetail({
           }}
         >
           <KakVnedritIiVTurizme />
+        </ArticleShell>
+      )}
+
+      {isCost && (
+        <ArticleShell
+          updated={guide.updated}
+          readingTime={guide.readingTime}
+          toc={[...skolkoStoitVnedrenieIiToc]}
+          cta={{
+            href: "/contact?intent=Смета%20на%20внедрение%20ИИ",
+            label: "Запросить смету",
+          }}
+        >
+          <SkolkoStoitVnedrenieIi />
         </ArticleShell>
       )}
 

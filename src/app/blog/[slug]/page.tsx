@@ -20,6 +20,11 @@ import {
   iiDlyaTuragentstva7ScenarievFaq,
   iiDlyaTuragentstva7ScenarievToc,
 } from "@/components/blog/IiDlyaTuragentstva7Scenariev";
+import {
+  IiDlyaTuroperatora,
+  iiDlyaTuroperatoraFaq,
+  iiDlyaTuroperatoraToc,
+} from "@/components/blog/IiDlyaTuroperatora";
 import { articleJsonLd, faqJsonLd, pageMetadata } from "@/lib/seo";
 import { blogPosts, getBlogPost } from "@/lib/blog-data";
 
@@ -58,6 +63,7 @@ export default async function BlogPostPage({
   const isStarter = slug === "chto-takoe-ai-turmenedzher";
   const isVsChatBot = slug === "ii-assistent-vs-chat-bot";
   const isAgency7 = slug === "ii-dlya-turagentstva-7-scenariev";
+  const isOperator = slug === "ii-dlya-turoperatora";
 
   return (
     <PageShell>
@@ -78,6 +84,9 @@ export default async function BlogPostPage({
       )}
       {isAgency7 && (
         <JsonLd data={faqJsonLd([...iiDlyaTuragentstva7ScenarievFaq])} />
+      )}
+      {isOperator && (
+        <JsonLd data={faqJsonLd([...iiDlyaTuroperatoraFaq])} />
       )}
 
       <PageHero
@@ -140,6 +149,20 @@ export default async function BlogPostPage({
           }}
         >
           <IiDlyaTuragentstva7Scenariev />
+        </ArticleShell>
+      )}
+
+      {isOperator && (
+        <ArticleShell
+          updated={post.publishedDisplay}
+          readingTime={post.readingTime}
+          toc={[...iiDlyaTuroperatoraToc]}
+          cta={{
+            href: "/contact?intent=ИИ%20для%20туроператора",
+            label: "Получить ИИ-аудит туроператора",
+          }}
+        >
+          <IiDlyaTuroperatora />
         </ArticleShell>
       )}
 
