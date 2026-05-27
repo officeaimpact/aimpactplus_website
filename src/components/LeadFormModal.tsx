@@ -5,7 +5,7 @@ import { createPortal } from "react-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { X } from "lucide-react";
 import { LeadForm } from "./LeadForm";
-import { track } from "@/lib/analytics";
+import { track, trackGoal } from "@/lib/analytics";
 import { lockBodyScroll, unlockBodyScroll } from "@/lib/scroll-lock";
 
 /**
@@ -43,6 +43,7 @@ export function LeadFormModal({
   useEffect(() => {
     if (!open) return;
     track("lead_modal_open");
+    trackGoal("form_open", { intent: initialIntent ?? "" });
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") onClose();
     };
@@ -54,7 +55,7 @@ export function LeadFormModal({
       unlockBodyScroll();
       clearTimeout(t);
     };
-  }, [open, onClose]);
+  }, [open, onClose, initialIntent]);
 
   if (!mounted) return null;
 

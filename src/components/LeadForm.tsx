@@ -8,7 +8,7 @@ import {
   ShieldCheck,
 } from "lucide-react";
 import { cn } from "@/lib/cn";
-import { getTrackingMeta, track } from "@/lib/analytics";
+import { getTrackingMeta, track, trackGoal } from "@/lib/analytics";
 import { leadDirections, leadIntents } from "@/lib/site-data";
 import { submitToWeb3Forms } from "@/lib/web3forms-client";
 
@@ -147,6 +147,11 @@ export function LeadForm({
       });
       const delivered = (data?.delivered ?? false) || w3f.ok;
       track("lead_submit_success", { delivered });
+      trackGoal("form_submit", {
+        delivered,
+        variant,
+        intent: values.intent ?? "",
+      });
       setSuccess(true);
       onSuccess?.();
     } catch {

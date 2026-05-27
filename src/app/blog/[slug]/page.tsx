@@ -15,6 +15,11 @@ import {
   iiAssistentVsChatBotFaq,
   iiAssistentVsChatBotToc,
 } from "@/components/blog/IiAssistentVsChatBot";
+import {
+  IiDlyaTuragentstva7Scenariev,
+  iiDlyaTuragentstva7ScenarievFaq,
+  iiDlyaTuragentstva7ScenarievToc,
+} from "@/components/blog/IiDlyaTuragentstva7Scenariev";
 import { articleJsonLd, faqJsonLd, pageMetadata } from "@/lib/seo";
 import { blogPosts, getBlogPost } from "@/lib/blog-data";
 
@@ -52,6 +57,7 @@ export default async function BlogPostPage({
 
   const isStarter = slug === "chto-takoe-ai-turmenedzher";
   const isVsChatBot = slug === "ii-assistent-vs-chat-bot";
+  const isAgency7 = slug === "ii-dlya-turagentstva-7-scenariev";
 
   return (
     <PageShell>
@@ -69,6 +75,9 @@ export default async function BlogPostPage({
       />
       {isVsChatBot && (
         <JsonLd data={faqJsonLd([...iiAssistentVsChatBotFaq])} />
+      )}
+      {isAgency7 && (
+        <JsonLd data={faqJsonLd([...iiDlyaTuragentstva7ScenarievFaq])} />
       )}
 
       <PageHero
@@ -117,6 +126,20 @@ export default async function BlogPostPage({
           }}
         >
           <IiAssistentVsChatBot />
+        </ArticleShell>
+      )}
+
+      {isAgency7 && (
+        <ArticleShell
+          updated={post.publishedDisplay}
+          readingTime={post.readingTime}
+          toc={[...iiDlyaTuragentstva7ScenarievToc]}
+          cta={{
+            href: "/contact?intent=Пилот%20ИИ%20для%20турагентства",
+            label: "Запросить пилот за 2 недели",
+          }}
+        >
+          <IiDlyaTuragentstva7Scenariev />
         </ArticleShell>
       )}
 
