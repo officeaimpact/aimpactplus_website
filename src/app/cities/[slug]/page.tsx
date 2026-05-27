@@ -47,6 +47,12 @@ export default async function CityDetail({
 
   const intent = encodeURIComponent(`Внедрение ИИ для туризма ${city.nameLocative}`);
   const contactHref = `/contact?intent=${intent}`;
+  const cityGoal: Record<string, string> = {
+    moscow: "pilot_intent_moscow",
+    "saint-petersburg": "pilot_intent_spb",
+    sochi: "pilot_intent_sochi",
+  };
+  const primaryCtaGoal = cityGoal[city.slug];
 
   return (
     <PageShell>
@@ -67,6 +73,7 @@ export default async function CityDetail({
         description={`${city.marketContext} Мы помогаем туркомпаниям ${city.nameGenitive} внедрять ИИ-ассистентов, чат-боты, голосовые сценарии и CRM-интеграции — на готовом продукте «Навылет! AI» или в формате кастомной разработки.`}
         primaryCta="Запросить ИИ-аудит"
         primaryHref={contactHref}
+        primaryCtaGoal={primaryCtaGoal}
         secondaryCta="Смотреть «Навылет! AI»"
         secondaryHref="/navilet-ai"
         crumbs={[

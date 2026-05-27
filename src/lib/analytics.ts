@@ -38,7 +38,10 @@ export type AnalyticsGoal =
   | "scroll_75"
   | "navilet_open"
   | "case_open"
-  | "blog_read";
+  | "blog_read"
+  | "pilot_intent_moscow"
+  | "pilot_intent_spb"
+  | "pilot_intent_sochi";
 
 declare global {
   interface Window {

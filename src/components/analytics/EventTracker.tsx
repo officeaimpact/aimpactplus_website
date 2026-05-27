@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
+import type { AnalyticsGoal } from "@/lib/analytics";
 import { trackGoal } from "@/lib/analytics";
 
 /**
@@ -26,6 +27,16 @@ export function EventTracker() {
       if (!anchor) return;
       if (anchor.dataset.analyticsSkip === "true") return;
       const href = anchor.getAttribute("href") ?? "";
+
+      // Универсальный механизм: если на ссылке стоит data-analytics-goal,
+      // отправляем именно эту цель (плюс параметр source = текущий путь).
+      const explicit = anchor.dataset.analyticsGoal;
+      if (explicit && explicit.length > 0) {
+        trackGoal(explicit as AnalyticsGoal, {
+          source: window.location.pathname,
+          href,
+        });
+      }
 
       if (href.startsWith("tel:")) {
         trackGoal("phone_click", { value: href.replace("tel:", "") });

@@ -16,6 +16,7 @@ export function PageHero({
   secondaryHref,
   crumbs,
   aside,
+  primaryCtaGoal,
 }: {
   eyebrow?: string;
   title: ReactNode;
@@ -26,6 +27,11 @@ export function PageHero({
   secondaryHref?: string;
   crumbs?: Crumb[];
   aside?: ReactNode;
+  /**
+   * Маркетинговая цель Метрики, которую нужно отправить при клике по
+   * primaryCta. EventTracker глобально слушает data-analytics-goal на якорях.
+   */
+  primaryCtaGoal?: string;
 }) {
   const hasAside = Boolean(aside);
   // eyebrow намеренно не отображается — оставлен в API для обратной совместимости
@@ -82,6 +88,7 @@ export function PageHero({
                   href={primaryHref}
                   target="_blank"
                   rel="noopener noreferrer"
+                  data-analytics-goal={primaryCtaGoal}
                   className="btn-primary w-full justify-center sm:w-auto"
                 >
                   {primaryCta}
@@ -90,6 +97,7 @@ export function PageHero({
               ) : (
                 <Link
                   href={primaryHref}
+                  data-analytics-goal={primaryCtaGoal}
                   className="btn-primary w-full justify-center sm:w-auto"
                 >
                   {primaryCta}
