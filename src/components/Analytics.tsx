@@ -41,12 +41,15 @@ export function Analytics() {
               k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
               (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
               ym(${ymId}, "init", {
+                ssr: true,
                 clickmap: true,
                 trackLinks: true,
                 accurateTrackBounce: true,
                 webvisor: true,
                 defer: true,
-                ecommerce: "dataLayer"
+                ecommerce: "dataLayer",
+                referrer: document.referrer,
+                url: location.href
               });
             `,
           }}
