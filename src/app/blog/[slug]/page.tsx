@@ -25,6 +25,11 @@ import {
   iiDlyaTuroperatoraFaq,
   iiDlyaTuroperatoraToc,
 } from "@/components/blog/IiDlyaTuroperatora";
+import {
+  IiDlyaOtelya,
+  iiDlyaOtelyaFaq,
+  iiDlyaOtelyaToc,
+} from "@/components/blog/IiDlyaOtelya";
 import { articleJsonLd, faqJsonLd, pageMetadata } from "@/lib/seo";
 import { blogPosts, getBlogPost } from "@/lib/blog-data";
 
@@ -64,6 +69,7 @@ export default async function BlogPostPage({
   const isVsChatBot = slug === "ii-assistent-vs-chat-bot";
   const isAgency7 = slug === "ii-dlya-turagentstva-7-scenariev";
   const isOperator = slug === "ii-dlya-turoperatora";
+  const isHotel = slug === "ii-dlya-otelya";
 
   return (
     <PageShell>
@@ -88,6 +94,7 @@ export default async function BlogPostPage({
       {isOperator && (
         <JsonLd data={faqJsonLd([...iiDlyaTuroperatoraFaq])} />
       )}
+      {isHotel && <JsonLd data={faqJsonLd([...iiDlyaOtelyaFaq])} />}
 
       <PageHero
         eyebrow="Блог"
@@ -163,6 +170,20 @@ export default async function BlogPostPage({
           }}
         >
           <IiDlyaTuroperatora />
+        </ArticleShell>
+      )}
+
+      {isHotel && (
+        <ArticleShell
+          updated={post.publishedDisplay}
+          readingTime={post.readingTime}
+          toc={[...iiDlyaOtelyaToc]}
+          cta={{
+            href: "/contact?intent=ИИ%20для%20отеля",
+            label: "Запросить пилот для отеля",
+          }}
+        >
+          <IiDlyaOtelya />
         </ArticleShell>
       )}
 

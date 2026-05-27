@@ -17,6 +17,11 @@ import {
   skolkoStoitVnedrenieIiToc,
 } from "@/components/guides/SkolkoStoitVnedrenieIi";
 import {
+  KakVybratPodryadchika,
+  kakVybratPodryadchikaFaq,
+  kakVybratPodryadchikaToc,
+} from "@/components/guides/KakVybratPodryadchika";
+import {
   articleJsonLd,
   faqJsonLd,
   howToJsonLd,
@@ -77,6 +82,7 @@ export default async function GuideDetail({
 
   const isFlagship = slug === "kak-vnedrit-ii-v-turizme";
   const isCost = slug === "skolko-stoit-vnedrenie-ii-v-turizme";
+  const isVendor = slug === "kak-vybrat-podryadchika-po-ii-v-turizme";
 
   return (
     <PageShell>
@@ -108,6 +114,10 @@ export default async function GuideDetail({
 
       {isCost && (
         <JsonLd data={faqJsonLd([...skolkoStoitVnedrenieIiFaq])} />
+      )}
+
+      {isVendor && (
+        <JsonLd data={faqJsonLd([...kakVybratPodryadchikaFaq])} />
       )}
 
       <PageHero
@@ -157,6 +167,20 @@ export default async function GuideDetail({
           }}
         >
           <SkolkoStoitVnedrenieIi />
+        </ArticleShell>
+      )}
+
+      {isVendor && (
+        <ArticleShell
+          updated={guide.updated}
+          readingTime={guide.readingTime}
+          toc={[...kakVybratPodryadchikaToc]}
+          cta={{
+            href: "/contact?intent=ИИ-аудит%20и%20выбор%20подрядчика",
+            label: "Проверить нас на чек-листе",
+          }}
+        >
+          <KakVybratPodryadchika />
         </ArticleShell>
       )}
 

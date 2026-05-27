@@ -125,6 +125,12 @@ export const metadata: Metadata = {
       "max-snippet": -1,
     },
   },
+  verification: {
+    // Подтверждение прав в поисковых системах. Значения подставляются из env
+    // во время билда. Не задано → метатеги не появляются. Это безопасно.
+    yandex: process.env.NEXT_PUBLIC_YANDEX_VERIFICATION || undefined,
+    google: process.env.NEXT_PUBLIC_GOOGLE_VERIFICATION || undefined,
+  },
 };
 
 export const viewport: Viewport = {
