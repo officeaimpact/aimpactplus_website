@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Menu, X, ArrowRight, Phone } from "lucide-react";
-import { navigation, site } from "@/lib/site-data";
+import { headerNavigation, navigation, site } from "@/lib/site-data";
 import { Logo } from "@/components/ui/Logo";
 import { LeadFormModal } from "@/components/LeadFormModal";
 import { track } from "@/lib/analytics";
@@ -17,16 +17,11 @@ export function Header() {
   const [modalOpen, setModalOpen] = useState(false);
   const pathname = usePathname();
 
-  // На страницах с тёмным hero (главная, продукт, услуги, кейсы, гайды и т.д.
-  // — все они начинаются с `.hero-shell`) хедер плавно «прилипает» к hero:
-  // прозрачный поверх градиента, при скролле — переходит в белый.
-  // Список страниц без тёмного hero — намеренно белые сразу.
-  const lightHeroPaths = ["/contact", "/privacy", "/offer", "/terms"];
-  const hasDarkHero = !lightHeroPaths.some((p) => pathname.startsWith(p));
-
-  // Активный тон: тёмный (логотип белый, текст белый) — когда мы на странице с
-  // dark hero и пользователь ещё не скроллил мимо него. Дальше — светлый.
-  const tone: "dark" | "light" = hasDarkHero && !scrolled ? "dark" : "light";
+  // Все страницы сайта начинаются с `.hero-shell` (тёмный градиент-секция).
+  // Поэтому единая логика: пока пользователь на hero — хедер прозрачный, белый
+  // логотип; как только проскроллил — хедер превращается в белый стеклянный,
+  // логотип плавно превращается в синий.
+  const tone: "dark" | "light" = scrolled ? "light" : "dark";
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -59,9 +54,7 @@ export function Header() {
         "sticky top-0 z-50 transition-all duration-300",
         scrolled
           ? "border-b border-blue-100/80 bg-white/85 backdrop-blur-xl shadow-[0_1px_0_rgba(0,82,204,0.06)]"
-          : hasDarkHero
-            ? "border-b border-transparent bg-transparent"
-            : "bg-white/70 backdrop-blur-md",
+          : "border-b border-transparent bg-transparent",
       )}
     >
       <div className="mx-auto flex h-20 max-w-7xl items-center gap-4 px-5 sm:px-8 lg:h-[88px] lg:gap-6">
@@ -71,7 +64,7 @@ export function Header() {
           className="hidden flex-1 items-center justify-center gap-0.5 lg:flex xl:gap-1"
           aria-label="Основная навигация"
         >
-          {navigation.map((item) => {
+          {headerNavigation.map((item) => {
             const active = isActive(item.href);
             return (
               <Link

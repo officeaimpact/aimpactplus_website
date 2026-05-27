@@ -142,6 +142,35 @@ h6 {
  * жил вне @layer и побеждал utilities → `<div class="card bg-deep">` оставался
  * белым с уже-светлым текстом → нечитаемый бокс. */
 @layer components {
+  /* === Logo cross-fade ===
+   * Логотип в хедере рендерит ОБА варианта (синий PNG и белый SVG),
+   * один поверх другого. Активный определяется через data-tone="dark|light"
+   * на ближайшем <header>. Плавное переключение 400ms ease — чтобы переход
+   * чувствовался «премиум» и не дёргался. */
+  .logo-link {
+    position: relative;
+  }
+  .logo-img {
+    transition: opacity 400ms ease;
+    will-change: opacity;
+  }
+  /* Дефолт (нет data-tone, например в Footer.tone="dark" попадает напрямую) —
+   * виден только light-вариант. */
+  .logo-img--light {
+    opacity: 1;
+  }
+  .logo-img--dark {
+    opacity: 0;
+    pointer-events: none;
+  }
+  /* На тёмном хедере (поверх hero, до скролла) — показываем белый SVG. */
+  header[data-tone="dark"] .logo-img--light {
+    opacity: 0;
+  }
+  header[data-tone="dark"] .logo-img--dark {
+    opacity: 1;
+  }
+
   /* === Hero shell with gradient + blobs === */
   .hero-shell {
     position: relative;

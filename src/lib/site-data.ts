@@ -50,6 +50,10 @@ export function absoluteUrl(path?: string): string {
   return `${site.domain}${normalized}`;
 }
 
+/**
+ * Полная навигация — используется в мобильном drawer (там вертикальный
+ * список, место не критично) и для подсветки активной страницы.
+ */
 export const navigation = [
   { label: "Решения", href: "/solutions" },
   { label: "Навылет! AI", href: "/navilet-ai" },
@@ -57,6 +61,21 @@ export const navigation = [
   { label: "Услуги", href: "/services" },
   { label: "Гайды", href: "/guides" },
   { label: "Блог", href: "/blog" },
+  { label: "Экспертиза", href: "/expertise" },
+  { label: "О компании", href: "/about" },
+] as const;
+
+/**
+ * Компактная навигация для desktop-хедера: убраны «Гайды» и «Блог»
+ * (они доступны в Footer → блок «Знания»). Это даёт месту логотипу и
+ * правому блоку (телефон + «Обсудить проект» + «Демо») не сжиматься
+ * на брейкпойнтах 1024–1280px (MacBook 13–14"), и логотип всегда виден.
+ */
+export const headerNavigation = [
+  { label: "Решения", href: "/solutions" },
+  { label: "Навылет! AI", href: "/navilet-ai" },
+  { label: "Кейсы", href: "/cases" },
+  { label: "Услуги", href: "/services" },
   { label: "Экспертиза", href: "/expertise" },
   { label: "О компании", href: "/about" },
 ] as const;

@@ -3,16 +3,15 @@ import Image from "next/image";
 import { cn } from "@/lib/cn";
 
 /**
- * Логотип AIMPACT+ с поддержкой двух тонов:
- *  - "light"  — обычный синий логотип для светлого header'а;
- *  - "dark"   — белый логотип для тёмного/прозрачного header'а.
+ * Логотип AIMPACT+ с двумя визуальными состояниями:
+ *  - "light" — обычный цветной (синий) логотип для светлого хедера;
+ *  - "dark"  — белый логотип для тёмного/прозрачного хедера поверх hero.
  *
- * Когда tone="auto", в DOM присутствуют ОБА варианта, и они кросс-фейдятся
- * через CSS opacity. Это позволяет хедеру плавно переключать тон при скролле
- * без перезагрузки картинки и без скачков лэйаута. Текущий тон задаётся
- * css-переменной/классом родителя (см. Header.tsx → data-tone).
- *
- * Aspect-ratio оригинала: 1795:654 ≈ 2.745:1.
+ * В режиме tone="auto" в DOM рендерятся ОБА варианта, и активный выбирается
+ * по data-tone на ближайшем `<header>`. Cross-fade реализован чистым CSS
+ * (см. `.logo-img--light` / `.logo-img--dark` в globals.css). Это надёжнее
+ * Tailwind arbitrary-селекторов — не зависит от порядка компиляции
+ * Tailwind v4 и от экранирования.
  */
 export function Logo({
   tone = "auto",
@@ -26,7 +25,7 @@ export function Logo({
   const sizes =
     size === "sm" ? "110px" : "(min-width: 1024px) 140px, 120px";
 
-  const renderImage = (src: string, alt: string, opacityClass: string) => (
+  const renderImage = (src: string, alt: string) => (
     <Image
       src={src}
       alt={alt}
@@ -34,61 +33,68 @@ export function Logo({
       height={654}
       priority
       sizes={sizes}
-      className={cn(
-        "block w-auto select-none transition-opacity duration-300",
-        heightClass,
-        opacityClass,
-      )}
+      className={cn("block w-auto select-none", heightClass)}
       draggable={false}
-      // SVG не нуждается в оптимизации Next/Image и весит больше PNG —
-      // отдаём как есть, чтобы избежать ошибки оптимизации.
+      // SVG отдаём без оптимизации Next/Image — это правильно для векторных
+      // ассетов, плюс наш белый SVG ~390 КБ (изначально с большим количеством
+      // векторных контуров) — оптимизация всё равно его не уменьшит.
       unoptimized={src.endsWith(".svg")}
     />
   );
 
+  if (tone === "dark") {
+    return (
+      <Link
+        href="/"
+        className={cn("logo-link inline-flex items-center", heightClass)}
+        aria-label="AIMPACT+ — На главную"
+      >
+        {renderImage(
+          "/brand/logo-white.svg",
+          "AIMPACT+ — ИИ-решения для туристического бизнеса",
+        )}
+      </Link>
+    );
+  }
+
+  if (tone === "light") {
+    return (
+      <Link
+        href="/"
+        className={cn("logo-link inline-flex items-center", heightClass)}
+        aria-label="AIMPACT+ — На главную"
+      >
+        {renderImage(
+          "/brand/logo.png",
+          "AIMPACT+ — ИИ-решения для туристического бизнеса",
+        )}
+      </Link>
+    );
+  }
+
+  // tone === "auto" — оба варианта в DOM, активный включается через CSS
+  // на основе data-tone у родительского <header>.
   return (
     <Link
       href="/"
-      className="group relative inline-flex items-center transition hover:opacity-90 focus-visible:opacity-100"
+      className={cn("logo-link relative inline-flex items-center", heightClass)}
       aria-label="AIMPACT+ — На главную"
     >
-      {tone === "auto" ? (
-        // Cross-fade между двумя вариантами. Активный задаётся через
-        // data-tone на ближайшем header'е → CSS-селектор подсветит нужный.
-        <span className={cn("relative block w-auto", heightClass)}>
-          {/* Светлый (синий) — по умолчанию виден, прячется при tone=dark */}
-          <span className="block opacity-100 [header[data-tone='dark']_&]:opacity-0 transition-opacity duration-300">
-            {renderImage(
-              "/brand/logo.png",
-              "AIMPACT+ — ИИ-решения для туристического бизнеса",
-              "",
-            )}
-          </span>
-          {/* Тёмный (белый) — поверх, виден только при tone=dark */}
-          <span
-            aria-hidden="true"
-            className="absolute inset-0 opacity-0 [header[data-tone='dark']_&]:opacity-100 transition-opacity duration-300"
-          >
-            {renderImage(
-              "/brand/logo-white.svg",
-              "",
-              "",
-            )}
-          </span>
-        </span>
-      ) : tone === "dark" ? (
-        renderImage(
-          "/brand/logo-white.svg",
-          "AIMPACT+ — ИИ-решения для туристического бизнеса",
-          "",
-        )
-      ) : (
-        renderImage(
+      <span className={cn("logo-img logo-img--light block", heightClass)}>
+        {renderImage(
           "/brand/logo.png",
           "AIMPACT+ — ИИ-решения для туристического бизнеса",
-          "",
-        )
-      )}
+        )}
+      </span>
+      <span
+        aria-hidden="true"
+        className={cn(
+          "logo-img logo-img--dark absolute inset-0 flex items-center",
+          heightClass,
+        )}
+      >
+        {renderImage("/brand/logo-white.svg", "")}
+      </span>
     </Link>
   );
 }
