@@ -147,6 +147,20 @@ h6 {
     position: relative;
     isolation: isolate;
     overflow: hidden;
+    /* Hero-секция всегда стоит вплотную к хедеру и «выезжает» под него,
+     * чтобы градиент шёл непрерывно от самого верха страницы. На светлых
+     * страницах (/contact и т.п.) хедер всё равно остаётся белым полупрозрачным
+     * сверху — это корректно перекрывает hero и читается как «hero под хедером». */
+    margin-top: calc(-1 * var(--header-height, 80px));
+    padding-top: var(--header-height, 80px);
+  }
+
+  /* На lg хедер выше — увеличиваем компенсацию. */
+  @media (min-width: 1024px) {
+    .hero-shell {
+      margin-top: -88px;
+      padding-top: 88px;
+    }
   }
 
   .hero-shell::before {

@@ -17,6 +17,17 @@ export function Header() {
   const [modalOpen, setModalOpen] = useState(false);
   const pathname = usePathname();
 
+  // На страницах с тёмным hero (главная, продукт, услуги, кейсы, гайды и т.д.
+  // — все они начинаются с `.hero-shell`) хедер плавно «прилипает» к hero:
+  // прозрачный поверх градиента, при скролле — переходит в белый.
+  // Список страниц без тёмного hero — намеренно белые сразу.
+  const lightHeroPaths = ["/contact", "/privacy", "/offer", "/terms"];
+  const hasDarkHero = !lightHeroPaths.some((p) => pathname.startsWith(p));
+
+  // Активный тон: тёмный (логотип белый, текст белый) — когда мы на странице с
+  // dark hero и пользователь ещё не скроллил мимо него. Дальше — светлый.
+  const tone: "dark" | "light" = hasDarkHero && !scrolled ? "dark" : "light";
+
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
     onScroll();
@@ -43,11 +54,14 @@ export function Header() {
 
   return (
     <header
+      data-tone={tone}
       className={cn(
-        "sticky top-0 z-50 transition-all",
+        "sticky top-0 z-50 transition-all duration-300",
         scrolled
           ? "border-b border-blue-100/80 bg-white/85 backdrop-blur-xl shadow-[0_1px_0_rgba(0,82,204,0.06)]"
-          : "bg-white/70 backdrop-blur-md",
+          : hasDarkHero
+            ? "border-b border-transparent bg-transparent"
+            : "bg-white/70 backdrop-blur-md",
       )}
     >
       <div className="mx-auto flex h-20 max-w-7xl items-center gap-4 px-5 sm:px-8 lg:h-[88px] lg:gap-6">
@@ -67,15 +81,24 @@ export function Header() {
                 className={cn(
                   "relative flex h-10 items-center whitespace-nowrap rounded-full px-2.5 text-[13px] font-semibold transition xl:px-3.5 xl:text-sm",
                   active
-                    ? "text-primary"
-                    : "text-body hover:bg-blue-50 hover:text-primary",
+                    ? tone === "dark"
+                      ? "text-white"
+                      : "text-primary"
+                    : tone === "dark"
+                      ? "text-white/85 hover:bg-white/10 hover:text-white"
+                      : "text-body hover:bg-blue-50 hover:text-primary",
                 )}
               >
                 {item.label}
                 {active && (
                   <span
                     aria-hidden="true"
-                    className="absolute inset-x-3 -bottom-0.5 h-0.5 rounded-full bg-gradient-to-r from-primary via-accent to-sky"
+                    className={cn(
+                      "absolute inset-x-3 -bottom-0.5 h-0.5 rounded-full",
+                      tone === "dark"
+                        ? "bg-gradient-to-r from-white via-sky to-accent"
+                        : "bg-gradient-to-r from-primary via-accent to-sky",
+                    )}
                   />
                 )}
               </Link>
@@ -87,14 +110,24 @@ export function Header() {
           <Link
             href={site.phoneHref}
             aria-label={`Позвонить ${site.phone}`}
-            className="hidden h-10 items-center gap-1.5 whitespace-nowrap rounded-full px-3 text-[13px] font-semibold text-body transition hover:bg-blue-50 hover:text-primary md:inline-flex xl:px-3.5 xl:text-sm"
+            className={cn(
+              "hidden h-10 items-center gap-1.5 whitespace-nowrap rounded-full px-3 text-[13px] font-semibold transition md:inline-flex xl:px-3.5 xl:text-sm",
+              tone === "dark"
+                ? "text-white/90 hover:bg-white/10 hover:text-white"
+                : "text-body hover:bg-blue-50 hover:text-primary",
+            )}
           >
             <Phone className="h-4 w-4" aria-hidden="true" />
             <span className="hidden xl:inline">{site.phone}</span>
           </Link>
           <Link
             href="/contact"
-            className="hidden h-10 items-center whitespace-nowrap rounded-full border border-blue-200 px-3.5 text-[13px] font-semibold text-primary transition hover:border-primary hover:bg-blue-50 sm:inline-flex xl:px-4 xl:text-sm"
+            className={cn(
+              "hidden h-10 items-center whitespace-nowrap rounded-full border px-3.5 text-[13px] font-semibold transition sm:inline-flex xl:px-4 xl:text-sm",
+              tone === "dark"
+                ? "border-white/30 text-white hover:border-white hover:bg-white/10"
+                : "border-blue-200 text-primary hover:border-primary hover:bg-blue-50",
+            )}
           >
             Обсудить проект
           </Link>
@@ -108,7 +141,12 @@ export function Header() {
           </button>
           <button
             type="button"
-            className="grid h-10 w-10 place-items-center rounded-full border border-blue-100 text-primary transition hover:border-primary hover:bg-blue-50 lg:hidden"
+            className={cn(
+              "grid h-10 w-10 place-items-center rounded-full border transition lg:hidden",
+              tone === "dark"
+                ? "border-white/30 text-white hover:border-white hover:bg-white/10"
+                : "border-blue-100 text-primary hover:border-primary hover:bg-blue-50",
+            )}
             aria-label={open ? "Закрыть меню" : "Открыть меню"}
             aria-expanded={open}
             aria-controls="mobile-drawer"

@@ -46,7 +46,7 @@ export function PageHero({
       {crumbs && crumbs.length > 1 && (
         <JsonLd data={breadcrumbJsonLd(crumbs)} />
       )}
-      <div className="mx-auto max-w-7xl px-5 py-16 sm:px-8 sm:py-20 lg:py-28">
+      <div className="mx-auto max-w-7xl px-5 py-14 sm:px-8 sm:py-16 lg:py-20">
         {crumbs && (
           <div
             className={cn("mb-6 sm:mb-8", !hasAside && "mx-auto max-w-3xl text-center")}

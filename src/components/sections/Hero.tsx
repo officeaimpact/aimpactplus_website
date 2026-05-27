@@ -19,7 +19,12 @@ export function Hero() {
 
   return (
     <section className="hero-shell text-white">
-      <div className="mx-auto grid max-w-7xl items-center gap-10 px-5 py-14 sm:px-8 sm:py-24 lg:min-h-[640px] lg:grid-cols-[1.1fr_0.9fr] lg:gap-16 lg:py-28">
+      {/* py-* и lg:min-h подобраны так, чтобы на MacBook 13–14" (≈720–820px
+       * viewport-height) контент Hero находился по вертикали примерно в центре
+       * видимой области, а не «уходил» вниз. lg:min-h-[calc(100svh-88px)] —
+       * hero занимает ровно высоту экрана за вычетом хедера, контент
+       * центрируется по вертикали. На очень больших экранах ограничиваем max. */}
+      <div className="mx-auto grid max-w-7xl items-center gap-8 px-5 py-12 sm:px-8 sm:py-16 lg:grid-cols-[1.1fr_0.9fr] lg:gap-16 lg:py-20 lg:min-h-[calc(100svh-88px)] lg:max-h-[860px]">
         <motion.div
           initial="hidden"
           animate="visible"
