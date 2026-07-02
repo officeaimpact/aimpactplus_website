@@ -136,7 +136,8 @@ async function sendTelegram(input: LeadInput): Promise<RoutingResult> {
       body: JSON.stringify({
         chat_id: chat,
         text,
-        parse_mode: "HTML",
+        // Без parse_mode — шлём простым текстом, чтобы символы <, >, & из
+        // пользовательского ввода не ломали доставку.
         disable_web_page_preview: true,
       }),
     });
