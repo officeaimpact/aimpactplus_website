@@ -7,12 +7,15 @@ export function CtaBand({
   text = "Покажем демо, оценим сценарии автоматизации и предложим безопасный план пилота. Без обязательств.",
   cta = "Оставить заявку",
   href = "/contact",
+  goal,
 }: {
   title?: string;
   text?: string;
   cta?: string;
   href?: string;
+  goal?: string;
 }) {
+  const isExternal = /^https?:\/\//i.test(href);
   return (
     <section className="px-4 py-14 sm:px-5 sm:py-20 lg:px-8">
       <div className="hero-shell mx-auto max-w-7xl rounded-[1.75rem] p-6 text-white sm:rounded-[2.4rem] sm:p-10 lg:p-14">
@@ -26,13 +29,26 @@ export function CtaBand({
               {text}
             </p>
           </div>
-          <Link
-            href={href}
-            className="btn-primary w-full justify-center self-start sm:w-auto"
-          >
-            {cta}
-            <ArrowRight className="h-5 w-5" aria-hidden="true" />
-          </Link>
+          {isExternal ? (
+            <a
+              href={href}
+              target="_blank"
+              rel="noopener noreferrer"
+              data-analytics-goal={goal}
+              className="btn-primary w-full justify-center self-start sm:w-auto"
+            >
+              {cta}
+              <ArrowRight className="h-5 w-5" aria-hidden="true" />
+            </a>
+          ) : (
+            <Link
+              href={href}
+              className="btn-primary w-full justify-center self-start sm:w-auto"
+            >
+              {cta}
+              <ArrowRight className="h-5 w-5" aria-hidden="true" />
+            </Link>
+          )}
         </div>
       </div>
     </section>

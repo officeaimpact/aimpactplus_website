@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { ArrowRight, ShieldCheck } from "lucide-react";
+import { ArrowRight, ExternalLink, ShieldCheck } from "lucide-react";
 import { HeroWordmark } from "@/components/visual/HeroWordmark";
 import {
   fadeInUp,
@@ -10,6 +10,7 @@ import {
   scaleIn,
   staggerContainer,
 } from "@/lib/animations";
+import { naviletDemoUrl } from "@/lib/site-data";
 
 const title = "Внедряем искусственный интеллект в туризм";
 const titleAccent = "от пилота за 2 недели до собственного ИИ-продукта";
@@ -70,24 +71,43 @@ export function Hero() {
             variants={fadeInUp}
             className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap"
           >
+            <a
+              href={naviletDemoUrl("hero")}
+              target="_blank"
+              rel="noopener noreferrer"
+              data-analytics-goal="navilet_demo_click"
+              className="btn-primary w-full justify-center sm:w-auto"
+              aria-label="Попробовать демо ИИ-турменеджера «Навылет! AI» (откроется в новой вкладке)"
+            >
+              Попробовать демо
+              <ExternalLink className="h-5 w-5" aria-hidden="true" />
+            </a>
             <Link
               href="/contact"
-              className="btn-primary w-full justify-center sm:w-auto"
+              className="btn-secondary-dark w-full justify-center sm:w-auto"
             >
               Получить ИИ-аудит
               <ArrowRight className="h-5 w-5" aria-hidden="true" />
-            </Link>
-            <Link
-              href="/navilet-ai"
-              className="btn-secondary-dark w-full justify-center sm:w-auto"
-            >
-              Смотреть Навылет! AI
             </Link>
           </motion.div>
 
           <motion.p
             variants={fadeInUp}
-            className="mt-4 inline-flex items-center gap-2 text-xs font-semibold tracking-wide text-sky"
+            className="mt-3 max-w-xl text-xs leading-5 text-blue-100/90"
+          >
+            Демо ИИ-турменеджера «Навылет! AI» — на базе поисковой системы
+            Tourvisor. 7 дней бесплатно, без карты.{" "}
+            <Link
+              href="/navilet-ai"
+              className="font-semibold text-sky underline-offset-2 hover:underline"
+            >
+              Подробнее о продукте
+            </Link>
+          </motion.p>
+
+          <motion.p
+            variants={fadeInUp}
+            className="mt-3 inline-flex items-center gap-2 text-xs font-semibold tracking-wide text-sky"
           >
             <ShieldCheck className="h-4 w-4" aria-hidden="true" />
             Пилот без риска для текущих продаж · согласие 152-ФЗ

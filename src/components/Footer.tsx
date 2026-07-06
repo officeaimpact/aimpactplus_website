@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { Mail, Phone, MapPin, ArrowUpRight } from "lucide-react";
 import { footerLinks, site } from "@/lib/site-data";
 import { Logo } from "@/components/ui/Logo";
@@ -28,6 +29,20 @@ export function Footer() {
             <span className="flex items-start gap-2.5">
               <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-sky" />
               {site.addressShort}
+            </span>
+          </div>
+          <div className="flex items-center gap-3 pt-1">
+            <Image
+              src="/partners/skolkovo.png"
+              alt="Участник Фонда «Сколково»"
+              width={132}
+              height={39}
+              className="h-9 w-auto"
+            />
+            <span className="text-xs leading-5 text-blue-100/80">
+              ИТ-кластер
+              <br />
+              Фонда «Сколково»
             </span>
           </div>
         </div>

@@ -26,6 +26,7 @@ import {
   naviletPartnerBenefits,
   naviletPartnerProfiles,
   site,
+  naviletDemoUrl,
 } from "@/lib/site-data";
 import { demoScenarios } from "@/lib/scenarios";
 
@@ -78,10 +79,11 @@ export default function NaviletAi() {
           </>
         }
         description="Не абстрактный ИИ, а понятный инструмент продаж: каскадный диалог, подбор туров на базе поисковой системы Tourvisor, карточки с ценами и фото, FAQ и передача заявки менеджеру. К продукту подключено 10+ компаний туристической отрасли — от туроператоров до сетей агентств и средств размещения."
-        primaryCta="Запросить демо"
-        primaryHref="/contact?intent=demo"
-        secondaryCta="Перейти на navilet.ru"
-        secondaryHref={site.naviletWebsite}
+        primaryCta="Попробовать демо"
+        primaryHref={naviletDemoUrl("product-hero")}
+        primaryCtaGoal="navilet_demo_click"
+        secondaryCta="Обсудить внедрение"
+        secondaryHref="/contact?intent=demo"
         crumbs={[
           { name: "Главная", href: "/" },
           { name: "Навылет! AI", href: "/navilet-ai" },
@@ -111,16 +113,18 @@ export default function NaviletAi() {
 
         <div className="mt-10 flex flex-col items-center gap-4 text-center">
           <p className="max-w-2xl text-sm leading-6 text-muted">
-            Хотите увидеть продукт «вживую» и попробовать сценарии?
-            Откройте отдельный продуктовый сайт.
+            Хотите попробовать ИИ-турменеджера «вживую»? Откройте демо на базе
+            поисковой системы Tourvisor — без регистрации. Понравится — запустите
+            своего ассистента: 7 дней бесплатно, без карты.
           </p>
           <a
-            href={site.naviletWebsite}
+            href={naviletDemoUrl("product-features")}
             target="_blank"
             rel="noopener noreferrer"
+            data-analytics-goal="navilet_demo_click"
             className="btn-primary"
           >
-            Открыть {site.naviletWebsiteDisplay}
+            Попробовать демо
             <ExternalLink className="h-5 w-5" aria-hidden="true" />
           </a>
         </div>
@@ -301,12 +305,13 @@ export default function NaviletAi() {
                 <ArrowRight className="h-5 w-5" />
               </Link>
               <a
-                href={site.naviletWebsite}
+                href={naviletDemoUrl("product-whitelabel")}
                 target="_blank"
                 rel="noopener noreferrer"
+                data-analytics-goal="navilet_demo_click"
                 className="btn-secondary-dark flex-1 justify-center"
               >
-                {site.naviletWebsiteDisplay}
+                Попробовать демо
                 <ExternalLink className="h-4 w-4" />
               </a>
             </div>
@@ -361,8 +366,11 @@ export default function NaviletAi() {
         items={naviletFaq}
       />
       <CtaBand
-        title="Готовы увидеть демо Навылет! AI?"
-        cta="Запросить демо"
+        title="Готовы попробовать ИИ-турменеджера «Навылет! AI»?"
+        text="Откройте демо на базе поисковой системы Tourvisor и запустите своего ассистента — 7 дней бесплатно, без карты."
+        cta="Попробовать демо"
+        href={naviletDemoUrl("product-ctaband")}
+        goal="navilet_demo_click"
       />
     </PageShell>
   );

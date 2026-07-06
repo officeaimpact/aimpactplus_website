@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import {
   ArrowRight,
   Award,
@@ -388,6 +389,26 @@ export default function About() {
               </p>
             </div>
           </article>
+        </div>
+        <div className="mt-5 card flex flex-col items-start gap-5 sm:flex-row sm:items-center">
+          <Image
+            src="/partners/skolkovo.png"
+            alt="Участник Фонда «Сколково»"
+            width={220}
+            height={65}
+            className="h-14 w-auto shrink-0"
+          />
+          <div>
+            <h3 className="text-lg font-bold text-heading">
+              Участник Фонда «Сколково»
+            </h3>
+            <p className="mt-2 text-sm leading-7 text-body">
+              Команда прошла программу Fast Track IT в Фонде «Сколково» и
+              развивает продукт «Навылет! AI» как участник ИТ-кластера — это
+              подтверждает технологическую зрелость и потенциал наших ИИ-решений
+              для туризма.
+            </p>
+          </div>
         </div>
       </SectionWrapper>
 

@@ -43,10 +43,10 @@ export default function Home() {
       <JsonLd data={faqJsonLd([...faq])} />
       <Hero />
       <Audience id="audience" />
+      <NaviletPreview id="product" />
       {/* Пара: «Что мы решаем» — проблема и сразу карта решений на ней */}
       <ProblemSolution id="solutions" merge="bottom" />
       <SolutionsMap merge="top" />
-      <NaviletPreview id="product" />
       <HowItWorks id="how-it-works" />
       <CasesPreview id="cases" />
       {/* Пара: «Доверие» — экспертиза в аудитории и отзывы профессионалов */}

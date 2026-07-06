@@ -35,6 +35,7 @@ export type AnalyticsGoal =
   | "phone_click"
   | "email_click"
   | "demo_click"
+  | "navilet_demo_click"
   | "scroll_75"
   | "navilet_open"
   | "case_open"

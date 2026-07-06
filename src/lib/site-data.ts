@@ -34,7 +34,24 @@ export const site = {
     "ИИМПАКТ ПЛЮС — IT-компания, которая проектирует и внедряет ИИ-ассистентов, виджеты, CRM-интеграции, аналитику и голосовые сценарии для туроператоров, турагентств, агрегаторов и средств размещения. Эксперт по искусственному интеллекту в туризме при ТПП РФ.",
   naviletWebsite: "https://navilet.ru",
   naviletWebsiteDisplay: "navilet.ru",
+  /** Целевая страница демо + саморегистрации — главная точка конверсии. */
+  naviletDemo: "https://navilet.ru/demo",
+  naviletDemoDisplay: "navilet.ru/demo",
 } as const;
+
+/**
+ * Ссылка на демо/саморегистрацию Навылет с UTM-метками — чтобы на стороне
+ * navilet.ru было видно, что переход пришёл с ИИМПАКТ ПЛЮС и из какого блока.
+ */
+export function naviletDemoUrl(content: string): string {
+  const params = new URLSearchParams({
+    utm_source: "aimpact-plus",
+    utm_medium: "referral",
+    utm_campaign: "impact-to-navilet",
+    utm_content: content,
+  });
+  return `${site.naviletDemo}?${params.toString()}`;
+}
 
 /**
  * Собирает абсолютный URL без `new URL(...)`, чтобы сохранить кириллицу

@@ -9,7 +9,7 @@ import {
   staggerContainer,
   viewportOnce,
 } from "@/lib/animations";
-import { naviletFeatures, site } from "@/lib/site-data";
+import { naviletFeatures, naviletDemoUrl } from "@/lib/site-data";
 import { SectionWrapper } from "@/components/ui/SectionWrapper";
 import DemoWidget from "@/components/DemoWidget";
 import { demoScenarios } from "@/lib/scenarios";
@@ -55,21 +55,31 @@ export function NaviletPreview({ id, merge }: SectionAnchorProps = {}) {
             variants={fadeInUp}
             className="mt-2 flex flex-col gap-3 sm:flex-row"
           >
-            <Link href="/navilet-ai" className="btn-primary flex-1 justify-center sm:flex-initial">
-              Открыть страницу продукта
-              <ArrowRight className="h-5 w-5" aria-hidden="true" />
-            </Link>
             <a
-              href={site.naviletWebsite}
+              href={naviletDemoUrl("home-preview")}
               target="_blank"
               rel="noopener noreferrer"
-              className="btn-outline flex-1 justify-center sm:flex-initial"
-              aria-label={`Перейти на сайт продукта ${site.naviletWebsiteDisplay} (откроется в новой вкладке)`}
+              data-analytics-goal="navilet_demo_click"
+              className="btn-primary flex-1 justify-center sm:flex-initial"
+              aria-label="Попробовать демо «Навылет! AI» (откроется в новой вкладке)"
             >
-              Перейти на {site.naviletWebsiteDisplay}
-              <ExternalLink className="h-4 w-4" aria-hidden="true" />
+              Попробовать демо
+              <ExternalLink className="h-5 w-5" aria-hidden="true" />
             </a>
+            <Link
+              href="/navilet-ai"
+              className="btn-outline flex-1 justify-center sm:flex-initial"
+            >
+              Страница продукта
+              <ArrowRight className="h-5 w-5" aria-hidden="true" />
+            </Link>
           </motion.div>
+          <motion.p
+            variants={fadeInUp}
+            className="text-xs leading-5 text-muted"
+          >
+            На базе поисковой системы Tourvisor · 7 дней бесплатно, без карты
+          </motion.p>
         </motion.div>
 
         <motion.div
