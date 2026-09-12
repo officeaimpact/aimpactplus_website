@@ -78,7 +78,7 @@ export function NaviletPreview({ id, merge }: SectionAnchorProps = {}) {
             variants={fadeInUp}
             className="text-xs leading-5 text-muted"
           >
-            На базе поисковой системы Tourvisor · 7 дней бесплатно, без карты
+            На базе поисковой системы Tourvisor · от 990 ₽/мес · первый месяц бесплатно
           </motion.p>
         </motion.div>
 

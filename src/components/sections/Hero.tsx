@@ -1,22 +1,24 @@
 "use client";
 
+import { Fragment } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { ArrowRight, ExternalLink, ShieldCheck } from "lucide-react";
 import { HeroWordmark } from "@/components/visual/HeroWordmark";
-import {
-  fadeInUp,
-  heroWordVariant,
-  scaleIn,
-  staggerContainer,
-} from "@/lib/animations";
+import { scaleIn } from "@/lib/animations";
 import { naviletDemoUrl } from "@/lib/site-data";
 
-const title = "Внедряем искусственный интеллект в туризм";
-const titleAccent = "от пилота за 2 недели до собственного ИИ-продукта";
+const title =
+  "Внедряем искусственный интеллект и разрабатываем IT-решения для туризма";
+const titleAccent = "от пилота за 2 недели до собственного продукта";
+
+/** Шаг появления слов заголовка, мс. */
+const WORD_STEP = 70;
 
 export function Hero() {
   const words = title.split(" ");
+  // Блоки под заголовком стартуют после последнего слова.
+  const afterTitle = (words.length + 1) * WORD_STEP;
 
   return (
     <section className="hero-shell text-white">
@@ -26,50 +28,57 @@ export function Hero() {
        * hero занимает ровно высоту экрана за вычетом хедера, контент
        * центрируется по вертикали. На очень больших экранах ограничиваем max. */}
       <div className="mx-auto grid max-w-7xl items-center gap-8 px-5 py-12 sm:px-8 sm:py-16 lg:grid-cols-[1.1fr_0.9fr] lg:gap-16 lg:py-20 lg:min-h-[calc(100svh-88px)] lg:max-h-[860px]">
-        <motion.div
-          initial="hidden"
-          animate="visible"
-          variants={staggerContainer}
-        >
-          <motion.h1
-            initial="hidden"
-            animate="visible"
-            variants={staggerContainer}
-            className="text-balance font-display text-[1.75rem] font-bold leading-[1.12] min-[420px]:text-[2rem] sm:text-5xl lg:text-6xl xl:text-[3.75rem]"
+        {/*
+         * Левая колонка анимируется чистым CSS (.hero-word / .hero-fade в
+         * globals.css), а не framer-motion. Причина — SEO: framer рендерил
+         * слова H1 отдельными <span> без пробелов и с inline opacity:0 в
+         * SSR-HTML, поэтому краулеры без JS (GPTBot, ClaudeBot, PerplexityBot)
+         * читали заголовок как одно склеенное слово. Теперь между словами
+         * настоящие пробелы, а в HTML нет inline-скрытия текста.
+         */}
+        <div>
+          <h1
+            className="text-balance font-display text-[1.6rem] font-bold leading-[1.12] min-[420px]:text-[1.85rem] sm:text-4xl lg:text-5xl xl:text-[3.4rem]"
             style={{ letterSpacing: "-0.012em" }}
           >
             {words.map((w, i) => (
-              <motion.span
-                key={`${w}-${i}`}
-                variants={heroWordVariant}
-                className="mr-[0.28em] inline-block"
-                style={{ perspective: 600 }}
-              >
-                {w}
-              </motion.span>
+              <Fragment key={`${w}-${i}`}>
+                {i > 0 ? " " : null}
+                <span
+                  className="hero-word"
+                  style={{ animationDelay: `${i * WORD_STEP}ms` }}
+                >
+                  {w}
+                </span>
+              </Fragment>
             ))}
-            <motion.span
-              variants={heroWordVariant}
-              className="mt-2 block text-gradient text-[1.4rem] leading-[1.18] min-[420px]:text-[1.6rem] sm:text-[2.1rem] lg:text-[2.6rem] xl:text-[2.9rem]"
+            {/* Пробел нужен для textContent: без него краулеры читают
+                «…туризмаот пилота…» одним словом. Визуально span — block. */}
+            {" "}
+            <span
+              className="hero-word mt-2 block text-gradient text-[1.25rem] leading-[1.18] min-[420px]:text-[1.45rem] sm:text-[1.8rem] lg:text-[2.2rem] xl:text-[2.5rem]"
+              style={{ animationDelay: `${words.length * WORD_STEP}ms` }}
             >
               {titleAccent}
-            </motion.span>
-          </motion.h1>
+            </span>
+          </h1>
 
-          <motion.p
-            variants={fadeInUp}
-            className="mt-6 max-w-2xl text-pretty text-base leading-7 text-blue-100 sm:text-xl sm:leading-8"
+          <p
+            className="hero-fade mt-6 max-w-2xl text-pretty text-base leading-7 text-blue-100 sm:text-xl sm:leading-8"
+            style={{ animationDelay: `${afterTitle}ms` }}
           >
-            ИИМПАКТ ПЛЮС — российский ИИ-интегратор для туризма с 2023 года.
-            Запускаем ИИ-ассистентов, голосовых помощников и ИИ-аналитику
-            для турагентств, туроператоров, отелей и агрегаторов.
-            Готовый продукт «Навылет! AI» — на базе поисковой системы
-            Tourvisor — уже работает у 10+ компаний отрасли.
-          </motion.p>
+            ИИМПАКТ ПЛЮС — российская IT-компания для туризма с 2023 года.
+            Внедряем искусственный интеллект и разрабатываем цифровые
+            решения под задачи турагентств, туроператоров, отелей
+            и агрегаторов — от ИИ-ассистентов и голосовых помощников
+            до интеграций с Tourvisor и CRM. Собственный продукт
+            «Навылет! AI» — на базе поисковой системы Tourvisor — уже
+            работает у 10+ компаний отрасли.
+          </p>
 
-          <motion.div
-            variants={fadeInUp}
-            className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap"
+          <div
+            className="hero-fade mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap"
+            style={{ animationDelay: `${afterTitle + 120}ms` }}
           >
             <a
               href={naviletDemoUrl("hero")}
@@ -89,30 +98,30 @@ export function Hero() {
               Получить ИИ-аудит
               <ArrowRight className="h-5 w-5" aria-hidden="true" />
             </Link>
-          </motion.div>
+          </div>
 
-          <motion.p
-            variants={fadeInUp}
-            className="mt-3 max-w-xl text-xs leading-5 text-blue-100/90"
+          <p
+            className="hero-fade mt-3 max-w-xl text-xs leading-5 text-blue-100/90"
+            style={{ animationDelay: `${afterTitle + 240}ms` }}
           >
             Демо ИИ-турменеджера «Навылет! AI» — на базе поисковой системы
-            Tourvisor. 7 дней бесплатно, без карты.{" "}
+            Tourvisor. От 990 ₽/мес, первый месяц бесплатно.{" "}
             <Link
               href="/navilet-ai"
               className="font-semibold text-sky underline-offset-2 hover:underline"
             >
               Подробнее о продукте
             </Link>
-          </motion.p>
+          </p>
 
-          <motion.p
-            variants={fadeInUp}
-            className="mt-3 inline-flex items-center gap-2 text-xs font-semibold tracking-wide text-sky"
+          <p
+            className="hero-fade mt-3 inline-flex items-center gap-2 text-xs font-semibold tracking-wide text-sky"
+            style={{ animationDelay: `${afterTitle + 320}ms` }}
           >
             <ShieldCheck className="h-4 w-4" aria-hidden="true" />
             Пилот без риска для текущих продаж · согласие 152-ФЗ
-          </motion.p>
-        </motion.div>
+          </p>
+        </div>
 
         <motion.div
           initial="hidden"

@@ -13,6 +13,18 @@ const STATIC_PAGES_UPDATED = new Date("2026-05-27");
 const SOLUTIONS_UPDATED = new Date("2026-05-27");
 const SERVICES_UPDATED = new Date("2026-05-27");
 
+/**
+ * Точечные даты для статических страниц, которые правились после общего
+ * обновления. Правило: изменил страницу — обнови дату здесь, иначе краулеры
+ * не увидят повода вернуться (в сентябре 35 из 40 URL висели с одной датой).
+ */
+const PAGE_UPDATED: Record<string, string> = {
+  "/": "2026-09-12",
+  "/about": "2026-09-12",
+  "/navilet-ai": "2026-09-12",
+  "/expertise": "2026-09-12",
+};
+
 export default function sitemap(): MetadataRoute.Sitemap {
   const staticPaths: MetadataRoute.Sitemap = [
     "/",
@@ -31,7 +43,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/offer",
   ].map((path) => ({
     url: absoluteUrl(path),
-    lastModified: STATIC_PAGES_UPDATED,
+    lastModified: PAGE_UPDATED[path]
+      ? new Date(PAGE_UPDATED[path])
+      : STATIC_PAGES_UPDATED,
     changeFrequency: path === "/" ? "weekly" : "monthly",
     priority: path === "/" ? 1 : 0.7,
   }));

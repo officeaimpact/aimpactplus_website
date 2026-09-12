@@ -136,6 +136,7 @@ export function organizationJsonLd() {
   return {
     "@context": "https://schema.org",
     "@type": "Organization",
+    "@id": absoluteUrl("/#organization"),
     name: site.legalName,
     legalName: site.legalName,
     alternateName: [
@@ -167,13 +168,18 @@ export function organizationJsonLd() {
     taxID: site.inn,
     foundingDate: "2025-06-06",
     founders: [
-      { "@type": "Person", name: "Силагадзе Лукиан Ираклиевич" },
+      {
+        "@type": "Person",
+        "@id": absoluteUrl("/about#author-lukian"),
+        name: "Силагадзе Лукиан Ираклиевич",
+        url: absoluteUrl("/about#author-lukian"),
+      },
     ],
     address: {
       "@type": "PostalAddress",
-      streetAddress: "Трубниковский переулок, д. 24, стр. 1, помещение 14",
+      streetAddress: "ул. Пресненский Вал, д. 21, помещ. 172",
       addressLocality: "Москва",
-      postalCode: "121069",
+      postalCode: "123557",
       addressCountry: "RU",
     },
     areaServed: { "@type": "Country", name: "Россия" },
@@ -199,7 +205,16 @@ export function organizationJsonLd() {
         email: site.email,
       },
     ],
-    sameAs: [site.domain, site.naviletWebsite],
+    // sameAs — страницы, однозначно описывающие это же юрлицо: бренд-домен
+    // aimpact.ru (301 → сюда), сайт продукта и карточки в открытых реестрах
+    // (по ОГРН). Помогает поисковикам и LLM «склеить» сущность компании.
+    sameAs: [
+      site.domain,
+      "https://aimpact.ru",
+      site.naviletWebsite,
+      "https://www.tbank.ru/business/contractor/legal/1257700255196/",
+      "https://www.reabiz.ru/organization/1257700255196-iimpakt-plyus",
+    ],
   } as const;
 }
 
@@ -217,6 +232,7 @@ export function websiteJsonLd() {
     inLanguage: "ru-RU",
     publisher: {
       "@type": "Organization",
+      "@id": absoluteUrl("/#organization"),
       name: site.legalName,
       url: site.domain,
     },
@@ -284,6 +300,17 @@ export function productJsonLd(input: {
   url: string;
   brand: string;
   image?: string;
+  /**
+   * Диапазон подписки (AggregateOffer). Цены должны совпадать с сайтом
+   * продукта — иначе LLM видят два противоречащих источника.
+   */
+  offers?: {
+    lowPrice: string;
+    highPrice: string;
+    priceCurrency: string;
+    url: string;
+    description?: string;
+  };
 }) {
   return {
     "@context": "https://schema.org",
@@ -293,12 +320,29 @@ export function productJsonLd(input: {
     brand: { "@type": "Brand", name: input.brand },
     manufacturer: {
       "@type": "Organization",
+      "@id": absoluteUrl("/#organization"),
       name: site.legalName,
       url: site.domain,
     },
     category: "ИИ-ассистент для туризма",
     url: absoluteUrl(input.url),
     image: input.image ? absoluteUrl(input.image) : undefined,
+    offers: input.offers
+      ? {
+          "@type": "AggregateOffer",
+          lowPrice: input.offers.lowPrice,
+          highPrice: input.offers.highPrice,
+          priceCurrency: input.offers.priceCurrency,
+          url: input.offers.url,
+          description: input.offers.description,
+          availability: "https://schema.org/InStock",
+          seller: {
+            "@type": "Organization",
+            "@id": absoluteUrl("/#organization"),
+            name: site.legalName,
+          },
+        }
+      : undefined,
   } as const;
 }
 
@@ -318,7 +362,7 @@ export function founderPersonJsonLd() {
     additionalName: "Ираклиевич",
     jobTitle: "Генеральный директор и основатель ИИМПАКТ ПЛЮС",
     description:
-      "Эксперт по искусственному интеллекту и цифровым технологиям в туризме, член Комитета ТПП РФ по предпринимательству в сфере туризма. Спикер ТПП РФ, РСТ, МГИМО, РЭУ им. Г. В. Плеханова.",
+      "Эксперт по искусственному интеллекту и цифровым технологиям в туризме, руководитель рабочей группы по ответственному применению ИИ при Комитете ТПП РФ по предпринимательству в сфере туризма. Спикер ТПП РФ, РСТ, МГИМО, РЭУ им. Г. В. Плеханова.",
     knowsAbout: [
       "Искусственный интеллект в туризме",
       "Внедрение ИИ в туристический бизнес",
@@ -329,6 +373,7 @@ export function founderPersonJsonLd() {
     ],
     worksFor: {
       "@type": "Organization",
+      "@id": absoluteUrl("/#organization"),
       name: site.legalName,
       url: site.domain,
     },
@@ -338,7 +383,13 @@ export function founderPersonJsonLd() {
       url: "https://tpprf.ru/",
     },
     url: absoluteUrl("/about#author-lukian"),
-    sameAs: [site.domain, site.naviletWebsite],
+    // Внешняя страница спикера на форуме «ОТДЫХ» (tourismexpo.ru) — сторонний
+    // источник, который описывает того же человека и его роль в проекте.
+    sameAs: [
+      site.domain,
+      site.naviletWebsite,
+      "https://tourismexpo.ru/program/speakers/lukian-silagadze/",
+    ],
   } as const;
 }
 
@@ -377,9 +428,9 @@ export function localBusinessJsonLd() {
     areaServed: { "@type": "Country", name: "Россия" },
     address: {
       "@type": "PostalAddress",
-      streetAddress: "Трубниковский переулок, д. 24, стр. 1, помещение 14",
+      streetAddress: "ул. Пресненский Вал, д. 21, помещ. 172",
       addressLocality: "Москва",
-      postalCode: "121069",
+      postalCode: "123557",
       addressCountry: "RU",
     },
     openingHoursSpecification: [

@@ -272,7 +272,7 @@ export default function About() {
         id="author-lukian"
         eyebrow="Основатель"
         title="Силагадзе Лукиан Ираклиевич — эксперт по ИИ в туризме"
-        description="Генеральный директор и основатель ИИМПАКТ ПЛЮС. Эксперт по искусственному интеллекту и цифровым технологиям в туризме, член Комитета ТПП РФ по предпринимательству в сфере туризма."
+        description="Генеральный директор и основатель ИИМПАКТ ПЛЮС. Эксперт по искусственному интеллекту и цифровым технологиям в туризме, руководитель рабочей группы по ответственному применению ИИ при Комитете ТПП РФ по предпринимательству в сфере туризма."
         alt
       >
         <article className="card mx-auto flex max-w-4xl flex-col gap-6 sm:flex-row sm:items-start">
@@ -314,7 +314,8 @@ export default function About() {
                   className="mt-0.5 h-4 w-4 shrink-0 text-primary"
                   aria-hidden="true"
                 />
-                Эксперт по ИИ в туризме при Комитете ТПП РФ
+                Руководитель рабочей группы по ответственному применению ИИ
+                при Комитете ТПП РФ по предпринимательству в сфере туризма
               </li>
               <li className="flex gap-2">
                 <BadgeCheck
@@ -370,7 +371,23 @@ export default function About() {
                 Вручена основателю ИИМПАКТ ПЛЮС Лукиану Силагадзе
                 вице-президентом Российского союза туриндустрии Юрием
                 Барзыкиным и заместителем председателя комитета Госдумы по
-                туризму Натальей Костенко (9 октября 2024).
+                туризму Натальей Костенко (октябрь 2025).
+              </p>
+            </div>
+          </article>
+          <article className="card flex items-start gap-4">
+            <span className="grid h-12 w-12 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-primary to-accent text-white shadow-[var(--shadow-blue)]">
+              <BadgeCheck className="h-6 w-6" />
+            </span>
+            <div>
+              <h3 className="text-lg font-bold text-heading">
+                Официальная поддержка Российского союза туриндустрии
+              </h3>
+              <p className="mt-2 text-sm leading-7 text-body">
+                Вице-президент РСТ Юрий Барзыкин выразил официальную поддержку
+                проекту «Навылет! AI»: письмом № 49К/0009 от 19.08.2025 проект
+                рекомендован профильным фондам, акселераторам и партнёрам
+                индустрии.
               </p>
             </div>
           </article>

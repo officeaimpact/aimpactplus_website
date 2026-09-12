@@ -67,6 +67,15 @@ export default function NaviletAi() {
             "Готовый ИИ-турменеджер для сайта туристической компании: каскадный диалог, подбор туров на базе поисковой системы Tourvisor, FAQ и передача заявки менеджеру. White-label, интеграция с популярными CRM. К продукту подключено 10+ компаний туристической отрасли.",
           url: "/navilet-ai",
           brand: site.brand,
+          // Цены — как на сайте продукта navilet.ru/tarify (единый источник).
+          offers: {
+            lowPrice: "990",
+            highPrice: "14990",
+            priceCurrency: "RUB",
+            url: `${site.naviletWebsite}/tarify`,
+            description:
+              "Подписка: версия «Лид» от 990 ₽/мес, версия «Про» от 1 990 ₽/мес. Первый месяц бесплатно, подключение 0 ₽.",
+          },
         })}
       />
       <JsonLd data={faqJsonLd([...naviletFaq])} />
@@ -115,7 +124,8 @@ export default function NaviletAi() {
           <p className="max-w-2xl text-sm leading-6 text-muted">
             Хотите попробовать ИИ-турменеджера «вживую»? Откройте демо на базе
             поисковой системы Tourvisor — без регистрации. Понравится — запустите
-            своего ассистента: 7 дней бесплатно, без карты.
+            своего ассистента: от 990 ₽/мес, первый месяц бесплатно,
+            подключение 0 ₽.
           </p>
           <a
             href={naviletDemoUrl("product-features")}
@@ -367,7 +377,7 @@ export default function NaviletAi() {
       />
       <CtaBand
         title="Готовы попробовать ИИ-турменеджера «Навылет! AI»?"
-        text="Откройте демо на базе поисковой системы Tourvisor и запустите своего ассистента — 7 дней бесплатно, без карты."
+        text="Откройте демо на базе поисковой системы Tourvisor и запустите своего ассистента — от 990 ₽/мес, первый месяц бесплатно, подключение 0 ₽."
         cta="Попробовать демо"
         href={naviletDemoUrl("product-ctaband")}
         goal="navilet_demo_click"
