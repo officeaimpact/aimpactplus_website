@@ -16,6 +16,12 @@ import {
   Database,
   Mic,
   Palette,
+  Smartphone,
+  Network,
+  Code2,
+  BookOpen,
+  Bot,
+  RussianRuble,
   type LucideIcon,
 } from "lucide-react";
 import { PageShell } from "@/components/PageShell";
@@ -25,7 +31,7 @@ import { CtaBand } from "@/components/sections/CtaBand";
 import { JsonLd } from "@/components/ui/JsonLd";
 import { SegmentVisual } from "@/components/visual/SegmentVisual";
 import { itemListJsonLd, pageMetadata, serviceJsonLd } from "@/lib/seo";
-import { services, type ServiceIcon } from "@/lib/site-data";
+import { serviceLines, services, type ServiceIcon } from "@/lib/site-data";
 
 const iconMap: Record<ServiceIcon, LucideIcon> = {
   Sparkles,
@@ -36,6 +42,12 @@ const iconMap: Record<ServiceIcon, LucideIcon> = {
   Compass,
   LayoutPanelLeft,
   Cloud,
+  Smartphone,
+  Plug,
+  Network,
+  Code2,
+  BookOpen,
+  Bot,
 };
 
 const pricingFactors: ReadonlyArray<{
@@ -145,11 +157,17 @@ const pricingTiers: ReadonlyArray<PricingTier> = [
 ];
 
 export const metadata = pageMetadata({
-  title: "Услуги и стоимость внедрения ИИ в туризм — ИИМПАКТ ПЛЮС",
+  title: "Услуги и цены: разработка и ИИ для туризма",
   description:
-    "Услуги ИИМПАКТ ПЛЮС: разработка кастомных ИИ-решений и приложений, интеграции в ПО и CRM, чат-боты, голосовые ИИ-ассистенты, ИИ-аналитика, обучение и консалтинг. От чего зависит стоимость и сроки запуска — в разделе «Стоимость».",
+    "Заказная разработка для туризма (B2B-кабинеты, приложения, интеграции с Tourvisor и CRM, боты, дашборды), внедрение ИИ, аудит и обучение. Цены «от» у каждой услуги.",
   path: "/services",
   keywords: [
+    "IT-разработка для туризма",
+    "заказная разработка для туроператора",
+    "разработка для турагентства цена",
+    "интеграция Tourvisor",
+    "B2B-кабинет туроператора",
+    "мобильное приложение для турагентства",
     "услуги ИИ-разработки для туризма",
     "услуги AI разработки",
     "внедрение ИИ в туризм",
@@ -186,13 +204,14 @@ export default function ServicesIndex() {
             description: s.text,
             url: `/services/${s.slug}`,
             audience: "Tourism business",
+            priceFrom: s.priceFrom,
           })}
         />
       ))}
       <PageHero
         eyebrow="Услуги"
-        title="Направления работы с ИИ для туризма"
-        description="От стратегии и аудита до разработки индивидуальных ИИ-приложений, интеграций, голосовых ассистентов и обучения команды. К каждой услуге можно оставить отдельную заявку — и мы сразу поймём, что именно вам нужно."
+        title="Заказная разработка и внедрение ИИ для туризма"
+        description="Три линии: заказная IT-разработка (B2B-кабинеты, мобильные приложения, интеграции с Tourvisor, Слетать, САМО, U-ON и CRM, боты, дашборды), внедрение искусственного интеллекта и стратегия с обучением. У каждой услуги — состав работ, сроки и стартовая цена «от»."
         crumbs={[
           { name: "Главная", href: "/" },
           { name: "Услуги", href: "/services" },
@@ -200,68 +219,84 @@ export default function ServicesIndex() {
         aside={<SegmentVisual segment="contact" />}
       />
 
-      <SectionWrapper
-        eyebrow="Каталог"
-        title="Что мы делаем"
-        description="Каждая услуга — это поддающийся измерению результат с прозрачным составом работ и сроком запуска. Откройте интересующую услугу или сразу оставьте заявку."
-      >
-        <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-          {services.map((s) => {
-            const Icon = iconMap[s.icon] ?? Sparkles;
-            const intent = `Заявка на услугу: ${s.title}`;
-            const contactHref = `/contact?intent=${encodeURIComponent(intent)}`;
-            return (
-              <article
-                key={s.slug}
-                id={s.slug}
-                className="card group relative flex h-full flex-col overflow-hidden scroll-mt-28"
-              >
-                <div className="pointer-events-none absolute -right-12 -top-12 h-32 w-32 rounded-full bg-accent/[0.06] transition-all duration-500 group-hover:scale-[1.6] group-hover:bg-accent/[0.12]" />
-                <div className="relative mb-5 grid h-12 w-12 place-items-center rounded-2xl bg-gradient-to-br from-primary to-accent text-white shadow-[var(--shadow-blue)] transition group-hover:scale-105 group-hover:-rotate-3">
-                  <Icon className="h-6 w-6" aria-hidden="true" />
-                </div>
-                <h3 className="relative text-lg font-bold text-heading">
-                  {s.title}
-                </h3>
-                <p className="relative mt-3 grow leading-7 text-body">
-                  {s.text}
-                </p>
-                <ul className="relative mt-5 space-y-2 border-t border-blue-100 pt-4">
-                  {s.outcomes.map((o) => (
-                    <li
-                      key={o}
-                      className="flex gap-2 text-sm leading-6 text-body"
-                    >
-                      <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
-                      {o}
-                    </li>
-                  ))}
-                </ul>
-                <p className="relative mt-4 flex items-center gap-1.5 text-xs text-muted">
-                  <Clock className="h-3.5 w-3.5" />
-                  {s.timeline}
-                </p>
-                <div className="relative mt-5 flex flex-col gap-2 sm:flex-row">
-                  <Link
-                    href={`/services/${s.slug}`}
-                    className="btn-outline flex-1 justify-center"
+      {serviceLines.map((lineDef, idx) => {
+        const items = services.filter((s) => s.line === lineDef.id);
+        return (
+          <SectionWrapper
+            key={lineDef.id}
+            id={lineDef.anchor}
+            eyebrow={lineDef.eyebrow}
+            title={lineDef.title}
+            description={lineDef.description}
+            alt={idx % 2 === 1}
+          >
+            <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+              {items.map((s) => {
+                const Icon = iconMap[s.icon] ?? Sparkles;
+                const intent = `Заявка на услугу: ${s.title}`;
+                const contactHref = `/contact?intent=${encodeURIComponent(intent)}`;
+                return (
+                  <article
+                    key={s.slug}
+                    id={s.slug}
+                    className="card group relative flex h-full flex-col overflow-hidden scroll-mt-28"
                   >
-                    Подробнее
-                    <ArrowRight className="h-4 w-4" />
-                  </Link>
-                  <Link
-                    href={contactHref}
-                    className="btn-primary flex-1 justify-center"
-                  >
-                    Заявка
-                    <ArrowRight className="h-4 w-4" />
-                  </Link>
-                </div>
-              </article>
-            );
-          })}
-        </div>
-      </SectionWrapper>
+                    <div className="pointer-events-none absolute -right-12 -top-12 h-32 w-32 rounded-full bg-accent/[0.06] transition-all duration-500 group-hover:scale-[1.6] group-hover:bg-accent/[0.12]" />
+                    <div className="relative mb-5 grid h-12 w-12 place-items-center rounded-2xl bg-gradient-to-br from-primary to-accent text-white shadow-[var(--shadow-blue)] transition group-hover:scale-105 group-hover:-rotate-3">
+                      <Icon className="h-6 w-6" aria-hidden="true" />
+                    </div>
+                    <h3 className="relative text-lg font-bold text-heading">
+                      {s.title}
+                    </h3>
+                    <p className="relative mt-3 grow leading-7 text-body">
+                      {s.text}
+                    </p>
+                    <ul className="relative mt-5 space-y-2 border-t border-blue-100 pt-4">
+                      {s.outcomes.map((o) => (
+                        <li
+                          key={o}
+                          className="flex gap-2 text-sm leading-6 text-body"
+                        >
+                          <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
+                          {o}
+                        </li>
+                      ))}
+                    </ul>
+                    <div className="relative mt-4 flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-muted">
+                      {s.priceFrom && (
+                        <span className="inline-flex items-center gap-1.5 text-sm font-bold text-heading">
+                          <RussianRuble className="h-3.5 w-3.5 text-primary" />
+                          {s.priceFrom.label}
+                        </span>
+                      )}
+                      <span className="inline-flex items-center gap-1.5">
+                        <Clock className="h-3.5 w-3.5" />
+                        {s.timeline}
+                      </span>
+                    </div>
+                    <div className="relative mt-5 flex flex-col gap-2 sm:flex-row">
+                      <Link
+                        href={`/services/${s.slug}`}
+                        className="btn-outline flex-1 justify-center"
+                      >
+                        Подробнее
+                        <ArrowRight className="h-4 w-4" />
+                      </Link>
+                      <Link
+                        href={contactHref}
+                        className="btn-primary flex-1 justify-center"
+                      >
+                        Заявка
+                        <ArrowRight className="h-4 w-4" />
+                      </Link>
+                    </div>
+                  </article>
+                );
+              })}
+            </div>
+          </SectionWrapper>
+        );
+      })}
 
       <SectionWrapper
         id="pricing"
@@ -290,8 +325,8 @@ export default function ServicesIndex() {
       </SectionWrapper>
 
       <SectionWrapper
-        title="Три уровня запуска"
-        description="Цены не публикуем — они зависят от перечисленных выше факторов. Ниже типовой состав, ориентир по срокам и кому уровень подходит."
+        title="Три уровня запуска ИИ-ассистента"
+        description="Стартовые цены «от» указаны у каждой услуги в каталоге выше. Здесь — три типовых уровня запуска ИИ-ассистента: состав, ориентир по срокам и кому уровень подходит."
         alt
         merge="top"
       >
@@ -352,9 +387,10 @@ export default function ServicesIndex() {
           })}
         </div>
         <p className="mx-auto mt-8 max-w-3xl text-center text-xs italic text-muted">
-          Сроки — оценка по типовому проекту. Точные значения зависят от
-          подключаемых интеграций, объёма FAQ-базы и доступности данных у
-          клиента. Рублёвую смету фиксируем после короткой встречи и аудита.
+          Сроки и цены «от» — оценка по типовому проекту. Точные значения
+          зависят от подключаемых интеграций, объёма данных и требований к
+          контуру. Смету фиксируем после короткой встречи и аудита; первая
+          консультация бесплатна.
         </p>
       </SectionWrapper>
 

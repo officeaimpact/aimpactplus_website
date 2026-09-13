@@ -11,7 +11,7 @@ import { cities } from "@/lib/cities-data";
  */
 const STATIC_PAGES_UPDATED = new Date("2026-05-27");
 const SOLUTIONS_UPDATED = new Date("2026-05-27");
-const SERVICES_UPDATED = new Date("2026-05-27");
+const SERVICES_UPDATED = new Date("2026-09-13");
 
 /**
  * Точечные даты для статических страниц, которые правились после общего
@@ -23,6 +23,8 @@ const PAGE_UPDATED: Record<string, string> = {
   "/about": "2026-09-12",
   "/navilet-ai": "2026-09-12",
   "/expertise": "2026-09-12",
+  "/services": "2026-09-13",
+  "/products": "2026-09-13",
 };
 
 export default function sitemap(): MetadataRoute.Sitemap {
@@ -30,6 +32,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/",
     "/solutions",
     "/navilet-ai",
+    "/products",
     "/cases",
     "/services",
     "/expertise",

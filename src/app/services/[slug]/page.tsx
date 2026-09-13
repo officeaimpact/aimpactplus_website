@@ -2,26 +2,39 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import {
   ArrowRight,
+  BookOpen,
+  Bot,
+  ChartLine,
   CheckCircle2,
   Clock,
+  Cloud,
+  Code2,
+  Compass,
+  GraduationCap,
+  Headset,
+  LayoutPanelLeft,
+  Network,
+  Plug,
+  RussianRuble,
+  Smartphone,
   Sparkles,
   Users,
   Workflow,
-  Headset,
-  ChartLine,
-  GraduationCap,
-  Compass,
-  LayoutPanelLeft,
-  Cloud,
   type LucideIcon,
 } from "lucide-react";
 import { PageShell } from "@/components/PageShell";
 import { PageHero } from "@/components/ui/PageHero";
 import { SectionWrapper } from "@/components/ui/SectionWrapper";
 import { CtaBand } from "@/components/sections/CtaBand";
+import { FAQSection } from "@/components/sections/FAQ";
 import { JsonLd } from "@/components/ui/JsonLd";
-import { pageMetadata, serviceJsonLd } from "@/lib/seo";
-import { services, type ServiceIcon } from "@/lib/site-data";
+import { faqJsonLd, pageMetadata, serviceJsonLd } from "@/lib/seo";
+import {
+  serviceLines,
+  services,
+  type ServiceIcon,
+  type ServiceLine,
+} from "@/lib/site-data";
 
 const iconMap: Record<ServiceIcon, LucideIcon> = {
   Sparkles,
@@ -32,7 +45,27 @@ const iconMap: Record<ServiceIcon, LucideIcon> = {
   Compass,
   LayoutPanelLeft,
   Cloud,
+  Smartphone,
+  Plug,
+  Network,
+  Code2,
+  BookOpen,
+  Bot,
 };
+
+/** serviceType для schema.org — по линии услуг. */
+const serviceTypeByLine: Record<ServiceLine, string> = {
+  development: "Заказная разработка программного обеспечения для туризма",
+  ai: "Внедрение искусственного интеллекта в туризм",
+  service: "ИИ-консалтинг, аудит и обучение для туристического бизнеса",
+};
+
+/** Обрезает описание до лимита сниппета по границе слова. */
+function clip(text: string, max = 158): string {
+  if (text.length <= max) return text;
+  const cut = text.slice(0, max - 1);
+  return `${cut.slice(0, cut.lastIndexOf(" "))}…`;
+}
 
 export function generateStaticParams() {
   return services.map((s) => ({ slug: s.slug }));
@@ -50,9 +83,11 @@ export async function generateMetadata({
       title: "Услуга не найдена",
       description: "Запрашиваемая услуга не найдена.",
     });
+  // Бренд не дописываем: layout уже добавляет « | ии-туризм.рф» (15 симв.),
+  // а сумма должна остаться в пределах ~65 символов сниппета.
   return pageMetadata({
-    title: `Услуга: ${service.title}`,
-    description: service.text,
+    title: service.title,
+    description: clip(service.text),
     path: `/services/${service.slug}`,
     keywords: service.keywords,
   });
@@ -68,7 +103,15 @@ export default async function ServiceDetail({
   if (!service) notFound();
 
   const Icon = iconMap[service.icon] ?? Sparkles;
-  const others = services.filter((s) => s.slug !== slug).slice(0, 3);
+  const line = serviceLines.find((l) => l.id === service.line) ?? serviceLines[0];
+  // «Возможно, вам ближе»: явно связанные услуги, иначе — соседи по линии.
+  const related = (
+    service.related
+      ? service.related
+          .map((r) => services.find((s) => s.slug === r))
+          .filter((s): s is (typeof services)[number] => Boolean(s))
+      : services.filter((s) => s.line === service.line && s.slug !== slug)
+  ).slice(0, 3);
   const intent = `Заявка на услугу: ${service.title}`;
   const contactHref = `/contact?intent=${encodeURIComponent(intent)}`;
 
@@ -79,18 +122,20 @@ export default async function ServiceDetail({
           name: service.title,
           description: service.text,
           url: `/services/${service.slug}`,
-          serviceType: "Внедрение ИИ в туризм",
+          serviceType: serviceTypeByLine[service.line],
           audience: "Tourism business",
+          priceFrom: service.priceFrom,
         })}
       />
+      {service.faq && <JsonLd data={faqJsonLd(service.faq)} />}
       <PageHero
-        eyebrow="Услуга"
+        eyebrow={line.eyebrow}
         title={service.title}
         description={service.text}
         primaryCta="Оставить заявку на услугу"
         primaryHref={contactHref}
-        secondaryCta="Все услуги"
-        secondaryHref="/services"
+        secondaryCta="Все услуги линии"
+        secondaryHref={`/services#${line.anchor}`}
         crumbs={[
           { name: "Главная", href: "/" },
           { name: "Услуги", href: "/services" },
@@ -115,18 +160,42 @@ export default async function ServiceDetail({
                 </li>
               ))}
             </ul>
-            <div className="mt-auto flex items-center gap-2 rounded-xl border border-white/10 bg-white/[0.04] px-3 py-2 text-xs text-blue-100">
-              <Clock className="h-4 w-4 shrink-0 text-sky" />
-              <span>{service.timeline}</span>
+            <div className="mt-auto space-y-2">
+              {service.priceFrom && (
+                <div className="flex items-center gap-2 rounded-xl border border-white/10 bg-white/[0.04] px-3 py-2 text-sm text-white">
+                  <RussianRuble className="h-4 w-4 shrink-0 text-sky" />
+                  <span className="font-bold">{service.priceFrom.label}</span>
+                </div>
+              )}
+              <div className="flex items-center gap-2 rounded-xl border border-white/10 bg-white/[0.04] px-3 py-2 text-xs text-blue-100">
+                <Clock className="h-4 w-4 shrink-0 text-sky" />
+                <span>{service.timeline}</span>
+              </div>
             </div>
           </div>
         }
       />
 
+      {service.intro && (
+        <SectionWrapper
+          eyebrow="О направлении"
+          title="Что это и зачем туркомпании"
+        >
+          <div className="mx-auto max-w-3xl space-y-5">
+            {service.intro.map((paragraph) => (
+              <p key={paragraph.slice(0, 40)} className="text-lg leading-8 text-body">
+                {paragraph}
+              </p>
+            ))}
+          </div>
+        </SectionWrapper>
+      )}
+
       <SectionWrapper
         eyebrow="Кому подходит"
         title="Для каких компаний эта услуга"
-        description="Чёткое позиционирование: с кем мы обычно реализуем эту услугу и какой контекст у заказчика."
+        description="С кем мы обычно реализуем эту услугу и какой контекст у заказчика."
+        alt={Boolean(service.intro)}
       >
         <div className="grid gap-5 md:grid-cols-3">
           {service.forWhom.map((w) => (
@@ -144,7 +213,7 @@ export default async function ServiceDetail({
         eyebrow="Состав работ"
         title="Что входит в услугу"
         description="Прозрачный список этапов и артефактов. Можно стартовать с базы и расширять по мере результата."
-        alt
+        alt={!service.intro}
       >
         <ol className="grid gap-5 md:grid-cols-2">
           {service.deliverables.map((d, i) => (
@@ -159,17 +228,46 @@ export default async function ServiceDetail({
       </SectionWrapper>
 
       <SectionWrapper
-        eyebrow="Сроки"
-        title="Когда увидите результат"
-        description="Предсказуемые сроки запуска. Финальные оценки фиксируются после короткого аудита."
+        id="price"
+        eyebrow="Стоимость и сроки"
+        title={service.priceFrom ? "Сколько стоит и когда увидите результат" : "Когда увидите результат"}
+        description="Стартовая вилка — для понимания порядка бюджета. Точную смету фиксируем после короткого аудита, обычно за одну встречу."
       >
-        <div className="card mx-auto flex max-w-3xl items-start gap-5">
-          <span className="grid h-14 w-14 shrink-0 place-items-center rounded-2xl bg-gradient-to-br from-primary to-accent text-white shadow-[var(--shadow-blue)]">
-            <Clock className="h-7 w-7" aria-hidden="true" />
-          </span>
-          <p className="text-lg leading-8 text-heading">{service.timeline}</p>
+        <div className="mx-auto grid max-w-5xl gap-5 md:grid-cols-2">
+          {service.priceFrom && (
+            <div className="card flex items-start gap-5">
+              <span className="grid h-14 w-14 shrink-0 place-items-center rounded-2xl bg-gradient-to-br from-primary to-accent text-white shadow-[var(--shadow-blue)]">
+                <RussianRuble className="h-7 w-7" aria-hidden="true" />
+              </span>
+              <div>
+                <p className="text-2xl font-bold text-heading">
+                  {service.priceFrom.label}
+                </p>
+                {service.priceFrom.note && (
+                  <p className="mt-2 text-sm leading-6 text-body">
+                    {service.priceFrom.note}
+                  </p>
+                )}
+              </div>
+            </div>
+          )}
+          <div className="card flex items-start gap-5">
+            <span className="grid h-14 w-14 shrink-0 place-items-center rounded-2xl bg-gradient-to-br from-primary to-accent text-white shadow-[var(--shadow-blue)]">
+              <Clock className="h-7 w-7" aria-hidden="true" />
+            </span>
+            <p className="text-lg leading-8 text-heading">{service.timeline}</p>
+          </div>
         </div>
       </SectionWrapper>
+
+      {service.faq && (
+        <FAQSection
+          eyebrow="FAQ"
+          title="Частые вопросы об услуге"
+          description="Коротко о том, что спрашивают на первой встрече."
+          items={service.faq}
+        />
+      )}
 
       <SectionWrapper
         eyebrow="Старт"
@@ -197,35 +295,39 @@ export default async function ServiceDetail({
         </div>
       </SectionWrapper>
 
-      <SectionWrapper
-        eyebrow="Другие услуги"
-        title="Возможно, вам ближе"
-      >
-        <div className="grid gap-5 md:grid-cols-3">
-          {others.map((o) => {
-            const OIcon = iconMap[o.icon] ?? Sparkles;
-            return (
-              <Link
-                key={o.slug}
-                href={`/services/${o.slug}`}
-                className="card group flex h-full flex-col"
-              >
-                <span className="mb-4 grid h-12 w-12 place-items-center rounded-2xl bg-gradient-to-br from-primary to-accent text-white shadow-[var(--shadow-blue)] transition group-hover:scale-105">
-                  <OIcon className="h-6 w-6" aria-hidden="true" />
-                </span>
-                <h3 className="text-lg font-bold text-heading">{o.title}</h3>
-                <p className="mt-3 grow text-sm leading-6 text-body">
-                  {o.text}
-                </p>
-                <span className="mt-5 inline-flex items-center gap-2 text-sm font-bold text-primary">
-                  Открыть услугу
-                  <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" />
-                </span>
-              </Link>
-            );
-          })}
-        </div>
-      </SectionWrapper>
+      {related.length > 0 && (
+        <SectionWrapper eyebrow="Другие услуги" title="Возможно, вам ближе">
+          <div className="grid gap-5 md:grid-cols-3">
+            {related.map((o) => {
+              const OIcon = iconMap[o.icon] ?? Sparkles;
+              return (
+                <Link
+                  key={o.slug}
+                  href={`/services/${o.slug}`}
+                  className="card group flex h-full flex-col"
+                >
+                  <span className="mb-4 grid h-12 w-12 place-items-center rounded-2xl bg-gradient-to-br from-primary to-accent text-white shadow-[var(--shadow-blue)] transition group-hover:scale-105">
+                    <OIcon className="h-6 w-6" aria-hidden="true" />
+                  </span>
+                  <h3 className="text-lg font-bold text-heading">{o.title}</h3>
+                  <p className="mt-3 grow text-sm leading-6 text-body">
+                    {o.text}
+                  </p>
+                  {o.priceFrom && (
+                    <p className="mt-3 text-sm font-bold text-heading">
+                      {o.priceFrom.label}
+                    </p>
+                  )}
+                  <span className="mt-5 inline-flex items-center gap-2 text-sm font-bold text-primary">
+                    Открыть услугу
+                    <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" />
+                  </span>
+                </Link>
+              );
+            })}
+          </div>
+        </SectionWrapper>
+      )}
 
       <CtaBand
         title={`Запустим «${service.title}»`}

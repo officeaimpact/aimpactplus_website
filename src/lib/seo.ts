@@ -273,6 +273,8 @@ export function serviceJsonLd(input: {
   url: string;
   serviceType?: string;
   audience?: string;
+  /** Стартовая цена «от» — попадает в Offer, чтобы LLM видели вилку. */
+  priceFrom?: { value: number; label: string; unit?: "project" | "month" };
 }) {
   return {
     "@context": "https://schema.org",
@@ -283,12 +285,30 @@ export function serviceJsonLd(input: {
     url: absoluteUrl(input.url),
     provider: {
       "@type": "Organization",
+      "@id": absoluteUrl("/#organization"),
       name: site.legalName,
       url: site.domain,
     },
     areaServed: { "@type": "Country", name: "Россия" },
     audience: input.audience
       ? { "@type": "BusinessAudience", audienceType: input.audience }
+      : undefined,
+    offers: input.priceFrom
+      ? {
+          "@type": "Offer",
+          priceCurrency: "RUB",
+          price: String(input.priceFrom.value),
+          description: input.priceFrom.label,
+          priceSpecification: {
+            "@type": "PriceSpecification",
+            minPrice: input.priceFrom.value,
+            priceCurrency: "RUB",
+            ...(input.priceFrom.unit === "month"
+              ? { unitCode: "MON", unitText: "месяц" }
+              : {}),
+          },
+          availability: "https://schema.org/InStock",
+        }
       : undefined,
     inLanguage: "ru-RU",
   } as const;

@@ -108,7 +108,7 @@ ${services
   .map(
     (s) =>
       `### ${s.title}
-URL: ${site.domain}/services/${s.slug}
+URL: ${site.domain}/services/${s.slug}${s.priceFrom ? `\nСтоимость: ${s.priceFrom.label}${s.priceFrom.note ? ` (${s.priceFrom.note})` : ""}` : ""}
 Описание: ${s.text}
 
 Кому подходит:

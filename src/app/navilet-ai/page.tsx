@@ -31,7 +31,7 @@ import {
 import { demoScenarios } from "@/lib/scenarios";
 
 export const metadata = pageMetadata({
-  title: "Навылет! AI — ИИ-турменеджер для сайта туристической компании",
+  title: "Навылет! AI — ИИ-турменеджер для турагентства",
   description:
     "Готовый ИИ-турменеджер «Навылет! AI» для сайта туристической компании: подбор туров на базе поисковой системы Tourvisor, FAQ, карточки отелей и передача заявки менеджеру. White-label, интеграция с AmoCRM, Bitrix24, UON CRM. К продукту подключено 10+ компаний туристической отрасли.",
   path: "/navilet-ai",

@@ -1,6 +1,7 @@
 import { PageShell } from "@/components/PageShell";
 import { Hero } from "@/components/sections/Hero";
 import { Audience } from "@/components/sections/Audience";
+import { Directions } from "@/components/sections/Directions";
 import { ProblemSolution } from "@/components/sections/ProblemSolution";
 import { SolutionsMap } from "@/components/sections/SolutionsMap";
 import { HowItWorks } from "@/components/sections/HowItWorks";
@@ -49,6 +50,7 @@ export default function Home() {
       <JsonLd data={faqJsonLd([...faq])} />
       <Hero />
       <Audience id="audience" />
+      <Directions id="directions" />
       <NaviletPreview id="product" />
       {/* Пара: «Что мы решаем» — проблема и сразу карта решений на ней */}
       <ProblemSolution id="solutions" merge="bottom" />
