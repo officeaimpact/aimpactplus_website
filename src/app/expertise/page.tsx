@@ -7,8 +7,9 @@ import { CtaBand } from "@/components/sections/CtaBand";
 import { BrandMonogram } from "@/components/ui/BrandMonogram";
 import { SegmentVisual } from "@/components/visual/SegmentVisual";
 import { ExpertiseEventsGrid } from "@/components/sections/ExpertiseEventsGrid";
-import { pageMetadata } from "@/lib/seo";
-import { partners, testimonials } from "@/lib/site-data";
+import { JsonLd } from "@/components/ui/JsonLd";
+import { eventJsonLd, pageMetadata } from "@/lib/seo";
+import { events, partners, testimonials } from "@/lib/site-data";
 
 export const metadata = pageMetadata({
   title: "Экспертиза, выступления и публичная репутация",
@@ -20,6 +21,24 @@ export const metadata = pageMetadata({
 export default function Expertise() {
   return (
     <PageShell>
+      {/* Event-разметка для каждого выступления: функция eventJsonLd была в
+       * seo.ts с самого начала, но нигде не подключалась — поисковики не
+       * видели доклады как события. Описание обрезаем: в схеме нужна суть,
+       * а не весь пресс-релиз. */}
+      {events.map((e) => (
+        <JsonLd
+          key={e.id}
+          data={eventJsonLd({
+            name: e.title,
+            startDate: e.dateISO,
+            location: e.place,
+            description:
+              e.description.length > 320
+                ? `${e.description.slice(0, 317)}…`
+                : e.description,
+          })}
+        />
+      ))}
       <PageHero
         eyebrow="Экспертиза"
         title="Публичная экспертиза в туристической отрасли"

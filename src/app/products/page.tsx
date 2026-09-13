@@ -123,7 +123,7 @@ export default function ProductsPage() {
             <span className="text-gradient">для туристического бизнеса</span>
           </>
         }
-        description="Мы не только разрабатываем на заказ — у нас есть собственный продукт, который уже работает у 10+ компаний отрасли. ИИ-турменеджер «Навылет! AI» на базе поисковой системы Tourvisor и личный кабинет с аналитикой — подключаются за пару минут."
+        description="Мы не только разрабатываем на заказ — у нас есть собственный продукт, который уже работает у 30+ компаний и офисов отрасли. ИИ-турменеджер «Навылет! AI» на базе поисковой системы Tourvisor и личный кабинет с аналитикой — подключаются за пару минут."
         primaryCta="Попробовать демо"
         primaryHref={naviletDemoUrl("products-hero")}
         primaryCtaGoal="navilet_demo_click"
@@ -304,9 +304,9 @@ export default function ProductsPage() {
       >
         <div className="grid gap-5 sm:grid-cols-3">
           {[
-            { icon: Bot, value: "10+", label: "компаний туристической отрасли подключены" },
-            { icon: MessageSquareText, value: "до 80%", label: "типовых обращений закрывает ассистент без менеджера" },
-            { icon: BarChart3, value: "24/7", label: "ночные и выходные заявки не теряются" },
+            { icon: Bot, value: "30+", label: "компаний и офисов подключены к продукту" },
+            { icon: MessageSquareText, value: "175 000+", label: "сообщений обработано в диалогах с гостями за сезон 2026" },
+            { icon: BarChart3, value: "41,4%", label: "обращений приходят вне рабочего времени — с 19:00 до 9:00" },
           ].map((s) => {
             const Icon = s.icon;
             return (

@@ -379,7 +379,7 @@ export function KakVybratPodryadchika() {
             <Link href="/cases/magazin-goryashchih-putevok">МГП</Link>,{" "}
             <Link href="/cases/otel-delas">Delas</Link>,{" "}
             <Link href="/cases/infoflot-corporate-ai">ИНФОФЛОТ</Link>;
-            под NDA — 10+ компаний на «Навылет! AI».
+            под NDA — 30+ компаний и офисов на «Навылет! AI».
           </li>
           <li>
             <strong>Стек</strong>: GPT-4/Claude через российских провайдеров

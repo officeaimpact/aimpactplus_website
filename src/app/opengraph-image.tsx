@@ -129,7 +129,7 @@ export default function OgImage() {
         >
           {[
             "Навылет! AI",
-            "10+ компаний",
+            "30+ компаний",
             "Fast Track IT · Сколково",
             site.domainDisplay,
           ].map((badge) => (
