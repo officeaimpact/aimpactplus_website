@@ -114,6 +114,7 @@ export const footerLinks = {
   ],
   company: [
     { label: "О компании", href: "/about" },
+    { label: "Факты о компании", href: "/facts" },
     { label: "Города работы", href: "/cities" },
     { label: "Контакты", href: "/contact" },
   ],
@@ -291,11 +292,14 @@ export type Solution = {
   effects: { metric: string; label: string }[];
   /** Базовые интеграции этого сегмента (CRM, API, каналы). */
   integrations: string[];
+  /** Услуги, с которых обычно начинают в этом сегменте (слаги /services/*). */
+  relatedServices?: string[];
 };
 
 export const solutions: ReadonlyArray<Solution> = [
   {
     slug: "travel-agencies",
+    relatedServices: ["integraciya-tourvisor-sletat-crm", "bots-voice", "crm-integration", "mobilnoe-prilozhenie-dlya-turizma"],
     title: "Внедрение ИИ для турагентств: ИИ-ассистенты и автоматизация продаж туров",
     eyebrow: "Турагентства и сети офисов",
     audience: "Турагентство",
@@ -368,6 +372,7 @@ export const solutions: ReadonlyArray<Solution> = [
   },
   {
     slug: "tour-operators",
+    relatedServices: ["b2b-kabinet-turoperatora", "korporativnyy-ii-assistent", "zakaznaya-razrabotka-dlya-turizma", "analytics"],
     title: "Внедрение ИИ для туроператоров: ИИ-поиск туров, B2B-портал агентов и ИИ-аналитика спроса",
     eyebrow: "B2B-агентский портал и B2C-продажи",
     audience: "Туроператор",
@@ -440,6 +445,7 @@ export const solutions: ReadonlyArray<Solution> = [
   },
   {
     slug: "hotels",
+    relatedServices: ["bots-voice", "crm-integration", "consulting", "cloud-ai"],
     title: "Внедрение ИИ для отелей и средств размещения: ИИ-ассистент гостя 24/7",
     eyebrow: "Гостиницы, апартаменты, мини-отели и сети",
     audience: "Отель",
@@ -511,6 +517,7 @@ export const solutions: ReadonlyArray<Solution> = [
   },
   {
     slug: "aggregators",
+    relatedServices: ["custom-ai", "ai-apps-ux", "analytics", "integraciya-tourvisor-sletat-crm"],
     title: "Внедрение ИИ для турагрегаторов: семантический поиск, ранжирование и ИИ-поддержка",
     eyebrow: "Мета-площадки и маркетплейсы туров",
     audience: "Турагрегатор",
@@ -1303,6 +1310,13 @@ export type CaseStudy = {
    * различать стадии перед пользователем и поисковыми LLM.
    */
   status?: "production" | "design";
+  /**
+   * Слаги услуг, которые применялись в проекте. Нужны для перелинковки:
+   * с кейса можно перейти к услуге, а не оказаться в тупике.
+   */
+  relatedServices?: string[];
+  /** Слаг сегмента (/solutions/*), к которому относится кейс. */
+  relatedSolution?: string;
   /** ISO-дата публикации кейса для Article JSON-LD. */
   datePublishedISO?: string;
   /** ISO-дата последней редакции кейса для Article JSON-LD. */
@@ -1312,6 +1326,8 @@ export type CaseStudy = {
 export const cases: ReadonlyArray<CaseStudy> = [
   {
     slug: "infoflot-corporate-ai",
+    relatedServices: ["korporativnyy-ii-assistent", "custom-ai", "b2b-kabinet-turoperatora"],
+    relatedSolution: "tour-operators",
     title: "ИНФОФЛОТ",
     segment: "Туроператор",
     client: "«ИНФОФЛОТ» — туроператор речных круизов",
@@ -1347,6 +1363,8 @@ export const cases: ReadonlyArray<CaseStudy> = [
   },
   {
     slug: "magazin-goryashchih-putevok",
+    relatedServices: ["crm-integration", "integraciya-tourvisor-sletat-crm", "analytics"],
+    relatedSolution: "travel-agencies",
     title: "«Сеть Магазинов Горящих Путёвок»",
     segment: "Сеть турагентств",
     client: "Сеть турагентств «Магазин Горящих Путёвок»",
@@ -1405,6 +1423,8 @@ export const cases: ReadonlyArray<CaseStudy> = [
   },
   {
     slug: "otel-delas",
+    relatedServices: ["bots-voice", "crm-integration", "consulting"],
+    relatedSolution: "hotels",
     title: "Отель Delas",
     segment: "Средство размещения",
     client: "Отель Delas",
@@ -1523,7 +1543,6 @@ export const events: ReadonlyArray<EventItem> = [
       "На III Международном конгрессе туроператоров в Сочи основатель и CEO проекта «Навылет!» Лукиан Силагадзе выступит в бизнес-секции «Билет в цифровое завтра: новые технологии в туризме». Конгресс соберёт более ста представителей туриндустрии и делегатов от Минэкономразвития, Госдумы и МИД РФ. В докладе будет представлен многофункциональный AI-ассистент, способный за несколько минут подобрать идеальные варианты туров и отелей, сокращая время до релевантного ответа и повышая онлайн-конверсию туристического бизнеса.",
     image: "/events/congress-sochi-2025.png",
     tags: ["Конгресс туроператоров", "Сочи", "Навылет! AI", "Нейротехнологии"],
-    upcoming: true,
   },
   {
     id: "dagestan-forum-2025",
@@ -1559,7 +1578,7 @@ export const events: ReadonlyArray<EventItem> = [
     dateISO: "2025-04-28",
     place: "Москва, ТПП РФ",
     title:
-      "AIMPACT на заседании Совета ТПП РФ по применению AI в бизнесе",
+      "AIMPACT на заседании Совета ТПП РФ по применению ИИ в бизнесе",
     description:
       "На круглом столе Совета ТПП РФ по развитию информационных технологий и цифровой экономики руководитель проекта AIMPACT Лукиан Силагадзе представил возможности искусственного интеллекта для туристической отрасли — от повышения эффективности туроператоров до внедрения цифровых инструментов, улучшающих клиентский опыт. Участники отметили перспективность ИИ-решений и выработали рекомендации по поддержке отечественных ИИ-разработок.",
     image: "/events/tpp-ai-council-2025.png",
@@ -1583,7 +1602,7 @@ export const events: ReadonlyArray<EventItem> = [
     dateISO: "2025-04-09",
     place: "Минск, Беларусь",
     title:
-      "AIMPACT и МГП на Международном конгрессе в Минске: AI в турагентствах",
+      "AIMPACT и МГП на Международном конгрессе в Минске: ИИ в турагентствах",
     description:
       "На Международном конгрессе в Минске генеральный директор «Сети магазинов горящих путёвок» Сергей Агафонов и руководитель проекта AIMPACT Лукиан Силагадзе обсудили влияние искусственного интеллекта на продажи в турагентствах. По данным экспертов, лишь 20% туристических компаний используют AI в работе, однако ИИ-ассистенты уже снижают нагрузку на сотрудников, обеспечивая круглосуточный и персонализированный клиентский сервис. Цифровые ассистенты помогают подобрать отдых, забронировать туры и сопровождают путешественника на каждом этапе поездки.",
     image: "/events/minsk-congress-2025.png",
@@ -1595,7 +1614,7 @@ export const events: ReadonlyArray<EventItem> = [
     dateISO: "2025-02-17",
     place: "Москва, РЭУ им. Г. В. Плеханова",
     title:
-      "AIMPACT на форуме в РЭУ им. Плеханова: AI и образование в туризме",
+      "AIMPACT на форуме в РЭУ им. Плеханова: ИИ и образование в туризме",
     description:
       "На форуме в РЭУ им. Г. В. Плеханова команда AIMPACT представила исследование о росте российского рынка искусственного интеллекта и потенциале генеративного ИИ в развитии туризма. В докладе была подчёркнута важность подготовки кадров, способных совмещать технологические компетенции с пониманием специфики туристической отрасли. Обсуждались меры по развитию цифровой инфраструктуры и оптимизации бизнес-процессов для повышения качества туристических услуг.",
     image: "/events/reu-forum-2025.png",

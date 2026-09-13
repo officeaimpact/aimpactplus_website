@@ -11,7 +11,7 @@ import {
   type SegmentKey,
 } from "@/components/visual/SegmentVisual";
 import { pageMetadata, serviceJsonLd } from "@/lib/seo";
-import { solutions } from "@/lib/site-data";
+import { services, solutions } from "@/lib/site-data";
 
 const SEGMENT_KEYS: ReadonlyArray<SegmentKey> = [
   "travel-agencies",
@@ -55,6 +55,14 @@ export default async function SolutionDetail({
   if (!solution) notFound();
 
   const others = solutions.filter((s) => s.slug !== slug).slice(0, 3);
+
+  // Перелинковка: услуги, с которых обычно начинают в этом сегменте.
+
+  const entryServices = (solution.relatedServices ?? [])
+
+    .map((slug) => services.find((x) => x.slug === slug))
+
+    .filter((x): x is (typeof services)[number] => Boolean(x));
 
   // Навылет! AI — продукт для турагентств и турагрегаторов на базе Tourvisor.
   // Поэтому secondary CTA «Смотреть Навылет! AI» уместен только в этих сегментах.
@@ -199,6 +207,37 @@ export default async function SolutionDetail({
           ))}
         </div>
       </SectionWrapper>
+
+      {entryServices.length > 0 && (
+        <SectionWrapper
+          eyebrow="С чего начинают"
+          title="Услуги для этого сегмента"
+          description="Конкретные работы с составом, сроком и стартовой ценой — можно заказать по отдельности или собрать в один проект."
+          alt
+        >
+          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+            {entryServices.map((x) => (
+              <Link
+                key={x.slug}
+                href={`/services/${x.slug}`}
+                className="card group flex h-full flex-col"
+              >
+                <h3 className="text-base font-bold text-heading">{x.title}</h3>
+                <p className="mt-3 grow text-sm leading-6 text-body">{x.text}</p>
+                {x.priceFrom && (
+                  <p className="mt-3 text-sm font-bold text-heading">
+                    {x.priceFrom.label}
+                  </p>
+                )}
+                <span className="mt-4 inline-flex items-center gap-2 text-sm font-bold text-primary">
+                  Подробнее
+                  <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" />
+                </span>
+              </Link>
+            ))}
+          </div>
+        </SectionWrapper>
+      )}
 
       <SectionWrapper
         eyebrow="Другие сегменты"

@@ -14,7 +14,7 @@ import {
   type SegmentKey,
 } from "@/components/visual/SegmentVisual";
 import { caseStudyJsonLd, pageMetadata } from "@/lib/seo";
-import { cases } from "@/lib/site-data";
+import { cases, services, solutions } from "@/lib/site-data";
 
 const SEGMENT_BY_LABEL: Record<string, SegmentKey> = {
   Туроператор: "tour-operators",
@@ -68,6 +68,20 @@ export default async function CaseDetail({
   if (!c) notFound();
 
   const others = cases.filter((x) => x.slug !== slug).slice(0, 3);
+
+  // Перелинковка: услуги, применённые в проекте, и сегмент кейса.
+
+  const usedServices = (c.relatedServices ?? [])
+
+    .map((slug) => services.find((s) => s.slug === slug))
+
+    .filter((s): s is (typeof services)[number] => Boolean(s));
+
+  const segment = c.relatedSolution
+
+    ? solutions.find((s) => s.slug === c.relatedSolution)
+
+    : undefined;
 
   return (
     <PageShell>
@@ -240,6 +254,48 @@ export default async function CaseDetail({
           </aside>
         </div>
       </SectionWrapper>
+
+      {usedServices.length > 0 && (
+        <SectionWrapper
+          eyebrow="Услуги в проекте"
+          title="Что мы делали в этом кейсе"
+          description="Каждую из этих работ можно заказать отдельно — с составом работ, сроком и стартовой ценой."
+        >
+          <div className="grid gap-5 md:grid-cols-3">
+            {usedServices.map((s) => (
+              <Link
+                key={s.slug}
+                href={`/services/${s.slug}`}
+                className="card group flex h-full flex-col"
+              >
+                <h3 className="text-lg font-bold text-heading">{s.title}</h3>
+                <p className="mt-3 grow text-sm leading-6 text-body">{s.text}</p>
+                {s.priceFrom && (
+                  <p className="mt-3 text-sm font-bold text-heading">
+                    {s.priceFrom.label}
+                  </p>
+                )}
+                <span className="mt-4 inline-flex items-center gap-2 text-sm font-bold text-primary">
+                  Открыть услугу
+                  <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" />
+                </span>
+              </Link>
+            ))}
+          </div>
+          {segment && (
+            <p className="mt-8 text-center text-sm leading-6 text-muted">
+              Работаете в том же сегменте? Смотрите{" "}
+              <Link
+                href={`/solutions/${segment.slug}`}
+                className="font-semibold text-primary underline-offset-2 hover:underline"
+              >
+                {segment.eyebrow.toLowerCase()} — полную карту ИИ-сценариев
+              </Link>
+              .
+            </p>
+          )}
+        </SectionWrapper>
+      )}
 
       <SectionWrapper eyebrow="Другие кейсы" title="Похожие истории" alt>
         <div className="grid gap-5 md:grid-cols-3">

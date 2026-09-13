@@ -25,6 +25,7 @@ const PAGE_UPDATED: Record<string, string> = {
   "/expertise": "2026-09-12",
   "/services": "2026-09-13",
   "/products": "2026-09-13",
+  "/facts": "2026-09-13",
 };
 
 export default function sitemap(): MetadataRoute.Sitemap {
@@ -40,6 +41,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/blog",
     "/cities",
     "/about",
+    "/facts",
     "/contact",
     "/privacy",
     "/terms",
