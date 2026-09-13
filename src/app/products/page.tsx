@@ -261,7 +261,7 @@ export default function ProductsPage() {
               title: "B2B-кабинет туроператора",
               text: "Витрина и бронирование для агентской сети поверх вашей учётной системы. ИИ-помощник для агентов — на технологии «Навылет! AI».",
               href: "/services/b2b-kabinet-turoperatora",
-              price: "от 400 000 ₽",
+              price: "от 200 000 ₽",
             },
             {
               icon: Plug,
@@ -275,7 +275,7 @@ export default function ProductsPage() {
               title: "Корпоративный ИИ-ассистент",
               text: "Тот же ИИ, но для сотрудников: отвечает по регламентам, тарифам и условиям туроператоров из вашей базы знаний.",
               href: "/services/korporativnyy-ii-assistent",
-              price: "от 250 000 ₽",
+              price: "от 150 000 ₽",
             },
           ].map((c) => {
             const Icon = c.icon;
