@@ -30,6 +30,11 @@ import {
   iiDlyaOtelyaFaq,
   iiDlyaOtelyaToc,
 } from "@/components/blog/IiDlyaOtelya";
+import {
+  SravnenieResheniy,
+  sravnenieResheniyFaq,
+  sravnenieResheniyToc,
+} from "@/components/blog/SravnenieResheniy";
 import { articleJsonLd, faqJsonLd, pageMetadata } from "@/lib/seo";
 import { blogPosts, getBlogPost } from "@/lib/blog-data";
 
@@ -70,6 +75,7 @@ export default async function BlogPostPage({
   const isAgency7 = slug === "ii-dlya-turagentstva-7-scenariev";
   const isOperator = slug === "ii-dlya-turoperatora";
   const isHotel = slug === "ii-dlya-otelya";
+  const isCompare = slug === "ii-dlya-turagentstva-sravnenie-resheniy";
 
   return (
     <PageShell>
@@ -95,6 +101,9 @@ export default async function BlogPostPage({
         <JsonLd data={faqJsonLd([...iiDlyaTuroperatoraFaq])} />
       )}
       {isHotel && <JsonLd data={faqJsonLd([...iiDlyaOtelyaFaq])} />}
+      {isCompare && (
+        <JsonLd data={faqJsonLd([...sravnenieResheniyFaq])} />
+      )}
 
       <PageHero
         eyebrow="Блог"
@@ -184,6 +193,20 @@ export default async function BlogPostPage({
           }}
         >
           <IiDlyaOtelya />
+        </ArticleShell>
+      )}
+
+      {isCompare && (
+        <ArticleShell
+          updated={post.publishedDisplay}
+          readingTime={post.readingTime}
+          toc={[...sravnenieResheniyToc]}
+          cta={{
+            href: "/contact?intent=Подобрать%20ИИ-решение%20для%20турагентства",
+            label: "Помочь выбрать решение",
+          }}
+        >
+          <SravnenieResheniy />
         </ArticleShell>
       )}
 
