@@ -5,17 +5,29 @@ import { motion } from "framer-motion";
 import {
   CheckCircle2,
   Loader2,
+  MessageCircle,
   ShieldCheck,
 } from "lucide-react";
 import { cn } from "@/lib/cn";
 import { getTrackingMeta, track, trackGoal } from "@/lib/analytics";
-import { leadDirections, leadIntents } from "@/lib/site-data";
+import {
+  leadChannels,
+  leadDirections,
+  leadIntents,
+  messengerContactHints,
+} from "@/lib/site-data";
 import { submitToWeb3Forms } from "@/lib/web3forms-client";
+
+type Messenger = (typeof leadChannels)[number];
 
 type LeadValues = {
   name: string;
   email: string;
   phone: string;
+  /** Мессенджер для связи — обязательный выбор. */
+  channel: "" | Messenger;
+  /** Ник или отдельный номер в мессенджере (необязательно). */
+  messengerContact: string;
   intent: string;
   direction: string;
   context: string;
@@ -27,6 +39,8 @@ const initialValues: LeadValues = {
   name: "",
   email: "",
   phone: "",
+  channel: "",
+  messengerContact: "",
   intent: leadIntents[0],
   direction: "",
   context: "",
@@ -79,8 +93,17 @@ export function LeadForm({
   const validate = () => {
     const next: Partial<Record<keyof LeadValues, string>> = {};
     if (values.name.trim().length < 2) next.name = "Укажите имя";
-    if (!values.email && !values.phone) {
-      next.phone = "Укажите телефон, мессенджер или email";
+    if (!values.channel) {
+      next.channel = "Выберите, куда вам написать";
+    }
+    // Мессенджеру нужен идентификатор: либо телефон, либо ник/отдельный номер.
+    // Для Telegram достаточно ника — это снижает барьер тем, кто не готов
+    // оставлять номер.
+    if (!values.phone.trim() && !values.messengerContact.trim()) {
+      next.messengerContact =
+        values.channel === "Telegram"
+          ? "Укажите телефон или ник в Telegram"
+          : "Укажите номер — на него напишем";
     }
     if (values.email) {
       const ok = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(values.email);
@@ -106,6 +129,8 @@ export function LeadForm({
         name: values.name,
         email: values.email,
         phone: values.phone,
+        channel: values.channel,
+        messengerContact: values.messengerContact,
         intent: values.intent,
         companyType: values.direction,
         context: values.context,
@@ -138,6 +163,8 @@ export function LeadForm({
         name: values.name,
         email: values.email,
         phone: values.phone,
+        channel: values.channel,
+        messengerContact: values.messengerContact,
         intent: values.intent,
         companyType: values.direction,
         context: values.context,
@@ -199,15 +226,54 @@ export function LeadForm({
             autoComplete="email"
           />
           <Field
-            label="Телефон / мессенджер"
+            label="Телефон"
             name="phone"
+            type="tel"
             value={values.phone}
             onChange={(v) => setField("phone", v)}
             error={errors.phone}
-            placeholder="+7 …  или @username"
+            placeholder="+7 900 000-00-00"
             autoComplete="tel"
           />
         </div>
+
+        {/* Выбор мессенджера — часть контактного блока, поэтому стоит сразу
+         * после телефона. Пояснение под чипами закрывает главный страх:
+         * человек боится не сообщения, а неожиданного звонка. */}
+        <div className="space-y-3">
+          <ChipsGroup
+            label="Куда вам написать"
+            name="channel"
+            value={values.channel}
+            options={[...leadChannels]}
+            error={errors.channel}
+            required
+            onChange={(v) => setField("channel", v as Messenger)}
+          />
+          <p className="flex items-start gap-2 text-xs leading-5 text-muted">
+            <MessageCircle
+              className="mt-0.5 h-3.5 w-3.5 shrink-0 text-primary"
+              aria-hidden="true"
+            />
+            Напишем сообщением в выбранный мессенджер — звонить без
+            предупреждения не будем.
+          </p>
+        </div>
+
+        {values.channel && (
+          <Field
+            label={messengerContactHints[values.channel].label}
+            name="messengerContact"
+            value={values.messengerContact}
+            onChange={(v) => setField("messengerContact", v)}
+            error={errors.messengerContact}
+            placeholder={messengerContactHints[values.channel].placeholder}
+            hint={messengerContactHints[values.channel].hint}
+            autoComplete={
+              values.channel === "Telegram" ? "username" : "tel"
+            }
+          />
+        )}
 
         <ChipsGroup
           label="Цель обращения"
@@ -346,6 +412,7 @@ function Field({
   error,
   placeholder,
   autoComplete,
+  hint,
 }: {
   label: string;
   required?: boolean;
@@ -356,6 +423,8 @@ function Field({
   error?: string;
   placeholder?: string;
   autoComplete?: string;
+  /** Подсказка под полем. Скрывается, когда показана ошибка. */
+  hint?: string;
 }) {
   return (
     <label className="block">
@@ -374,11 +443,13 @@ function Field({
         aria-invalid={!!error}
         required={required}
       />
-      {error && (
+      {error ? (
         <span className="mt-1 block text-xs font-semibold text-red-600">
           {error}
         </span>
-      )}
+      ) : hint ? (
+        <span className="mt-1 block text-xs leading-5 text-muted">{hint}</span>
+      ) : null}
     </label>
   );
 }

@@ -1921,12 +1921,39 @@ export const leadTimelines = [
   "Пока изучаю",
 ] as const;
 
-export const leadChannels = [
-  "Telegram / WhatsApp",
-  "Телефон",
-  "Email",
-  "Любой канал",
-] as const;
+/**
+ * Мессенджеры, в которые команда пишет по заявке. Список намеренно короткий:
+ * ряд из трёх чипов читается за секунду, а каждый лишний вариант — это
+ * лишнее решение для человека. Звонок и email тут не нужны: телефон и почта
+ * собираются отдельными полями, а смысл выбора — «куда написать».
+ */
+export const leadChannels = ["Telegram", "WhatsApp", "MAX"] as const;
+
+/**
+ * Подписи условного поля под выбором мессенджера. У Telegram есть @username,
+ * у WhatsApp и MAX идентификатор — только номер телефона, поэтому подпись,
+ * подсказка и placeholder меняются вместе с выбором.
+ */
+export const messengerContactHints: Record<
+  (typeof leadChannels)[number],
+  { label: string; placeholder: string; hint: string }
+> = {
+  Telegram: {
+    label: "Ник в Telegram",
+    placeholder: "@username",
+    hint: "Если ника нет — оставьте пустым, напишем на номер телефона.",
+  },
+  WhatsApp: {
+    label: "Номер для WhatsApp",
+    placeholder: "+7 900 000-00-00",
+    hint: "Оставьте пустым, если совпадает с телефоном выше.",
+  },
+  MAX: {
+    label: "Номер для MAX",
+    placeholder: "+7 900 000-00-00",
+    hint: "Оставьте пустым, если совпадает с телефоном выше.",
+  },
+};
 
 export const team = [
   {

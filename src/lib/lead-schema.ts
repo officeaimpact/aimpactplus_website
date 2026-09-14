@@ -18,7 +18,10 @@ export const leadSchema = z.object({
   task: trimmed(120).optional(),
   scale: trimmed(160).optional(),
   timeline: trimmed(120).optional(),
+  /** Мессенджер, в который просят написать: Telegram, WhatsApp или MAX. */
   channel: trimmed(120).optional(),
+  /** Ник или отдельный номер в этом мессенджере, если отличается от телефона. */
+  messengerContact: trimmed(120).optional(),
   consent: z.literal(true, {
     message: "Нужно согласие на обработку данных",
   }),
@@ -38,7 +41,7 @@ export type LeadInput = z.infer<typeof leadSchema>;
 export const leadStepSchemas = [
   leadSchema.pick({ name: true, email: true, phone: true, intent: true }),
   leadSchema.pick({ company: true, companyType: true, region: true, context: true }),
-  leadSchema.pick({ task: true, scale: true, timeline: true, channel: true }),
+  leadSchema.pick({ task: true, scale: true, timeline: true, channel: true, messengerContact: true }),
   leadSchema.pick({ consent: true }),
 ] as const;
 

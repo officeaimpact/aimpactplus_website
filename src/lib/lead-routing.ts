@@ -38,7 +38,11 @@ function summary(input: LeadInput) {
     "— Контакт —",
     `Имя: ${input.name}`,
     input.email ? `Email: ${input.email}` : "Email: —",
-    input.phone ? `Телефон / мессенджер: ${input.phone}` : "Телефон: —",
+    input.phone ? `Телефон: ${input.phone}` : "Телефон: —",
+    input.channel ? `✍️ Написать в: ${input.channel}` : "",
+    input.messengerContact
+      ? `Контакт в мессенджере: ${input.messengerContact}`
+      : "",
     "",
     "— Заявка —",
     `Цель: ${input.intent}`,
@@ -48,7 +52,6 @@ function summary(input: LeadInput) {
     input.task ? `Задача: ${input.task}` : "",
     input.scale ? `Масштаб: ${input.scale}` : "",
     input.timeline ? `Срок: ${input.timeline}` : "",
-    input.channel ? `Предпочтительный канал: ${input.channel}` : "",
     input.context ? `\nКонтекст:\n${input.context}` : "",
     "",
     "— Источник —",

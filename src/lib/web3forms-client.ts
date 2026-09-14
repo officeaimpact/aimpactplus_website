@@ -20,6 +20,10 @@ export type Web3FormsPayload = {
   phone?: string;
   intent: string;
   companyType?: string;
+  /** Мессенджер для связи. */
+  channel?: string;
+  /** Ник или номер в мессенджере. */
+  messengerContact?: string;
   context?: string;
   sourcePath?: string;
   /** honeypot — пустая строка для людей */
@@ -42,7 +46,11 @@ function buildMessage(input: Web3FormsPayload) {
     "— Контакт —",
     `Имя: ${input.name}`,
     input.email ? `Email: ${input.email}` : "Email: —",
-    input.phone ? `Телефон / мессенджер: ${input.phone}` : "Телефон: —",
+    input.phone ? `Телефон: ${input.phone}` : "Телефон: —",
+    input.channel ? `✍️ Написать в: ${input.channel}` : "",
+    input.messengerContact
+      ? `Контакт в мессенджере: ${input.messengerContact}`
+      : "",
     "",
     "— Заявка —",
     `Цель: ${input.intent}`,
@@ -57,7 +65,13 @@ function buildMessage(input: Web3FormsPayload) {
 }
 
 function buildSubject(input: Web3FormsPayload) {
-  return [`[${site.brand}]`, input.intent, input.companyType, input.name]
+  return [
+    `[${site.brand}]`,
+    input.channel ? `→ ${input.channel}` : "",
+    input.intent,
+    input.companyType,
+    input.name,
+  ]
     .filter(Boolean)
     .map((s) => String(s).trim())
     .filter(Boolean)
@@ -86,6 +100,9 @@ export async function submitToWeb3Forms(input: Web3FormsPayload): Promise<{
     if (input.phone) fd.append("phone", input.phone);
     fd.append("intent", input.intent);
     if (input.companyType) fd.append("company_type", input.companyType);
+    if (input.channel) fd.append("messenger", input.channel);
+    if (input.messengerContact)
+      fd.append("messenger_contact", input.messengerContact);
     if (input.context) fd.append("context", input.context);
     if (input.sourcePath) fd.append("source_path", input.sourcePath);
     fd.append("message", buildMessage(input));
