@@ -63,6 +63,7 @@ export default function Expertise() {
       </SectionWrapper>
 
       <SectionWrapper
+        id="events"
         eyebrow="Хроника"
         title="Выступления и мероприятия"
         description="Фокус на туризме, искусственном интеллекте и цифровизации отрасли. Нажмите на карточку — откроется модальное окно с полным описанием и тегами."
