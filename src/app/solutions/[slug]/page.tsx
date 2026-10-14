@@ -39,7 +39,7 @@ export async function generateMetadata({
   const solution = solutions.find((s) => s.slug === slug);
   if (!solution) return pageMetadata({ title: "Не найдено", description: "" });
   return pageMetadata({
-    title: solution.title,
+    title: solution.seoTitle ?? solution.title,
     description: solution.summary,
     path: `/solutions/${solution.slug}`,
   });

@@ -1,5 +1,5 @@
 import type { MetadataRoute } from "next";
-import { absoluteUrl, site } from "@/lib/site-data";
+import { absoluteUrl } from "@/lib/site-data";
 
 // Явно разрешаем индексировать сайт всем основным поисковым роботам
 // (Google, Bing, Yandex, Mail.ru, DuckDuckGo) и LLM-краулерам
@@ -11,6 +11,8 @@ export default function robots(): MetadataRoute.Robots {
     "OAI-SearchBot",
     "ChatGPT-User",
     "ClaudeBot",
+    "Claude-User",
+    "Claude-SearchBot",
     "Claude-Web",
     "PerplexityBot",
     "Perplexity-User",
@@ -36,7 +38,7 @@ export default function robots(): MetadataRoute.Robots {
         disallow: ["/api/", "/email/"],
       },
     ],
+    // Host: Яндекс не учитывает с 2018 года (зеркало — через 301), поэтому не выводим.
     sitemap: absoluteUrl("/sitemap.xml"),
-    host: site.domain,
   };
 }

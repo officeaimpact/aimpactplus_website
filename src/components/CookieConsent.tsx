@@ -3,8 +3,9 @@
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
+import { COOKIE_CONSENT_EVENT, COOKIE_CONSENT_KEY } from "./Analytics";
 
-const STORAGE_KEY = "aimpact-tourism-cookie-consent";
+const STORAGE_KEY = COOKIE_CONSENT_KEY;
 
 export function CookieConsent() {
   const [shown, setShown] = useState(false);
@@ -27,6 +28,8 @@ export function CookieConsent() {
     } catch {
       // ignore storage errors
     }
+    // Analytics ждёт это событие: «Только необходимые» — счётчики не стартуют.
+    window.dispatchEvent(new CustomEvent(COOKIE_CONSENT_EVENT, { detail: value }));
     setShown(false);
   };
 
@@ -41,6 +44,7 @@ export function CookieConsent() {
           className="fixed inset-x-3 bottom-3 z-[60] sm:inset-x-auto sm:bottom-5 sm:left-5 sm:right-auto sm:max-w-sm"
           role="dialog"
           aria-label="Cookie-согласие"
+          data-cookie-consent
         >
           <div className="rounded-3xl border border-blue-100 bg-white p-5 shadow-[var(--shadow-card-hover)]">
             <p className="text-sm font-bold text-heading">

@@ -1,5 +1,7 @@
 export type BlogPost = {
   slug: string;
+  /** Короткий title для поиска (≤50 символов + « | ии-туризм.рф»); H1 остаётся title. */
+  seoTitle?: string;
   title: string;
   description: string;
   /** Тёг секции / категория. */
@@ -37,6 +39,7 @@ export const blogPosts: ReadonlyArray<BlogPost> = [
   },
   {
     slug: "ii-dlya-otelya",
+    seoTitle: "ИИ для отеля и санатория: что внедряют в 2026",
     title:
       "ИИ для отеля: что внедряют отели и санатории в 2026 году",
     description:
@@ -62,6 +65,7 @@ export const blogPosts: ReadonlyArray<BlogPost> = [
   },
   {
     slug: "ii-dlya-turoperatora",
+    seoTitle: "ИИ для туроператора: где работает в 2026 году",
     title:
       "ИИ для туроператора: где он реально работает в 2026 году",
     description:
@@ -84,6 +88,7 @@ export const blogPosts: ReadonlyArray<BlogPost> = [
   },
   {
     slug: "ii-dlya-turagentstva-7-scenariev",
+    seoTitle: "ИИ для турагентства: 7 сценариев и экономика",
     title:
       "ИИ для турагентства: 7 рабочих сценариев и их экономика",
     description:
@@ -107,6 +112,7 @@ export const blogPosts: ReadonlyArray<BlogPost> = [
   },
   {
     slug: "ii-assistent-vs-chat-bot",
+    seoTitle: "ИИ-ассистент или чат-бот: в чём разница",
     title:
       "ИИ-ассистент vs чат-бот: в чём разница и когда выбирать что",
     description:
@@ -129,6 +135,7 @@ export const blogPosts: ReadonlyArray<BlogPost> = [
   },
   {
     slug: "chto-takoe-ai-turmenedzher",
+    seoTitle: "Что такое ИИ-турменеджер и зачем он турагентству",
     title:
       "Что такое ИИ-турменеджер и зачем он турагентству в 2026 году",
     description:

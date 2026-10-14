@@ -53,7 +53,7 @@ export async function generateMetadata({
   const post = getBlogPost(slug);
   if (!post) return {};
   return pageMetadata({
-    title: post.title,
+    title: post.seoTitle ?? post.title,
     description: post.description,
     path: `/blog/${post.slug}`,
     keywords: post.keywords,

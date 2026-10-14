@@ -1,5 +1,7 @@
 export type Guide = {
   slug: string;
+  /** Короткий title для поиска (≤50 символов + « | ии-туризм.рф»); H1 остаётся title. */
+  seoTitle?: string;
   title: string;
   description: string;
   /** Дата публикации (или последнего обновления). */
@@ -15,6 +17,7 @@ export type Guide = {
 export const guides: ReadonlyArray<Guide> = [
   {
     slug: "kak-vybrat-podryadchika-po-ii-v-turizme",
+    seoTitle: "Подрядчик по ИИ в туризме: чек-лист и 15 вопросов",
     title:
       "Как выбрать подрядчика по внедрению ИИ в туризме: чек-лист и 15 вопросов",
     description:
@@ -37,6 +40,7 @@ export const guides: ReadonlyArray<Guide> = [
   },
   {
     slug: "skolko-stoit-vnedrenie-ii-v-turizme",
+    seoTitle: "Сколько стоит внедрение ИИ в туризме в 2026",
     title:
       "Сколько стоит внедрение ИИ в туристическом бизнесе в 2026 году",
     description:
@@ -59,6 +63,7 @@ export const guides: ReadonlyArray<Guide> = [
   },
   {
     slug: "kak-vnedrit-ii-v-turizme",
+    seoTitle: "Как внедрить ИИ в туризме: этапы, сроки, цена",
     title:
       "Как внедрить ИИ в туризме: с чего начать, этапы, сроки и стоимость",
     description:

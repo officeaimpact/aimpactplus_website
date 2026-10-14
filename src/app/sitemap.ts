@@ -19,8 +19,8 @@ const SERVICES_UPDATED = new Date("2026-09-13");
  * не увидят повода вернуться (в сентябре 35 из 40 URL висели с одной датой).
  */
 const PAGE_UPDATED: Record<string, string> = {
-  "/": "2026-09-12",
-  "/about": "2026-09-12",
+  "/": "2026-10-12",
+  "/about": "2026-10-12",
   "/navilet-ai": "2026-09-12",
   "/expertise": "2026-09-12",
   "/services": "2026-09-13",

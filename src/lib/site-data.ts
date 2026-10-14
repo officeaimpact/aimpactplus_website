@@ -276,6 +276,8 @@ export const implementationSteps: ReadonlyArray<ImplementationStep> = [
 
 export type Solution = {
   slug: string;
+  /** Короткий title для поиска (≤50 символов + « | ии-туризм.рф»); H1 остаётся title. */
+  seoTitle?: string;
   title: string;
   eyebrow: string;
   summary: string;
@@ -299,6 +301,7 @@ export type Solution = {
 export const solutions: ReadonlyArray<Solution> = [
   {
     slug: "travel-agencies",
+    seoTitle: "Внедрение ИИ в турагентстве: ассистент и продажи",
     relatedServices: ["integraciya-tourvisor-sletat-crm", "bots-voice", "crm-integration", "mobilnoe-prilozhenie-dlya-turizma"],
     title: "Внедрение ИИ для турагентств: ИИ-ассистенты и автоматизация продаж туров",
     eyebrow: "Турагентства и сети офисов",
@@ -372,6 +375,7 @@ export const solutions: ReadonlyArray<Solution> = [
   },
   {
     slug: "tour-operators",
+    seoTitle: "Внедрение ИИ для туроператоров: поиск и B2B",
     relatedServices: ["b2b-kabinet-turoperatora", "korporativnyy-ii-assistent", "zakaznaya-razrabotka-dlya-turizma", "analytics"],
     title: "Внедрение ИИ для туроператоров: ИИ-поиск туров, B2B-портал агентов и ИИ-аналитика спроса",
     eyebrow: "B2B-агентский портал и B2C-продажи",
@@ -445,6 +449,7 @@ export const solutions: ReadonlyArray<Solution> = [
   },
   {
     slug: "hotels",
+    seoTitle: "Внедрение ИИ в отеле: ассистент гостя 24/7",
     relatedServices: ["bots-voice", "crm-integration", "consulting", "cloud-ai"],
     title: "Внедрение ИИ для отелей и средств размещения: ИИ-ассистент гостя 24/7",
     eyebrow: "Гостиницы, апартаменты, мини-отели и сети",
@@ -517,6 +522,7 @@ export const solutions: ReadonlyArray<Solution> = [
   },
   {
     slug: "aggregators",
+    seoTitle: "Внедрение ИИ для турагрегаторов: поиск и сервис",
     relatedServices: ["custom-ai", "ai-apps-ux", "analytics", "integraciya-tourvisor-sletat-crm"],
     title: "Внедрение ИИ для турагрегаторов: семантический поиск, ранжирование и ИИ-поддержка",
     eyebrow: "Мета-площадки и маркетплейсы туров",
@@ -654,6 +660,8 @@ export const serviceLines: ReadonlyArray<{
 
 export type ServiceItem = {
   slug: string;
+  /** Короткий title для поиска (≤50 символов + « | ии-туризм.рф»); H1 остаётся title. */
+  seoTitle?: string;
   /** Линия услуг — группирует каталог и задаёт serviceType в JSON-LD. */
   line: ServiceLine;
   title: string;
@@ -753,6 +761,7 @@ export const services: ReadonlyArray<ServiceItem> = [
   },
   {
     slug: "bots-voice",
+    seoTitle: "Telegram- и MAX-боты, голосовые ИИ для туризма",
     line: "development",
     priceFrom: { label: "от 100 000 ₽", value: 100000, note: "один канал (Telegram, MAX или голос), до 10 сценариев" },
     title: "Telegram- и MAX-боты, голосовые ИИ-ассистенты для туризма",

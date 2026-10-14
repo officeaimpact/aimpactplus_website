@@ -86,7 +86,7 @@ export async function generateMetadata({
   // Бренд не дописываем: layout уже добавляет « | ии-туризм.рф» (15 симв.),
   // а сумма должна остаться в пределах ~65 символов сниппета.
   return pageMetadata({
-    title: service.title,
+    title: service.seoTitle ?? service.title,
     description: clip(service.text),
     path: `/services/${service.slug}`,
     keywords: service.keywords,
